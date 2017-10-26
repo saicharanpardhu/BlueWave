@@ -35,4 +35,10 @@ public class AppTests {
 
 	        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
 	    }
+
+	@Test
+        public void notstartingServer() {
+            ResponseEntity<String> entity = this.testRestTemplate.getForEntity("http://localhost:"+this.port +"/miss", String.class);
+            assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());
+        }
 }
