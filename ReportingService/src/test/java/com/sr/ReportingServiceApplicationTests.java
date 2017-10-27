@@ -31,7 +31,7 @@ public class ReportingServiceApplicationTests extends TestCase {
     
 	@Before
     public void setUp() throws Exception {
-		report = new Report(new Long(16), new Timestamp(System.currentTimeMillis()),"testUser", "Test Message","fatal");
+		report = new Report(new Long(5), new Timestamp(System.currentTimeMillis()),"testUser", "Test Message","fatal");
 		
     }
 	
@@ -52,21 +52,35 @@ public class ReportingServiceApplicationTests extends TestCase {
         ResponseEntity<Report> response = restTemplate.exchange(
                 createURLWithPort("/report"),
                 HttpMethod.POST, entity, Report.class); 
-        assertNotNull(response);
-        Report actual = response.getBody();
-        System.out.println(actual.getId() + " " + actual.getMessage());
+        assertNotNull(response); 
     }
     
     @Test
-    public void testGetReportById() throws Exception {  
-    	HttpHeaders headers = new HttpHeaders();
-    	headers.setContentType(MediaType.APPLICATION_JSON);  
-        HttpEntity<String> testEntity = new HttpEntity<String>(null, headers);
+    public void testGetReportById() throws Exception {   
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
         ResponseEntity<Report> response = restTemplate.exchange(
                 createURLWithPort("/report/5"),
-                HttpMethod.GET, testEntity, Report.class);  
+                HttpMethod.GET, entity, Report.class);
         Report actual = response.getBody();
-        assertEquals(actual,report);	
+        assertEquals(actual.getId(),report.getId());	
+    }
+    
+    @Test
+    public void testGetReportByYear() throws Exception {   
+    	HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<Iterable> response = restTemplate.exchange(
+                createURLWithPort("/report/year/2017"),
+                HttpMethod.GET, entity, Iterable.class); 
+        assertNotNull(response);	
+    }
+    
+    @Test
+    public void testGetReportByUserid() throws Exception {    
+    	HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<Iterable> response = restTemplate.exchange(
+                createURLWithPort("/report/akshaydv"),
+                HttpMethod.GET, entity, Iterable.class); 
+        assertNotNull(response);
     }
      
     
@@ -77,7 +91,6 @@ public class ReportingServiceApplicationTests extends TestCase {
                 createURLWithPort("/report"),
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response);
-    } 
-	
+    }  
 
 }

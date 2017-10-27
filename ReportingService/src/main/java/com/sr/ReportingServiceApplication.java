@@ -15,8 +15,8 @@ import com.sr.messenger.ReportingServiceProducer;
 //<-- Driver Class -->
 
 @SpringBootApplication
-@EnableDiscoveryClient
-@EnableZuulServer
+//@EnableDiscoveryClient
+//@EnableZuulServer
 public class ReportingServiceApplication {
 
 	public static void main(String[] args) {

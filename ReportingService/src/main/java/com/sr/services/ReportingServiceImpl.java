@@ -5,20 +5,26 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.jcabi.aspects.Loggable;
 import com.sr.domain.Report;
 import com.sr.exceptions.ReportNotFoundException;
 import com.sr.repository.ReportRepository;
+import com.sr.utility.LogExecutionTime;
+import com.sr.utility.MethodLogger;
 
 //Service implementation
 
 @Service
+
 public class ReportingServiceImpl implements ReportingService{
 	
 	@Autowired
 	private ReportRepository reportRepository;
-	
+	  
 	
 	//<--- Setter-Getter Methods ---> 
 	public ReportRepository getReportRepository() {
@@ -74,10 +80,13 @@ public class ReportingServiceImpl implements ReportingService{
 	}
 	
 	@Override
+	@LogExecutionTime
 	public Iterable<Report> getAllReports() {
 		// TODO Auto-generated method stub
+		System.out.println("Loggable");
 		return this.reportRepository.findAll();
 	}
+	 
 
 	
 	

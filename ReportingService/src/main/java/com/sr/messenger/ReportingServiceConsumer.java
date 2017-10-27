@@ -17,11 +17,11 @@ public class ReportingServiceConsumer {
 	
 	
 	
-	@KafkaListener(topics = "testrun4", 
-			  containerFactory = "reportKafkaListenerContainerFactory")
-			public void reportlistener(Report report) {
-			    System.out.println(report.getMessage());
-			    latch.countDown();
-			} 
+//	@KafkaListener(topics = "testrun4", 
+//			  containerFactory = "reportKafkaListenerContainerFactory")
+//			public void reportlistener(Report report) {
+//			    System.out.println(report.getMessage());
+//			    latch.countDown();
+//			} 
  
 }

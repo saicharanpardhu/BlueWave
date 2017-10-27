@@ -34,7 +34,6 @@ public class ReportingServiceController {
 	private ReportingService reportService;  
 	@Autowired 
 	ReportingServiceProducer producer;
-	 
 	//<--- Fetcher Methods --->   
 		@ApiOperation(value = "Get a report by ID",response = Report.class)
 		@ApiResponses(value = {
@@ -43,9 +42,18 @@ public class ReportingServiceController {
 	            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 	            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 	    })
-		@GetMapping(path="/{id:^[0-9]*$}")
+		@GetMapping(path="/{id:^[0-9]*$}") 
 		@Loggable
 		public @ResponseBody ResponseEntity<?> fetchReportByID (@PathVariable("id") Long id) { 
+			try {  
+				return new ResponseEntity<Report>(reportService.getReportById(id), HttpStatus.OK);
+			}
+			catch(Exception e) {  
+				return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+			}
+		} 
+		
+		public ResponseEntity<?> fetchReportByID_aroundBody (Long id) { 
 			try {  
 				return new ResponseEntity<Report>(reportService.getReportById(id), HttpStatus.OK);
 			}
@@ -101,7 +109,7 @@ public class ReportingServiceController {
 			try {  
 				report.setTimestamp(new Timestamp(System.currentTimeMillis()));
 				Report savedReport = reportService.saveReport(report);
-				producer.sendMessage(savedReport);
+//				producer.sendMessage(savedReport);
 				return new ResponseEntity<Report>(reportService.saveReport(report), HttpStatus.OK);
 			}
 			catch(Exception e) { 
