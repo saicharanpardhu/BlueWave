@@ -5,6 +5,15 @@ ReportingService/mvnw
 ReportingService/mvnw.cmd
 ReportingService/.project
 ReportingService/.classpath
+
+PersistenceManager/target
+PersistenceManager/.mvn
+PersistenceManager/.settings
+PersistenceManager/mvnw
+PersistenceManager/mvnw.cmd
+PersistenceManager/.project
+PersistenceManager/.classpath
+
 Api-Gateway/mvnw
 Api-Gateway/mvnw.cmd
 Api-Gateway/.mvn
@@ -26,3 +35,5 @@ Task2/.classpath
 Task2/.project
 Task2/.springBeans
 Task2/.settings
+/.metadata/
+/.metadata/
