@@ -14,6 +14,9 @@ PersistenceManager/mvnw.cmd
 PersistenceManager/.project
 PersistenceManager/.classpath
 
+.recommenders
+Servers
+
 Api-Gateway/mvnw
 Api-Gateway/mvnw.cmd
 Api-Gateway/.mvn
