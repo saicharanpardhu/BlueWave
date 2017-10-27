@@ -18,3 +18,8 @@ eureka-server/.classpath
 eureka-server/.project
 src
 target
+Task2/target
+Task2/.classpath
+Task2/.project
+Task2/.springBeans
+Task2/.settings
