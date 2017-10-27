@@ -7,3 +7,14 @@ ReportingService/.project
 ReportingService/.classpath
 Api-Gateway/mvnw
 Api-Gateway/mvnw.cmd
+Api-Gateway/.mvn
+Config-server/.settings
+Config-server/.classpath
+Config-server/.project
+Config-server/target
+eureka-server/.settings
+eureka-server/target
+eureka-server/.classpath
+eureka-server/.project
+src
+target
