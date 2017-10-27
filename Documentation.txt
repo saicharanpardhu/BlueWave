@@ -1,0 +1,112 @@
+ReportingService
+
+REST Endpoint Documentation
+
+GET
+<ip_address>:8080/v1.0/reportingservice/report
+	{
+	timestamp;
+	userid;
+	message;
+	severity
+	}
+
+POST
+<ip_address>:8080/v1/<project name>/<resource>
+	{
+	timestamp;
+	userid;
+	message;
+	severity
+	}
+
+
+ReportingService Kafka Documentation
+
+Publishing Data Into Kafka
+	{
+	timestamp;
+	userid;
+	message;
+	severity
+	}
+
+
+Consuming Data from Kafka
+{
+
+}
+
+
+PersistenceManagerService
+
+REST Endpoint Documentation
+
+GET
+<ip_address>:8080/v1.0/workflow/get
+{
+id;
+sequence;
+userid;
+}
+GET BY ID
+<ip_address>:8080/v1.0/workflow/get/id
+{
+id;
+sequence;
+userid;
+}
+
+POST
+<ip_address>:8080/v1.0/workflow/save
+{
+id;
+sequence;
+userid;
+}
+UPDATE
+<ip_address>:8080/v1.0/workflow/update
+DELETE
+<ip_address>:8080/v1.0/workflow/delete/id
+{
+
+}
+
+PersistenceService Kafka Documentation
+
+Publishing Data Into Kafka
+{
+id;
+sequence;
+userid;
+}
+
+Consuming Data from Kafka
+{
+
+}
+
+TaskOneService
+
+REST Endpoint Documentation
+
+GET
+<ip_address>:8080/v1.0/reportingservice/report
+
+POST
+<ip_address>:8080/v1/<project name>/<resource>
+{
+
+}
+
+TaskOneService Kafka Documentation
+
+Publishing Data Into Kafka
+{
+
+}
+
+Consuming Data from Kafka
+{
+
+}
