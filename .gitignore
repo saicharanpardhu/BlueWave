@@ -1,0 +1,9 @@
+ReportingService/target
+ReportingService/.mvn
+ReportingService/.settings
+ReportingService/mvnw
+ReportingService/mvnw.cmd
+ReportingService/.project
+ReportingService/.classpath
+Api-Gateway/mvnw
+Api-Gateway/mvnw.cmd
