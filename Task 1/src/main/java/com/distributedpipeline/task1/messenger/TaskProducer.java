@@ -3,6 +3,8 @@ package com.distributedpipeline.task1.messenger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.kafka.core.KafkaTemplate; 
+
+//<!----Producer for the task: Produces string using two methods -->
 @Service
 public class TaskProducer {
 	
@@ -13,7 +15,7 @@ public class TaskProducer {
 	private KafkaTemplate<String, String> kafkaTemplate2;
 	 
 	public void sendMessage(String message) {
-	    kafkaTemplate.send("task1-response", message);
+	    kafkaTemplate.send("task-response2", message);
 	   
 	}
 	public void sendReport(String message) {

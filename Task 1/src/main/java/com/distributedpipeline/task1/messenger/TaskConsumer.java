@@ -8,6 +8,7 @@ import com.distributedpipeline.task1.messenger.TaskProducer;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.annotation.KafkaListener; 
 
+//<!----Task Consumer: Consumes Strings -->
 @Service
 public class TaskConsumer {
 	
@@ -19,7 +20,7 @@ public class TaskConsumer {
 	@Autowired
 	TaskProducer taskProducer;
 	  
-	@KafkaListener(topics = "task1-topic", 
+	@KafkaListener(topics = "task-response1", 
 			  containerFactory = "kafkaListenerContainerFactory")
 			public void reportlistener(String message) {
 			    System.out.println(message); 
