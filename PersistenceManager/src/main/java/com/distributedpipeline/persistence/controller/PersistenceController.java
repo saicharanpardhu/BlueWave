@@ -25,6 +25,7 @@ import com.distributedpipeline.persistence.utility.LogExecutionTime;
 
 @RestController
 @RequestMapping("/persistence")
+/*------- interaction with engine microservice using kafka-------------*/
 public class PersistenceController {
 	
 	@Autowired
