@@ -4,7 +4,7 @@ This is the project submitted for Distributed Pipeline Project demonstrating a S
 
 To be able to run this application, you will have to create a MongodB database.
 
-To run the application, use src/main/java/com/sr/ReportingServiceApplication.java
+To run the application, use src/main/java/com/distributedpipeline/persistence.java
 
 # Swagger Documentation
 
