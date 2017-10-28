@@ -37,6 +37,26 @@ Consuming Data from Kafka
 
 }
 
+EngineService Kafka Documentation
+
+Publishing Data Into Kafka
+	{
+        taskId
+	}
+
+
+Consuming Data from Kafka (PersistenceManager)
+{
+    id;
+    sequene;
+    userId
+}
+
+Consuming Data from Kafka (Task)
+{
+    taskData;
+}
+
 
 PersistenceManagerService
 
