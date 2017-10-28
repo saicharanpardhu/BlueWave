@@ -13,10 +13,7 @@ PersistenceManager/mvnw
 PersistenceManager/mvnw.cmd
 PersistenceManager/.project
 PersistenceManager/.classpath
-
-.recommenders
-Servers
-
+ 
 Api-Gateway/mvnw
 Api-Gateway/mvnw.cmd
 Api-Gateway/.mvn
@@ -27,12 +24,7 @@ Config-server/target
 eureka-server/.settings
 eureka-server/target
 eureka-server/.classpath
-eureka-server/.project
-src
-target
-.settings
-.classpath
-.project
+eureka-server/.project 
 Task2/target
 Task2/.classpath
 Task2/.project

@@ -12,6 +12,7 @@ import com.distributedpipeline.task1.services.Task1Service;
 
 import io.swagger.annotations.Api; 
 
+//<!----Controller -->
 @Controller    
 @RequestMapping(path="/v1.0/task1service/task")
 @Api(value="Task 1", description="Task1 microservice of the Distributed Pipeline Project.")
@@ -20,6 +21,7 @@ public class TaskController {
 		@Autowired
 		private Task1Service taskService;
 		
+		//<!----Dummy test method-->
 		@GetMapping
 		public @ResponseBody ResponseEntity<String> getTask () {  
 			try { 
