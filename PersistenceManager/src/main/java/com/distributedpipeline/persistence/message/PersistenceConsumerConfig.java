@@ -1,4 +1,4 @@
-package com.distributedpipeline.persistence.message;
+ package com.distributedpipeline.persistence.message;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ import com.distributedpipeline.persistence.domain.Report;
 public class PersistenceConsumerConfig {
       
 	@Bean
-    public ConsumerFactory<String, Report> reportconsumerFactory() {
+    public ConsumerFactory<String, Report> createConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
@@ -48,7 +48,7 @@ public class PersistenceConsumerConfig {
 	 
 	    ConcurrentKafkaListenerContainerFactory<String, Report> factory
 	      = new ConcurrentKafkaListenerContainerFactory<>();
-	    factory.setConsumerFactory(reportconsumerFactory());
+	    factory.setConsumerFactory(createConsumerFactory());
 	    return factory;
 	}
 	@Bean

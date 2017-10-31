@@ -19,7 +19,7 @@ public class SwaggerConfig {
     public Docket productApi() {
     return new Docket(DocumentationType.SWAGGER_2)
             .select().apis(RequestHandlerSelectors.basePackage("com.distributedpipeline.persistence"))
-            .paths(PathSelectors.regex("/workflow.*"))
+            .paths(PathSelectors.regex("/v1.0/persistence.*"))
             .build();
          
 }

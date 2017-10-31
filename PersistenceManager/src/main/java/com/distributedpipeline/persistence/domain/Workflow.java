@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="PERSISTENCEMODEL")
 @Entity
-public class PersistenceModel {
+public class Workflow {
 	
 	@Id
 	private long id;
@@ -37,7 +37,7 @@ public class PersistenceModel {
 	}
 	
 	/*------------------ constructors based on field ------------------- */
-	public PersistenceModel(long id, ArrayList<Long> sequence, String userid) {
+	public Workflow(long id, ArrayList<Long> sequence, String userid) {
 		super();
 		this.id = id;
 		this.sequence = sequence;
@@ -46,7 +46,7 @@ public class PersistenceModel {
 	
 	
 	/*------------------- default constructor -------------------------- */ 
-	public PersistenceModel()
+	public Workflow()
 	{
 		
 	}

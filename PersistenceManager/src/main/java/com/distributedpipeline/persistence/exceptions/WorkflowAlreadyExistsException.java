@@ -1,7 +1,7 @@
 package com.distributedpipeline.persistence.exceptions;
-public class WorkflowAlreadyExists extends Exception {
+public class WorkflowAlreadyExistsException extends Exception {
 
-	public WorkflowAlreadyExists(String s) {
+	public WorkflowAlreadyExistsException(String s) {
 		super(s);
 		
 	

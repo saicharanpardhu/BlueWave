@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,32 +17,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.distributedpipeline.persistence.domain.PersistenceModel;
-import com.distributedpipeline.persistence.exceptions.WorkflowAlreadyExists;
+import com.distributedpipeline.persistence.domain.Workflow;
+import com.distributedpipeline.persistence.exceptions.WorkflowAlreadyExistsException;
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
 import com.distributedpipeline.persistence.message.PersistenceProducer;
 import com.distributedpipeline.persistence.service.PersistenceService;
 import com.distributedpipeline.persistence.utility.LogExecutionTime;
 
 @RestController
-@RequestMapping("/persistence")
-/*------- interaction with engine microservice using kafka-------------*/
+@RequestMapping("/v1.0/persistence")
 public class PersistenceController {
+	final static Logger logger = Logger.getLogger(PersistenceController.class);
 	
 	@Autowired
 	PersistenceProducer persistenceProducer;
 	
-	
+	/*------- interaction with engine microservice using kafka-------------*/
 	@GetMapping("/workflow")
 	@LogExecutionTime
-	public @ResponseBody ResponseEntity<?> fetchWorkflow () {
-		System.out.println("Here");
+	public @ResponseBody ResponseEntity<String> fetchWorkflow () {
 		ArrayList<Long> arr=new ArrayList<>();
 		arr.add((long)2);
 		arr.add((long)1);
-		PersistenceModel model=new PersistenceModel((long)1,arr,"vishal");
+		Workflow model=new Workflow((long)1,arr,"java");
       	persistenceProducer.sendMessage(model);
-		return null;
+      	persistenceProducer.sendInt(12,12);
+		return new ResponseEntity<String>("Workflow Sent",HttpStatus.OK);
 	
 	}
 	
@@ -63,13 +64,13 @@ public class PersistenceController {
 //		        return new ResponseEntity<List<PersistenceModel>>(workflow, HttpStatus.OK);
 //		   
 //		}
-//
+
 //	   /* ---------------- get workflow by id -------------------------- */
 //		@RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //		    public ResponseEntity<PersistenceModel> getWorkFlow(@PathVariable("id") long id) throws WorkflowNotFoundException {
 //		        PersistenceModel workflow = persistenceservice.getWorkflow(id);
 //		        if (workflow == null) {
-//		            System.out.println("workflow with id " + id + " not found");
+//		            logger.info("workflow with id " + id + " not found");
 //		            return new ResponseEntity<PersistenceModel>(HttpStatus.NOT_FOUND);
 //		        }
 //		        return new ResponseEntity<PersistenceModel>(workflow, HttpStatus.OK);

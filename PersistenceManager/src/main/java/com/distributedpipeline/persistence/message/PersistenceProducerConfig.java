@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +12,8 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-
-import com.distributedpipeline.persistence.domain.PersistenceModel;
+import org.springframework.kafka.support.serializer.*;
+import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.domain.Report;
 
 
@@ -20,7 +21,7 @@ import com.distributedpipeline.persistence.domain.Report;
 
 public class PersistenceProducerConfig {
 	@Bean
-    public ProducerFactory<String, PersistenceModel> producerFactory() {
+    public ProducerFactory<String, Workflow> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
@@ -33,9 +34,50 @@ public class PersistenceProducerConfig {
           JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
     }
+	
+	@Bean
+	   public ProducerFactory<String, String> producerStringFactory() {
+	       Map<String, Object> configProps = new HashMap<>();
+	       configProps.put(
+	         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+	         "172.23.238.170:9092");
+	       configProps.put(
+	         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+	         StringSerializer.class);
+	       configProps.put(
+	         ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+	         StringSerializer.class);
+	       
+	       return new DefaultKafkaProducerFactory<>(configProps);
+	   }
+	@Bean
+	   public ProducerFactory<String, Integer> producerIntFactory() {
+	       Map<String, Object> configProps = new HashMap<>();
+	       configProps.put(
+	         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+	         "172.23.238.170:9092");
+	       configProps.put(
+	         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+	         StringSerializer.class);
+	       configProps.put(
+	         ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+	         IntegerSerializer.class);
+	       
+	       return new DefaultKafkaProducerFactory<>(configProps);
+	   }
  
     @Bean
-    public KafkaTemplate<String, PersistenceModel> kafkaTemplate() {
+    public KafkaTemplate<String, Workflow> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+    
+    @Bean
+    public KafkaTemplate<String, String> kafkaTemplate1() {
+        return new KafkaTemplate<>(producerStringFactory());
+    }
+    @Bean
+    public KafkaTemplate<String, Integer> kafkaTemplate2() {
+        return new KafkaTemplate<>(producerIntFactory());
+    }
 }
+
