@@ -1,19 +1,14 @@
-stages:
-  -test
-  -build
-  -package
-
-unit_test:
-  stage: test
-  script:
-    - mvn clean test -B
-
-maven-build:
+--- 
+maven-build: 
+  scrpit: 
+    - "mvn build -B"
   stage: build
-  scrpit:
-    - mvn build -B
-
-maven-package:
+maven-package: 
+  script: 
+    - "mvn package -B"
   stage: package
-  script:
-    - mvn package -B
+stages: "-test -build -package"
+unit_test: 
+  script: 
+    - "mvn clean test -B"
+  stage: test
