@@ -2,11 +2,10 @@ image: java:8-jdk
 
 stages:
  - build
-
-build:
+maven-build:
+ image: maven:3-jdk-8
  stage: build
- script:
-   - "mvn build"
-
-after_script:
- - echo "End CI google"
+ script: "mvn package -B"
+ artifacts:
+   paths:
+     - target/*.jar
