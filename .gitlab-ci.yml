@@ -2,6 +2,13 @@ image: java:8-jdk
 
 stages:
  - build
+ - test
+
+maven-test:
+ iamge: maven:3-jdk-8
+ stage: test
+ script: "mvn test -B"
+
 maven-build:
  image: maven:3-jdk-8
  stage: build
@@ -9,3 +16,4 @@ maven-build:
  artifacts:
    paths:
      - target/*.jar
+
