@@ -5,7 +5,7 @@ stages:
  - build
 
 maven-test:
- iamge: maven:3-jdk-8
+ image: maven:3-jdk-8
  stage: test
  script: "mvn test -B"
 
