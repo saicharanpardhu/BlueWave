@@ -1,12 +1,12 @@
 image: java:8-jdk
 
 stages:
- - test
+ - build
 
-test:
- stage: test
+build:
+ stage: build
  script:
-   - "mvn test"
+   - "mvn build"
 
 after_script:
  - echo "End CI google"
