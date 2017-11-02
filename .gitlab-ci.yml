@@ -1,8 +1,8 @@
 image: java:8-jdk
 
 stages:
- - build
  - test
+ - build
 
 maven-test:
  iamge: maven:3-jdk-8
