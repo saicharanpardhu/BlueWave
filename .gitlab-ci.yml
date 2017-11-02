@@ -2,8 +2,6 @@ image: docker:latest
 
 stages:
  - build
- - package
- - deploy
 
 maven-build:
  image: maven:3-jdk-8
