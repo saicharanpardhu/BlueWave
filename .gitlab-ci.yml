@@ -1,21 +1,12 @@
-image: node:latest
+image: docker:latest
 
 stages:
  - build
- - test
 
-cache:
- paths:
-   - node_modules/
-
-install_dependencies:
+maven-build:
+ image: maven:3-jdk-8
  stage: build
- script:
-   - npm install
+ script: "mvn package -B"
  artifacts:
    paths:
-     - node_modules/
-
-test_with_lab:
- stage: test
- script: npm test
+     - target/*.jar
