@@ -1,9 +1,9 @@
 image: docker:latest
-services:
- - docker:dind
 
 stages:
  - build
+ - package
+ - deploy
 
 maven-build:
  image: maven:3-jdk-8
