@@ -1,14 +1,21 @@
---- 
-maven-build: 
-  scrpit: 
-    - "mvn build -B"
-  stage: build
-maven-package: 
-  script: 
-    - "mvn package -B"
-  stage: package
-stages: "-test -build -package"
-unit_test: 
-  script: 
-    - "mvn clean test -B"
-  stage: test
+image: node:latest
+
+stages:
+ - build
+ - test
+
+cache:
+ paths:
+   - node_modules/
+
+install_dependencies:
+ stage: build
+ script:
+   - npm install
+ artifacts:
+   paths:
+     - node_modules/
+
+test_with_lab:
+ stage: test
+ script: npm test
