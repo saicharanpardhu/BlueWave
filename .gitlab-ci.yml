@@ -9,4 +9,4 @@ test:
    - "mvn test"
 
 after_script:
- - echo "End CI"
+ - echo "End CI google"
