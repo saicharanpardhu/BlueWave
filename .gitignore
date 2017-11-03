@@ -15,7 +15,13 @@ PersistenceManager/.project
 PersistenceManager/.classpath
  
 EngineService
-
+Engine/target
+Engine/.mvn
+Engine/.settings
+Engine/.project
+Engine/.classpath
+Engine/mvnw
+Engine/mvnw.cmd
 target
 Api-Gateway/mvnw
 Api-Gateway/mvnw.cmd
