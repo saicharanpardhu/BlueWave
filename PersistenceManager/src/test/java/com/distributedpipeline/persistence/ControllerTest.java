@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.distributedpipeline.persistence.PersistenceManagerApplication;
-import com.distributedpipeline.persistence.domain.PersistenceModel;
+import com.distributedpipeline.persistence.domain.Workflow;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PersistenceManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -30,7 +30,7 @@ public class ControllerTest {
     private int port;
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
-    PersistenceModel persistencemodel;
+    Workflow persistencemodel;
     @Before
     public void setUp() throws Exception {
     	ArrayList<Long>seq = new ArrayList<Long>();
@@ -38,7 +38,7 @@ public class ControllerTest {
     	seq.add((long) 2);
     	seq.add((long) 3);
     	
-    	persistencemodel = new PersistenceModel(1, seq,"2");
+    	persistencemodel = new Workflow(1, seq,"2");
     }
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
@@ -51,7 +51,7 @@ public class ControllerTest {
     public void testaddWorkflow() throws Exception {  
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<PersistenceModel> entity = new HttpEntity<PersistenceModel>(persistencemodel, headers);
+        HttpEntity<Workflow> entity = new HttpEntity<Workflow>(persistencemodel, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/workflow/save"),
                 HttpMethod.POST, entity, String.class); 
@@ -71,7 +71,7 @@ public class ControllerTest {
     
     @Test
     public void testupdateWorkflow() throws Exception {
-        HttpEntity<PersistenceModel> entity = new HttpEntity<PersistenceModel>(persistencemodel, headers);
+        HttpEntity<Workflow> entity = new HttpEntity<Workflow>(persistencemodel, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/workflow/update"),
                 HttpMethod.PUT, entity, String.class);
@@ -83,7 +83,7 @@ public class ControllerTest {
     
    @Test
     public void testdelete() throws Exception {
-        HttpEntity<PersistenceModel> entity = new HttpEntity<PersistenceModel>(persistencemodel, headers);
+        HttpEntity<Workflow> entity = new HttpEntity<Workflow>(persistencemodel, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/workflow/delete/1"),
                 HttpMethod.DELETE, entity, String.class);

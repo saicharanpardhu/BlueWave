@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.distributedpipeline.persistence.domain.PersistenceModel;
+import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.repo.PersistenceRepo;
 import com.distributedpipeline.persistence.service.PersistenceService;
 import com.distributedpipeline.persistence.service.PersistenceServiceImpl;
@@ -23,7 +23,7 @@ public class ServiceTest {
        @Mock
        private PersistenceRepo persistencerepo;
        @Mock
-       private PersistenceModel persistencemodel;
+       private Workflow persistencemodel;
        @Before
        public void setupMock() {
            MockitoAnnotations.initMocks(this);
@@ -37,7 +37,7 @@ public class ServiceTest {
            // Arrange
            when(persistencerepo.findOne(2)).thenReturn(persistencemodel);
            // Act
-           PersistenceModel retrievedUser = persistenceserviceimpl.getWorkflow(2);
+           Workflow retrievedUser = persistenceserviceimpl.getWorkflow(2);
            // Assert
            assertThat(retrievedUser, is(equalTo(persistencemodel)));
       }

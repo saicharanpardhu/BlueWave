@@ -10,10 +10,26 @@ import org.springframework.kafka.core.KafkaTemplate;
 @Service
 public class PersistenceProducer {
 	@Autowired
-	private KafkaTemplate<String, PersistenceModel> kafkaTemplate;
+	private KafkaTemplate<String, Workflow> kafkaTemplate;
+	
+	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate1;
+	
+	@Autowired
+	private KafkaTemplate<String, Integer> kafkaTemplate2;
 	 
-	public void sendMessage(PersistenceModel model) {
+	public void sendMessage(Workflow model) {
 	    kafkaTemplate.send("persistence45", model);
 	   
 	}
+	public void sendInt(int a,int b) {
+	    kafkaTemplate2.send("persistence45",a);
+	   
+	}
+	
+	public void sendReport(String message) {
+        System.out.println("Sending report.." + message);
+        kafkaTemplate1.send("report-topic", message);
+       
+    }
 }
