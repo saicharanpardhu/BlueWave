@@ -1,57 +1,36 @@
 package com.distributedpipeline.persistence.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="PERSISTENCEMODEL")
-@Entity
-public class Workflow {
+@Document(collection="WORKFLOW")
+public class Workflow {	
 	
 	@Id
-	private long id;
-	private ArrayList<Long> sequence;
-	private String userid;
+	@NotNull
+	private String workFlowName;
 	
-	/*---------------- getters and setters of fields ----------------- */
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public ArrayList<Long> getSequence() {
-		return sequence;
-	}
-	public void setSequence(ArrayList<Long> sequence) {
-		this.sequence = sequence;
-	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	
-	/*------------------ constructors based on field ------------------- */
-	public Workflow(long id, ArrayList<Long> sequence, String userid) {
-		super();
-		this.id = id;
-		this.sequence = sequence;
-		this.userid = userid;
-	}
+	private List<Tasks> tasks;
 	
 	
-	/*------------------- default constructor -------------------------- */ 
-	public Workflow()
-	{
-		
+	/*--------------------- Getters and Setters for the fields -----------------------------*/
+	public String getWorkFlowName() {
+		return workFlowName;
 	}
-	
-	
+	public void setWorkFlowName(String workFlowName) {
+		this.workFlowName = workFlowName;
+	}
+	public List<Tasks> getTasks() {
+		return tasks;
+	}
+	public void setTasks(List<Tasks> tasks) {
+		this.tasks = tasks;
+	}
 	
 	
 }
+	
