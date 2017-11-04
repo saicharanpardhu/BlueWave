@@ -1,0 +1,65 @@
+package com.distributedpipeline.userpersistence.controller;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.distributedpipeline.userpersistence.domain.User;
+import com.distributedpipeline.userpersistence.service.UserService;
+
+@RestController
+@RequestMapping("/v0.1/userinfo")
+public class UserController {
+	
+	@Autowired
+	UserService userService;
+	
+	@PostMapping(value="/user" , consumes = "application/json")
+	public ResponseEntity addUser(@Valid @RequestBody User UserDetail)
+	{
+		if(UserDetail.getFirstname() == null | UserDetail.getLastname() == null | UserDetail.getEmail() == null ) {
+			
+			return new ResponseEntity<String> ("one or more field is empty",HttpStatus.CONFLICT);
+			
+		}
+		else {
+			String email = UserDetail.getEmail()  ;
+			if(Checkmail(email)== true) {
+				User uniqueEmail = userService.findByEmail(email);
+				
+				if(uniqueEmail == null) {
+					
+					userService.Signup(UserDetail);
+					return new ResponseEntity<String> ("Your profile is successfully added, Thank you",HttpStatus.OK);
+
+					
+
+				}else {
+					return new ResponseEntity<String>("email is already in use", HttpStatus.CONFLICT);
+					
+				}
+				
+			
+			}
+			else {
+				return new ResponseEntity<String>("invalid email address", HttpStatus.CONFLICT);
+				
+			}
+		}
+		
+		
+	}
+	
+	private boolean Checkmail(String email) {
+		String emailValidator = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		return email.matches(emailValidator);
+		
+	}
+
+}
