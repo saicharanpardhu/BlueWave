@@ -10,6 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="WORKFLOW")
 public class Workflow {	
 	
+	
+	
+
 	@Id
 	@NotNull
 	private String workFlowName;
@@ -31,6 +34,17 @@ public class Workflow {
 		this.tasks = tasks;
 	}
 	
+	public Workflow(String workFlowName, List<Tasks> tasks) {
+		super();
+		this.workFlowName = workFlowName;
+		this.tasks = tasks;
+	}
+	
+	
+	public Workflow() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }
 	

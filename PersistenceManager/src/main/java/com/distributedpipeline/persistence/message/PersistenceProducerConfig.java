@@ -13,6 +13,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import com.distributedpipeline.persistence.domain.TaskLibrary;
+import com.distributedpipeline.persistence.domain.Tasks;
 import com.distributedpipeline.persistence.domain.Workflow;
 
 
@@ -22,6 +24,35 @@ import com.distributedpipeline.persistence.domain.Workflow;
 public class PersistenceProducerConfig {
 	@Bean
     public ProducerFactory<String, Workflow> producerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(
+          ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
+          "172.23.238.170:9092");
+        configProps.put(
+          ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
+          StringSerializer.class);
+        configProps.put(
+          ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, 
+          JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+	@Bean
+    public ProducerFactory<String, Tasks> producerTasksFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(
+          ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
+          "172.23.238.170:9092");
+        configProps.put(
+          ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
+          StringSerializer.class);
+        configProps.put(
+          ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, 
+          JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+	
+	@Bean
+    public ProducerFactory<String, TaskLibrary> producerTaskLibraryFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
@@ -70,14 +101,23 @@ public class PersistenceProducerConfig {
     public KafkaTemplate<String, Workflow> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+    @Bean
+    public KafkaTemplate<String, Tasks> kafkaTemplate1() {
+        return new KafkaTemplate<>(producerTasksFactory());
+    }
     
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate1() {
-        return new KafkaTemplate<>(producerStringFactory());
+    public KafkaTemplate<String, TaskLibrary> kafkaTemplaten() {
+        return new KafkaTemplate<>(producerTaskLibraryFactory());
     }
-    @Bean
-    public KafkaTemplate<String, Integer> kafkaTemplate2() {
-        return new KafkaTemplate<>(producerIntFactory());
-    }
+    
+//    @Bean
+//    public KafkaTemplate<String, String> kafkaTemplate1() {
+//        return new KafkaTemplate<>(producerStringFactory());
+//    }
+//    @Bean
+//    public KafkaTemplate<String, Integer> kafkaTemplate2() {
+//        return new KafkaTemplate<>(producerIntFactory());
+//    }
 }
 

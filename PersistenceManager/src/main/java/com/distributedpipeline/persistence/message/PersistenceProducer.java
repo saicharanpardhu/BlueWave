@@ -13,23 +13,36 @@ public class PersistenceProducer {
 	private KafkaTemplate<String, Workflow> kafkaTemplate;
 	
 	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate1;
+	private KafkaTemplate<String, Tasks> kafkaTemplate1;
 	
 	@Autowired
-	private KafkaTemplate<String, Integer> kafkaTemplate2;
+	private KafkaTemplate<String, TaskLibrary> kafkaTemplaten;
+	
+//	@Autowired
+//	private KafkaTemplate<String, Integer> kafkaTemplate2;
 	 
 	public void sendMessage(Workflow model) {
 	    kafkaTemplate.send("persistence45", model);
 	   
 	}
-	public void sendInt(int a,int b) {
-	    kafkaTemplate2.send("persistence45",a);
+	
+	public void sendTask(Tasks task) {
+	    kafkaTemplate1.send("Tasks", task);
 	   
 	}
 	
-	public void sendReport(String message) {
-        System.out.println("Sending report.." + message);
-        kafkaTemplate1.send("report-topic", message);
-       
-    }
+	public void sendTask(TaskLibrary taskLibrary) {
+	    kafkaTemplaten.send("TaskLibrary", taskLibrary);
+	   
+	}
+//	public void sendInt(int a,int b) {
+//	    kafkaTemplate2.send("persistence45",a);
+//	   
+//	}
+//	
+//	public void sendReport(String message) {
+//        System.out.println("Sending report.." + message);
+//        kafkaTemplate1.send("report-topic", message);
+//       
+//    }
 }

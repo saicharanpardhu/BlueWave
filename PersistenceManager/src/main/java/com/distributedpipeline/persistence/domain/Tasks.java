@@ -44,6 +44,18 @@ public class Tasks {
 	public void setInput(String[] input) {
 		this.input = input;
 	}
+	public Tasks(String taskNameAlias, String taskType, String[] dependsOn, String[] output, String[] input) {
+		super();
+		this.taskNameAlias = taskNameAlias;
+		this.taskType = taskType;
+		this.dependsOn = dependsOn;
+		this.output = output;
+		this.input = input;
+	}
+	public Tasks() {
+		super();
+	}
+	
 	
 	
 }
