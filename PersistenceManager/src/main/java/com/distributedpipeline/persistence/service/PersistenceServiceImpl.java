@@ -2,11 +2,11 @@ package com.distributedpipeline.persistence.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.distributedpipeline.persistence.domain.Tasks;
+import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Workflow;
-import com.distributedpipeline.persistence.exceptions.NotNullException;
-import com.distributedpipeline.persistence.exceptions.WorkflowAlreadyExistsException;
+import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundException;
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
+import com.distributedpipeline.persistence.repo.PersistenceTaskRepo;
 import com.distributedpipeline.persistence.repo.PersistenceWorkflowRepo;
 
 @Service
@@ -16,7 +16,10 @@ public class PersistenceServiceImpl implements PersistenceService {
 	@Autowired
 	private PersistenceWorkflowRepo persistenceWorkflowRepo;
 	
-		
+	@Autowired
+	private PersistenceTaskRepo persistenceTaskRepo;
+	
+	
 	/*---------------------- getters and setters for repos-----------------------------*/
      
 	public PersistenceWorkflowRepo getPersistenceWorkflowRepo() {
@@ -27,6 +30,14 @@ public class PersistenceServiceImpl implements PersistenceService {
 		this.persistenceWorkflowRepo = persistenceWorkflowRepo;
 	}
 
+	public PersistenceTaskRepo getPersistenceTaskRepo() {
+		return persistenceTaskRepo;
+	}
+
+	public void setPersistenceTaskRepo(PersistenceTaskRepo persistenceTaskRepo) {
+		this.persistenceTaskRepo = persistenceTaskRepo;
+	}
+	
 	/*------------------------                    ----------------------------------------
                                Method For Workflow    
      --------------------------                    --------------------------------------*/
@@ -71,4 +82,48 @@ public class PersistenceServiceImpl implements PersistenceService {
 			return false;
 		}
 	}
+	
+    /*------------------------                    ----------------------------------------
+	                            Method For TaskLibrary    
+	--------------------------                    --------------------------------------*/
+	
+	
+	/*--------------------- Method to get tasklibrary by taskname------------------------*/
+    @Override
+	public TaskLibrary gettaskLibraryByName(String taskName) throws TaskLibraryNotFoundException{
+		return persistenceTaskRepo.getTaskLibraryByTaskName(taskName);
+	} 
+	
+	/*----------------------- Method to get all tasklibraries ---------------------------*/
+	@Override
+	public Iterable<TaskLibrary> getTaskLibrary() throws TaskLibraryNotFoundException {
+		return persistenceTaskRepo.findAll();
+	}
+	
+	/*--------------------------- Method to save a tasklibrary -------------------------*/
+	@Override
+	public TaskLibrary addTaskLibrary(TaskLibrary taskLibrary) {
+		return persistenceTaskRepo.save(taskLibrary);
+	}
+	
+	/*-------------------------- Method to update a tasklibrary ------------------------*/
+	@Override
+	public TaskLibrary updateTaskLibrary(TaskLibrary taskLibrary) {
+        String taskName = taskLibrary.getTaskName();
+		persistenceTaskRepo.deleteByTaskName(taskName);
+		return persistenceTaskRepo.save(taskLibrary);
+		
+	}
+	
+	/*-------------------------- Method to delete tasklibrary by id -------------------*/
+	@Override
+	public boolean deleteTaskLibrary(String taskName) {
+		if(persistenceTaskRepo.getTaskLibraryByTaskName(taskName) != null)  {
+			persistenceTaskRepo.deleteByTaskName(taskName);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}   
 }
