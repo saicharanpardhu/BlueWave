@@ -13,7 +13,13 @@ PersistenceManager/mvnw
 PersistenceManager/mvnw.cmd
 PersistenceManager/.project
 PersistenceManager/.classpath
- 
+Authentication_server/target
+Authentication_server/.mvn
+Authentication_server/.settings
+Authentication_server/mvnw
+Authentication_server/mvnw.cmd
+Authentication_server/.project
+Authentication_server/.classpath 
 EngineService
 Engine/target
 Engine/.mvn
