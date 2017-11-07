@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.distributedpipeline.userpersistence.domain.Role;
 import com.distributedpipeline.userpersistence.domain.User;
 import com.distributedpipeline.userpersistence.service.UserService;
+import com.distributedpipeline.userpersistence.repository.*;
+import java.util.Set;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/v0.1/userinfo")
@@ -19,6 +23,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	Rolerepo rolerepo;
 	
 	@PostMapping(value="/user" , consumes = "application/json")
 	public ResponseEntity addUser(@Valid @RequestBody User UserDetail)
@@ -35,6 +42,10 @@ public class UserController {
 				
 				if(uniqueEmail == null) {
 					
+					Role role = rolerepo.findByRole("USER");
+					Set<Role> roles = new HashSet<Role>();
+ 			    	roles.add(role);
+					UserDetail.setRoles(roles);
 					userService.Signup(UserDetail);
 					return new ResponseEntity<String> ("Your profile is successfully added, Thank you",HttpStatus.OK);
 
