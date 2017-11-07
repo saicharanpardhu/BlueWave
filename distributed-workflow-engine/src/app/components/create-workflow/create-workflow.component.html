@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div class="container"> 
+  <button mat-button (click)="openDialog()">
+    <span class="mat-button-wrapper" >
+      <mat-icon>add_circle</mat-icon><span>Add tasks</span> 
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </span>
+  </button> 
+  <ul>
+    <li *ngFor="let task of map.keys()">
+      <mat-card>
+      {{task}} : {{map.get(task)}}
+      </mat-card>
+    </li>
+  </ul>
+</div>

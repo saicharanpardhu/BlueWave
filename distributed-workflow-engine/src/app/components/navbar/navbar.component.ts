@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatToolbarModule,MatProgressSpinnerModule} from '@angular/material';
 
 @Component({
   selector: 'app-navbar',

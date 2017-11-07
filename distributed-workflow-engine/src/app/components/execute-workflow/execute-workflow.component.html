@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      CI-CD Workflow
+    </mat-card-header>
+    <mat-card-content>
+        <mat-horizontal-stepper [linear]="isLinear">
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Git-Clone</ng-template> 
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>MVN</ng-template> 
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+          </mat-step>
+        </mat-horizontal-stepper>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <br><br>
+        {{response.workFlowName}}
+        <br><br>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Reports
+              </mat-panel-title> 
+            </mat-expansion-panel-header>  
+        </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+</div>
