@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-workflow-execution',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkflowExecutionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authentication : AuthenticationService,
+    private router: Router) { }
 
   ngOnInit() {
+    // console.log("Logged in: ", !(this.authentication.getAccessToken() === ''));
+    // if(this.authentication.getAccessToken() === ''){
+    //   this.router.navigate(['/index']);
+    // }
   }
 
 }

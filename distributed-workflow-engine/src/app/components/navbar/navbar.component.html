@@ -1,3 +1,62 @@
-<p>
-  navbar works!
-</p>
+
+<mat-toolbar color="primary"> 
+
+  <a _ngcontent-c1="" aria-label="Home" class=" docs-navbar docs-button mat-button" 
+    mat-button=""   tabindex="0" aria-disabled="false" href="/home">
+    <span class="mat-button-wrapper">
+        <mat-icon>home</mat-icon> <span>Home</span>
+    </span>
+    <div class="mat-button-ripple mat-ripple" matripple=""></div>
+    <div class="mat-button-focus-overlay"></div>
+  </a> 
+
+  <a _ngcontent-c1="" aria-label="My Projects" class="docs-navbar-hide-small docs-button mat-button" 
+    mat-button=""   tabindex="0" aria-disabled="false" href="/projects">
+    <span class="mat-button-wrapper">
+        <mat-icon>work</mat-icon> <span>My Projects</span>
+    </span>
+    <div class="mat-button-ripple mat-ripple" matripple=""></div>
+    <div class="mat-button-focus-overlay"></div>
+    </a> 
+
+  <a _ngcontent-c1="" aria-label="Reports" class="docs-navbar-hide-small docs-button mat-button" 
+    mat-button=""   tabindex="0" aria-disabled="false" href="/reports">
+    <span class="mat-button-wrapper">
+      <mat-icon>description</mat-icon> <span>Reports</span>
+    </span>
+    <div class="mat-button-ripple mat-ripple" matripple=""></div>
+    <div class="mat-button-focus-overlay"></div>
+  </a>  
+
+  <span class="fill-remaining-space"></span>
+
+  <a _ngcontent-c1="" aria-label="Add Workflow" href="/addworkflow" class="docs-navbar-hide-small docs-button mat-button" 
+  mat-button=""   tabindex="0" aria-disabled="false" >
+  <span class="mat-button-wrapper" id="addWorkflow">
+    <mat-icon>add_circle</mat-icon> <span>Add Workflow</span>
+  </span>
+  <div class="mat-button-ripple mat-ripple" matripple=""></div>
+  <div class="mat-button-focus-overlay"></div>
+  </a> 
+  
+  <a _ngcontent-c1="" aria-label="Profile" href="/profile" class="docs-navbar-hide-small docs-button mat-button" 
+  mat-button=""   tabindex="0" aria-disabled="false" >
+  <span class="mat-button-wrapper" id="profile">
+    <mat-icon>account_circle</mat-icon> <span>Profile</span>
+  </span>
+  <div class="mat-button-ripple mat-ripple" matripple=""></div>
+  <div class="mat-button-focus-overlay"></div>
+  </a> 
+
+  
+
+  <a _ngcontent-c1="" aria-label="Logout" (click)="logout()" href="/index" class="docs-navbar-hide-small docs-button mat-button" 
+    mat-button=""   tabindex="0" aria-disabled="false" >
+    <span class="mat-button-wrapper" id="logout">
+        <mat-icon>power_settings_new</mat-icon> <span>Logout</span>
+    </span>
+    <div class="mat-button-ripple mat-ripple" matripple=""></div>
+    <div class="mat-button-focus-overlay"></div>
+  </a> 
+  
+</mat-toolbar>  

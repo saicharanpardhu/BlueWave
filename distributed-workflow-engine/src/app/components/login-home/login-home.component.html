@@ -1,3 +1,44 @@
-<p>
-  login-home works!
-</p>
+<mat-card class="container"> 
+  <mat-card-content>
+    <mat-tab-group>
+        <mat-tab label="Login">  
+            <div class="form-container"> 
+              <mat-form-field [hideRequiredMarker]="true">
+                  <input #emailLoginBox matInput placeholder="Enter your username" [formControl]="emailLoginValidator" required>
+                  <mat-error *ngIf="emailLoginValidator.invalid">{{getEmailLoginErrorMessage()}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                  <input #passwordLoginBox matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+                  <mat-icon matSuffix id="password-hide" (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+              </mat-form-field> 
+              <button mat-raised-button color="primary" (keyup.enter)="login(emailLoginBox.value,passwordLoginBox.value)" (click)="login(emailLoginBox.value,passwordLoginBox.value)">Login</button>
+            </div>
+        </mat-tab>
+        <mat-tab label="Signup" >
+          <div class="form-container">    
+              <mat-form-field [hideRequiredMarker]="true">
+                <input matInput #firstName placeholder="First name" [formControl]="nameValidator" required> 
+              </mat-form-field> 
+              <mat-form-field matInput [hideRequiredMarker]="true">
+                  <input #lastName matInput placeholder="Last name" [formControl]="nameValidator" required>
+                  <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
+                </mat-form-field>  
+              <mat-form-field [hideRequiredMarker]="true">
+                  <input #emailSignup matInput  placeholder="Email" [formControl]="emailSignupValidator" required>
+                  <mat-error *ngIf="emailSignupValidator.invalid">{{getEmailSignupErrorMessage()}}</mat-error>
+              </mat-form-field>  
+              <mat-form-field [hideRequiredMarker]="true">
+                    <input #userName matInput  placeholder="Username" [formControl]="usernameValidator" required>
+                    <mat-error *ngIf="usernameValidator.invalid">{{getUsernameErrorMessage()}}</mat-error>
+                </mat-form-field>   
+              <mat-form-field [hideRequiredMarker]="true">
+                  <input #passwordSignup matInput placeholder="Password" [type]="signUphide ? 'password' : 'text'" required> 
+                  <mat-icon matSuffix id="password-hide" (click)="signUphide = !signUphide">{{signUphide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                  <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+              </mat-form-field> 
+              <button mat-raised-button color="primary" (click)="signup(firstName.value,lastName.value,emailSignup.value,userName.value,passwordSignup.value)">Signup</button>
+            </div>  
+        </mat-tab>
+      </mat-tab-group>  
+    </mat-card-content>
+    </mat-card>
