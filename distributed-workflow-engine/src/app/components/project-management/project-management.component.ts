@@ -1,5 +1,7 @@
 import { Project } from './../../model/project';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-management',
@@ -8,7 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectManagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authentication : AuthenticationService,
+    private router: Router) { }
 
   Project1 = new Project("Default Project","This is your default project", ["Workflow1", "Workflow2"]);
   projects: Array<Project> = [
@@ -18,7 +21,10 @@ export class ProjectManagementComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("ProjectMAnagament");
+    // console.log("Logged in: ", !(this.authentication.getAccessToken() === ''));
+    // if(this.authentication.getAccessToken() === ''){
+    //   this.router.navigate(['/index']);
+    // }
   }
 
 }

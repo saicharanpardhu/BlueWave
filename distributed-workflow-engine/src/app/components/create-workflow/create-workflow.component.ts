@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthenticationService } from './../../services/authentication/authentication.service';
  
 import {Component, OnInit, Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -19,9 +21,16 @@ export class CreateWorkflowComponent implements OnInit{
   public taskType: String;
   map : Map<String,String> = new Map();
   ngOnInit() { 
+    // console.log("Logged in: ", !(this.authentication.getAccessToken() === ''));
+    // if(this.authentication.getAccessToken() === ''){
+    //   this.router.navigate(['/index']);
+    // }
   }
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog, 
+    private authentication : AuthenticationService,
+    private router: Router) {}
 
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogOverviewDialog, {

@@ -11,7 +11,7 @@
                   <input #passwordLoginBox matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
                   <mat-icon matSuffix id="password-hide" (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
               </mat-form-field> 
-              <button mat-raised-button color="primary" (click)="login(emailLoginBox.value,passwordLoginBox.value)">Login</button>
+              <button mat-raised-button color="primary" (keyup.enter)="login(emailLoginBox.value,passwordLoginBox.value)" (click)="login(emailLoginBox.value,passwordLoginBox.value)">Login</button>
             </div>
         </mat-tab>
         <mat-tab label="Signup" >

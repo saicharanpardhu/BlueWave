@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {MatToolbarModule,MatProgressSpinnerModule} from '@angular/material';
 
@@ -8,9 +9,13 @@ import {MatToolbarModule,MatProgressSpinnerModule} from '@angular/material';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authentication: AuthenticationService) { }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.authentication.setAccessToken(); 
   }
 
 }

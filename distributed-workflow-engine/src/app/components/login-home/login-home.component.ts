@@ -12,10 +12,14 @@ export class LoginHomeComponent implements OnInit {
 
   constructor(private router: Router, 
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService, 
   ) { }
 
   ngOnInit() {
+    // console.log("Logged in: ", !(this.authenticationService.getAccessToken() === ''));
+    // if(!(this.authenticationService.getAccessToken() === '')){
+    //   this.router.navigate(['/home']);
+    // }
   }
 
   emailLoginValidator = new FormControl('', [Validators.required]); 
@@ -50,11 +54,13 @@ export class LoginHomeComponent implements OnInit {
   }
 
   login(email,password){
-    this.authenticationService.login(email,password);
+    this.authenticationService.login(email,password).then(() => this.router.navigate(['/home']));
+    // console.log("Authenticated from login", this.authenticationService.getAccessToken());
+    
   }
 
   signup(firstName, lastName, userName, email, password){
-    this.authenticationService.signup(firstName, lastName, userName, email, password);
+    this.authenticationService.signup(firstName, lastName, userName, email, password).then(()=>this.router.navigate(['/home']));
   }
 
   hide = true;

@@ -38,7 +38,8 @@ import { Validators } from '@angular/forms';
     MatTabsModule,
     MatTableModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule, 
@@ -56,7 +57,8 @@ import { Validators } from '@angular/forms';
     MatTableModule,
     MatProgressBarModule,
     MatDialogModule,
-    MatStepperModule
+    MatStepperModule,
+    MatProgressSpinnerModule
   ],
 })
 export class MaterialModule { }
