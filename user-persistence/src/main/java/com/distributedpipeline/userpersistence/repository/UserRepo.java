@@ -9,5 +9,5 @@ import com.distributedpipeline.userpersistence.domain.User;
 public interface UserRepo extends CrudRepository<User, Long>{
 	User findByEmail(String email);
 	
-//	User findByUsername(String username);
+	User findByUserName(String userName);
 }

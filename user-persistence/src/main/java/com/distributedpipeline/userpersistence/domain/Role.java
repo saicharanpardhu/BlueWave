@@ -17,7 +17,13 @@ public class Role {
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     private Set<User> users;
 
-    public Role( String role) {
+    public Role(long id, String role) {
+		super();
+		this.id = id;
+		this.role = role;
+	}
+
+	public Role( String role) {
 		super();
 		
 		this.role = role;
