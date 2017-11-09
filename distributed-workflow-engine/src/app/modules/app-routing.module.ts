@@ -8,15 +8,20 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateWorkflowComponent } from '../components/create-workflow/create-workflow.component';
 import { ExecuteWorkflowComponent } from '../components/execute-workflow/execute-workflow.component';
+import { AuthGuardService } from '../services/authentication/auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path : 'projects', component: ProjectManagementComponent},
-  {path : 'home', component: HomeComponent},
+  {path : 'projects', component: ProjectManagementComponent, canActivate: [AuthGuardService]},
+  {
+    path : 'home', 
+    component: HomeComponent,
+    canActivate: [AuthGuardService]
+  },
   {path : 'index', component: LoginHomeComponent},
-  {path : 'profile', component: ProfileComponent},
-  {path : 'reports', component: ReportsComponent},
-  {path : 'addworkflow', component: CreateWorkflowComponent},
+  {path : 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
+  {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
+  {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent}  
 ];
 @NgModule({ 

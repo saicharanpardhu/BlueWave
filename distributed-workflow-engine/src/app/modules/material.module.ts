@@ -17,7 +17,8 @@ import {MatCardModule ,
   MatDialogModule,
   MatDialog,
   MatDialogRef,
-  MatStepperModule
+  MatStepperModule,
+  MatMenuModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -39,7 +40,8 @@ import { Validators } from '@angular/forms';
     MatTableModule,
     MatDialogModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule
   ],
   exports: [
     MatButtonModule, 
@@ -58,7 +60,8 @@ import { Validators } from '@angular/forms';
     MatProgressBarModule,
     MatDialogModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule
   ],
 })
 export class MaterialModule { }

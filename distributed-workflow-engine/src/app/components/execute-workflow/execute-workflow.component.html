@@ -23,6 +23,11 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <br><br>
         {{response.workFlowName}}
+        <div *ngIf="socketService.socketMessage != 'Default'">{{socketService.socketMessage}}</div>
+        <mat-form-field [hideRequiredMarker]="true">
+          <input #messageBox matInput placeholder="Message" [type]="'text'" >  
+        </mat-form-field> 
+        <button mat-raised-button (click)="sendMessage(messageBox.value)" color="primary">Submit</button>
         <br><br>
         <mat-expansion-panel>
             <mat-expansion-panel-header>

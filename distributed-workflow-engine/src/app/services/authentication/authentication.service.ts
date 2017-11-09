@@ -17,6 +17,10 @@ export class AuthenticationService {
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
+  isLoggedIn(){
+    return !(this.access_token === '');
+  }
+
   signup(firstName, lastName, email, userName, password){
     let json = JSON.stringify({
       firstName:firstName,
