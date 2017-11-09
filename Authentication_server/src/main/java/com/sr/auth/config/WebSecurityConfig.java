@@ -13,7 +13,7 @@ import com.sr.auth.repository.*;
 import com.sr.auth.service.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import javax.sql.DataSource;
-
+import org.springframework.http.HttpMethod;
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 
@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	auth.jdbcAuthentication()
-        .usersByUsernameQuery("select username,password,enabled from user where username=?")
-        .authoritiesByUsernameQuery("select u.username,r.role from user u inner join user_roles ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id)  where u.username=?")
+        .usersByUsernameQuery("select * from user where user_name=?")
+        .authoritiesByUsernameQuery("select u.user_name,r.role from user u inner join user_roles ur on(u.id=ur.user_id) inner join role r on(ur.role_id=r.id)  where u.user_name=?")
         .dataSource(dataSource);
     	
     	
@@ -61,16 +61,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-		http.authorizeRequests().antMatchers("/greeting").permitAll()
-		
+		http
+		.authorizeRequests().antMatchers("/greeting").permitAll()
+		.antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
 		//all requests to require login
-		.anyRequest().authenticated();
-        //.and()
-        //.formLogin()
+		.anyRequest().authenticated()
+        .and()
+        .formLogin();
         //.and()
         //.httpBasic();
 		
