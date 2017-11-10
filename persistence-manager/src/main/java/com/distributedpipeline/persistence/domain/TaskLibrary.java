@@ -1,6 +1,5 @@
 package com.distributedpipeline.persistence.domain;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 

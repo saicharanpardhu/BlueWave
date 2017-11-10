@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.distributedpipeline.persistence.utility.LogExecutionTime;
 
 @Controller
 @RequestMapping("/v1.0/persistence")
+@CrossOrigin(origins="*")
 public class PersistenceController {
       //final static Logger logger = Logger.getLogger(PersistenceController.class);
 	
@@ -50,9 +52,9 @@ public class PersistenceController {
 		
 	/*---------------------------------add workflow -------------------------------------- */
 	@RequestMapping(value="/workflow", method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity addWorkflow( @RequestBody  Workflow workflow) {
+	public ResponseEntity<String> addWorkflow( @RequestBody  Workflow workflow) {
 		try {
-			return new ResponseEntity<Workflow>(persistenceservice.addWorkflow(workflow), HttpStatus.OK);
+			return new ResponseEntity<String>(persistenceservice.addWorkflow(workflow), HttpStatus.OK);
 		}
 		catch(Exception e) { 
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -126,6 +128,13 @@ public class PersistenceController {
 		persistenceservice.deleteTaskLibrary(taskname);
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/workflow/{userName}/{workFlowName}" , method=RequestMethod.GET)
+	public ResponseEntity<String> getWorkflowforuser(@PathVariable(value="userName") String userName, @PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
+		return new ResponseEntity<String>(persistenceservice.userPermissions(workFlowName, userName),HttpStatus.OK);
+	}
+	
+	
 	
 	
 }

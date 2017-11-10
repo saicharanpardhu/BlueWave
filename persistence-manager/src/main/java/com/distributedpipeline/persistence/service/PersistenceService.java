@@ -12,7 +12,7 @@ public interface PersistenceService {
 	public Iterable<Workflow> getWorkflow() throws WorkflowNotFoundException;
 	
 	/*----------------------Add a new workflow-------------------------------------------*/
-	public Workflow addWorkflow(Workflow workflow); 
+	public String addWorkflow(Workflow workflow); 
 	
 	/*----------------------Update a workflow--------------------------------------------*/  
 	public Workflow updateWorkflow(Workflow workFlow) ;
@@ -20,6 +20,7 @@ public interface PersistenceService {
 	/*----------------------Delete a workflow--------------------------------------------*/
     public boolean deleteWorkflow(String workFlowName) throws WorkflowNotFoundException;
     
+    public String userPermissions(String workFlowName, String userName);
 	
 	
     /*-------------------Retrieve tasklibrary by taskname------------------------------- */    

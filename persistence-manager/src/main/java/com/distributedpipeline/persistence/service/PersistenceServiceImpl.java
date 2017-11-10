@@ -1,5 +1,7 @@
 package com.distributedpipeline.persistence.service;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
@@ -59,8 +61,15 @@ public class PersistenceServiceImpl implements PersistenceService {
 
 	/*--------------------- Method to save workflow to repository -----------------------*/	
 	@Override
-	public Workflow addWorkflow(Workflow workflow) {
-		return persistenceWorkflowRepo.save(workflow);
+	public String addWorkflow(Workflow workflow) {
+		String workFlowName = workflow.getWorkFlowName();
+		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName)==null) {
+			persistenceWorkflowRepo.save(workflow);
+			return "Workflow saved";
+		}
+		else {
+			return "Workflow with the same Workflow name already exists";
+		}
 	}
 	
 	/*-------------------------- Method to update a workflow ----------------------------*/
@@ -126,4 +135,21 @@ public class PersistenceServiceImpl implements PersistenceService {
 			return false;
 		}
 	}   
+	
+	@Override
+	public String userPermissions(String workFlowName, String userName) {
+		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
+		if(Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
+			return "user can edit workflow";
+		}
+		else if(Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
+			return "user can execute workflow";
+		}
+		else if(Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
+			return "user can view workflow";
+		}
+		else {
+			return "user not authorised to access workflow";
+		}
+	}
 }

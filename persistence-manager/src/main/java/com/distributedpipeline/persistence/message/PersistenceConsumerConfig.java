@@ -25,7 +25,7 @@ public class PersistenceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.170:9092");
+          "172.23.238.158:9092");
         
         props.put(
           ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
@@ -56,7 +56,7 @@ public class PersistenceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "localhost:9092");
+          "172.23.238.158:9092");
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something");
