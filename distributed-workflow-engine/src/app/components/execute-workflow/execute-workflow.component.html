@@ -5,29 +5,22 @@
       CI-CD Workflow
     </mat-card-header>
     <mat-card-content>
-        <mat-horizontal-stepper [linear]="isLinear">
-          <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
-              <ng-template matStepLabel>Git-Clone</ng-template> 
+      <br>
+        <mat-horizontal-stepper *ngIf="displayStepper" [linear]="isLinear">
+          <mat-step *ngFor="let name of tasks">
+            <form >
+              <ng-template matStepLabel>{{name}}</ng-template> 
             </form>
-          </mat-step>
-          <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-              <ng-template matStepLabel>MVN</ng-template> 
-            </form>
-          </mat-step>
-          <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-          </mat-step>
+          </mat-step> 
         </mat-horizontal-stepper>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        <br><br>
-        <!-- {{response.workFlowName}} -->
-         <mat-form-field [hideRequiredMarker]="true">
+        <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
+        <br><br> 
+
+         <!-- <mat-form-field [hideRequiredMarker]="true">
           <input #messageBox matInput placeholder="Message" [type]="'text'" >  
         </mat-form-field> 
         <button mat-raised-button (click)="sendMessage(messageBox.value)" color="primary">Submit</button>
-        <br><br>
+        <br><br> -->
         <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
