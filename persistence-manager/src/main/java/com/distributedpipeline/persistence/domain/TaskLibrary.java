@@ -36,5 +36,21 @@ public class TaskLibrary{
 		this.outputType = outputType;
 	}
 	
+	/*--------------------------------- Constructors--------------------------- */
+	public TaskLibrary(String taskName, String inputType, String outputType) {
+		super();
+		this.taskName = taskName;
+		this.inputType = inputType;
+		this.outputType = outputType;
+	}
+	
+	/*------------------------------ Default Constructors --------------------- */
+	public TaskLibrary() {
+		super();
+	}
+	
+	
+	
+	
 	
 }

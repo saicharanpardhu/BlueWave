@@ -46,7 +46,19 @@ public class Tasks {
 	public void setInput(String[] input) {
 		this.input = input;
 	}
+	
+	/*-------------------------------------- Constructors------- ------------------- */
 
+	public Tasks(String taskType, String status, String[] depends_on, String[] output, String[] input) {
+		super();
+		this.taskType = taskType;
+		this.status = status;
+		this.depends_on = depends_on;
+		this.output = output;
+		this.input = input;
+	}
+
+	/*--------------------------------- Default Constructors ------------------------ */
 	public Tasks() {
 		super();
 	}

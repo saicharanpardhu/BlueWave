@@ -33,6 +33,7 @@ public class PersistenceController {
 	private PersistenceServiceImpl persistenceservice;
 		
 	/*----------------------------------Get workflow ------------------------------------ */
+	/*------Record the logs for Reporting Service----------- */
 	@LogExecutionTime
 	@RequestMapping(value="/workflow" , method=RequestMethod.GET)
 	public ResponseEntity<Iterable<Workflow>> getWorkflow() throws WorkflowNotFoundException {
@@ -129,6 +130,8 @@ public class PersistenceController {
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 	
+	
+	/*--------------------------------- Check Permissions for different users -------- */
 	@RequestMapping(value="/workflow/{userName}/{workFlowName}" , method=RequestMethod.GET)
 	public ResponseEntity<String> getWorkflowforuser(@PathVariable(value="userName") String userName, @PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
 		return new ResponseEntity<String>(persistenceservice.userPermissions(workFlowName, userName),HttpStatus.OK);

@@ -20,6 +20,7 @@ public interface PersistenceService {
 	/*----------------------Delete a workflow--------------------------------------------*/
     public boolean deleteWorkflow(String workFlowName) throws WorkflowNotFoundException;
     
+    /*-------------------- Check Permissions for different users ---------------------- */
     public String userPermissions(String workFlowName, String userName);
 	
 	
