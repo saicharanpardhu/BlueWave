@@ -60,7 +60,10 @@ export class LoginHomeComponent implements OnInit {
   }
 
   signup(firstName, lastName, userName, email, password){
-    this.authenticationService.signup(firstName, lastName, userName, email, password).then(()=>this.router.navigate(['/home']));
+    this.authenticationService.signup(firstName, lastName, userName, email, password).then(()=>{
+      this.login(email,password);
+      this.router.navigate(['/home']);
+    });
   }
 
   hide = true;

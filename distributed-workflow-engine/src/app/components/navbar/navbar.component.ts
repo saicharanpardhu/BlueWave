@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(private authentication: AuthenticationService) { }
 
+  notif = true;
   ngOnInit() {
   }
 

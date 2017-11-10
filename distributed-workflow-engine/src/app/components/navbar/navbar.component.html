@@ -9,11 +9,12 @@
     <div class="mat-button-ripple mat-ripple" matripple=""></div>
     <div class="mat-button-focus-overlay"></div>
   </a> 
+  
 
   <a _ngcontent-c1="" aria-label="My Projects" class="docs-navbar-hide-small docs-button mat-button" 
     mat-button=""   tabindex="0" aria-disabled="false" [routerLink]="['/projects']">
     <span class="mat-button-wrapper">
-        <mat-icon>work</mat-icon> <span>My Projects</span>
+        <mat-icon>work</mat-icon> <span>My Workflows</span>
     </span>
     <div class="mat-button-ripple mat-ripple" matripple=""></div>
     <div class="mat-button-focus-overlay"></div>
@@ -29,27 +30,21 @@
   </a>  
 
   <span class="fill-remaining-space"></span>
+  
+  <button (click)="notif = !notif" _ngcontent-c1="" aria-label="Notifications" 
+  mat-icon-button   tabindex="0" aria-disabled="false"> 
+      <mat-icon *ngIf="notif">notifications</mat-icon> 
+      <mat-icon *ngIf="!notif">notifications_active</mat-icon> 
+</button> 
 
-  <button mat-icon-button [matMenuTriggerFor]="add">
-    <mat-icon>add_circle</mat-icon>
-  </button>
-
-  <mat-menu #add="matMenu" yPosition="below" xPosition="after">
-    <button mat-menu-item _ngcontent-c1=""  aria-label="Add"  class="docs-navbar-hide-small docs-button mat-button" 
-      tabindex="0" aria-disabled="false" >
-      <span class="mat-button-wrapper" id="addWorkflow">
-        Add Workflow
-      </span>
-      <div class="mat-button-ripple mat-ripple" matripple=""></div>
-      <div class="mat-button-focus-overlay"></div>
-    </button>
-    <button mat-menu-item _ngcontent-c1="" aria-label="Add"  class="docs-navbar-hide-small docs-button mat-button" 
-      tabindex="0" aria-disabled="false" > 
-      Add Project 
-    <div class="mat-button-ripple mat-ripple" matripple=""></div>
-    <div class="mat-button-focus-overlay"></div>
-  </button>
-  </mat-menu>  
+  <a _ngcontent-c1="" aria-label="Add Workflow" [routerLink]="['/addworkflow']" class="docs-navbar-hide-small docs-button mat-button" 
+  mat-button   tabindex="0" aria-disabled="false" >
+  <span class="mat-button-wrapper" id="addworkflow">
+    <mat-icon>add_circle</mat-icon> <span>Add Workflow</span>
+  </span>
+  <div class="mat-button-ripple mat-ripple" matripple=""></div>
+  <div class="mat-button-focus-overlay"></div>
+  </a> 
   
   <a _ngcontent-c1="" aria-label="Profile" [routerLink]="['/profile']" class="docs-navbar-hide-small docs-button mat-button" 
   mat-button=""   tabindex="0" aria-disabled="false" >

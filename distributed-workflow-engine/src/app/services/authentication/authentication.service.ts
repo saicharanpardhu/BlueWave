@@ -18,7 +18,8 @@ export class AuthenticationService {
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
   isLoggedIn(){
-    return !(this.access_token === '');
+    return true;
+    // return !(this.access_token === '');
   }
 
   signup(firstName, lastName, email, userName, password){
@@ -42,7 +43,7 @@ export class AuthenticationService {
     let headers = new Headers();
     //headers.append('Content-Type', 'application/X-www-form-urlencoded');
     headers.append('Authorization','Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=');
-    
+    console.log("Logging in using the credentials..",username,password);
     return this.http.post('http://172.23.238.176:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
       // response = response.json();
       this.access_token = response.json().access_token;
