@@ -19,8 +19,6 @@ export class SocketService {
   socketMessages = this.socketMessageSource.asObservable();
   numberSubscription:any; 
   socketNumber:number;
-  
-
   nameSubscription : any; 
   taskNames : Array<String> = [];
   socketNameSource = new Subject<String>();
