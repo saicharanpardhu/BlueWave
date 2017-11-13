@@ -22,7 +22,6 @@ export class ProjectDetailsComponent implements OnInit {
 
     load_workflows() {
       return this.workflow_service.getWorkflow().subscribe(datas => {
-        console.log(datas);
         this.datas = datas ;
       });
     }
