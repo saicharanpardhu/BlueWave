@@ -1,0 +1,4 @@
+FROM java:8-jre
+ADD target/CloneAgent-0.0.1-SNAPSHOT.jar cloneAgent.jar
+ENTRYPOINT ["java", "-jar", "/cloneAgent.jar"]
+EXPOSE 8095
