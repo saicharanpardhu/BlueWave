@@ -18,10 +18,15 @@ import { StompService } from 'ng2-stomp-service'
 import { FormControl , ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { Http, HttpModule } from '@angular/http';
-import { CreateWorkflowComponent, DialogOverviewDialog } from './components/create-workflow/create-workflow.component';
+import { CreateWorkflowComponent, DialogOverviewDialog,WnameOverviewDialog } from './components/create-workflow/create-workflow.component';
 import { ExecuteWorkflowComponent } from './components/execute-workflow/execute-workflow.component'; 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { SocketService } from './services/socket/socket.service';
+import { APP_BASE_HREF, Location } from '@angular/common';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxChartsDagModule } from '@swimlane/ngx-charts-dag';
+import { TagInputModule } from 'ngx-chips';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +41,7 @@ import { SocketService } from './services/socket/socket.service';
     LoginHomeComponent,
     CreateWorkflowComponent,
     DialogOverviewDialog,
+    WnameOverviewDialog,
     ExecuteWorkflowComponent,
     SnackBarComponent
   ],
@@ -45,11 +51,24 @@ import { SocketService } from './services/socket/socket.service';
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    NgxChartsModule, 
+    NgxChartsDagModule,
+    TagInputModule
   ],
-  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService],
+  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService,
+    {
+      provide: APP_BASE_HREF,
+      useFactory: getBaseLocation
+    }
+  ],
   bootstrap: [AppComponent],
-  entryComponents:[DialogOverviewDialog, SnackBarComponent]
+  entryComponents:[DialogOverviewDialog, SnackBarComponent,WnameOverviewDialog]
 })
 export class AppModule { }
  
+ export function getBaseLocation() {
+    const paths: string[] = location.pathname.split('/').splice(1, 1);
+    const basePath: string = (paths && paths[0]) || '';
+    return '/' + basePath;
+}

@@ -1,0 +1,14 @@
+
+  <!-- <h1 mat-dialog-title>Add a new task to the workflow</h1> -->
+  <div mat-dialog-content>
+    <p>WorkFlow Name</p>
+    <mat-form-field>
+      <input matInput tabindex="1" placeholder="WorkFlowName" [(ngModel)]="data.WName">
+    </mat-form-field> 
+    
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data" tabindex="2">Ok</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div> 
+ 
