@@ -32,6 +32,8 @@ public class AppTest {
     public void contextLoads() {
         assertThat(controller).isNotNull();
     }
+    
+    // Test case to check that config server starts properly
 
     @Test
     public void shouldStartConfigServer() {
@@ -39,6 +41,8 @@ public class AppTest {
                 "http://localhost:" + this.port + "/application/default", String.class);
         assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
+    
+    // Test case to check that config server works for appropriate URLs
     
     @Test
     public void shouldNotStartConfigServer() {
