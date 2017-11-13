@@ -5,21 +5,17 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise'
 @Injectable()
 export class WorkflowDetailsService {
-  // public workflow_obj : any;
-
-
-
   public datas : any;
   public tasks : any;
   constructor(private _http:Http){
-    console.log("service running");
+    console.log("workflow-details service running");
   }
   getWorkflow(){
-      return this._http.get('http://localhost:8080/v1.0/persistence/workflow').map(res=>res.json());
+      return this._http.get('http://172.23.138.147:8080/v1.0/persistence/workflow').map(res=>res.json());
   }
 
   getTasksOfWorkflow(workFlowName : String){
-    return this._http.get("http://localhost:8080/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
+    return this._http.get("http://172.23.138.147:8080/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
       this.tasks = res.json();
       console.log(this.tasks);
     });
