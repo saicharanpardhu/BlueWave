@@ -1,0 +1,6 @@
+<app-navbar></app-navbar>
+<div class= "container">
+  <mat-tab-group *ngFor = "let task of this.tasks">
+    <mat-tab label={{task}}>Content</mat-tab>
+  </mat-tab-group>
+</div>
