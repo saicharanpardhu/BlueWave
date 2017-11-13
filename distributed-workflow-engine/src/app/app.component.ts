@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     this.socketService.socketMessages.subscribe( data => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;
-      this.snackBar.open(data.toString(),'',config);
+      this.snackBar.open(data.toString(),'');
       console.log(data);
   });
   }

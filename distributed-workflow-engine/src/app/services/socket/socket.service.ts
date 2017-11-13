@@ -17,6 +17,14 @@ export class SocketService {
   messageSubscription:any;
   socketMessage: String = "Default";
   socketMessages = this.socketMessageSource.asObservable();
+  numberSubscription:any; 
+  socketNumber:number;
+  
+
+  nameSubscription : any; 
+  taskNames : Array<String> = [];
+  socketNameSource = new Subject<String>();
+  socketNames = this.socketNameSource.asObservable();
 
  constructor(
     private http:Http,
@@ -31,20 +39,41 @@ connect(){
   });
   this.stomp.startConnect().then(() => {
     this.stomp.done('init'); 
-    this.subscribe();
+    this.subscribe(); 
   });
 }
 subscribe(){
   if(this.messageSubscription != null)
         this.messageSubscription.unsubscribe();
+    
   
      this.messageSubscription = this.stomp.subscribe('/response',(response) => {
         let temp : String = response.message;
         this.socketMessageSource.next(temp);
         console.log(temp);
-      });
-}
+      }); 
 
+      if(this.numberSubscription != null)
+      this.numberSubscription.unsubscribe();
+  
+
+   this.numberSubscription = this.stomp.subscribe('/number',(response) => {
+      let temp : String = response.message;
+      this.socketNumber = response.message;
+      console.log(this.socketNumber); 
+    }); 
+
+    if(this.nameSubscription != null)
+    this.nameSubscription.unsubscribe();
+
+
+ this.nameSubscription = this.stomp.subscribe('/name',(response) => {
+    let temp : String = response.message; 
+    console.log("RECEIEVED TASKNAME: " , temp); 
+    this.socketNameSource.next(temp); 
+  }); 
+}
+ 
  sendMessage(message: string) {
     let socketMessage = new SocketMessage(message);
     console.log(message);
