@@ -20,7 +20,8 @@ import {MatCardModule ,
   MatDialog,
   MatDialogRef,
   MatStepperModule,
-  MatMenuModule
+  MatMenuModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -44,12 +45,14 @@ import { Validators } from '@angular/forms';
     MatTableModule,
     MatDialogModule,
     MatStepperModule, 
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule, 
     BrowserAnimationsModule, 
     MatToolbarModule,
+    MatCheckboxModule,
     MatCardModule,
     MatExpansionModule,
     MatSnackBarModule, 

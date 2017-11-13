@@ -31,11 +31,21 @@
 
   <span class="fill-remaining-space"></span>
   
-  <button (click)="notif = !notif" _ngcontent-c1="" aria-label="Notifications" 
+  
+  <button mat-button [matMenuTriggerFor]="menu" (click)="notif = !notif" _ngcontent-c1="" aria-label="Notifications" 
   mat-icon-button   tabindex="0" aria-disabled="false"> 
-      <mat-icon *ngIf="notif">notifications</mat-icon> 
+      <mat-icon *ngIf="notif" >notifications</mat-icon> 
+      
       <mat-icon *ngIf="!notif">notifications_active</mat-icon> 
 </button> 
+<mat-menu #menu="matMenu"> 
+  <div mat-menu-item>
+          Notifiaofjwopajdapowjndpoajwopjnadijadwp
+        </div> 
+        <div mat-menu-item>
+            Notifiaofjwopajdapowjndpoajwopjnadijadwp
+          </div> 
+  </mat-menu>
 
   <a _ngcontent-c1="" aria-label="Add Workflow" [routerLink]="['/addworkflow']" class="docs-navbar-hide-small docs-button mat-button" 
   mat-button   tabindex="0" aria-disabled="false" >

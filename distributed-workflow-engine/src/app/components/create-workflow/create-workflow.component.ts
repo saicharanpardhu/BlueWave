@@ -12,7 +12,10 @@ import {Task} from "./task";
 import {Workflow} from "./workflow";
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material';
-
+import 'rxjs/add/operator/filter'; 
+import 'rxjs/add/operator/map';
+import { TagInputModule } from 'ngx-chips';
+import 'rxjs/add/operator/debounceTime';
 /**
  * @title Dialog Overview
  */ 
@@ -35,9 +38,19 @@ export class CreateWorkflowComponent implements OnInit{
   dependsOn :String[];
   input :String;
   status = "created";
-  wTaskAliases : String[];
-
-
+  wTaskAliases : string[];
+  items = ['Javascript', 'Typescript'];
+  autocompleteItems = ['Item1', 'item2', 'item3'];
+  autocompleteItemsAsObjects = [
+    {value: 'Item1', id: 0, extra: 0},
+    {value: 'item2', id: 1, extra: 1},
+    'item3'
+];
+  checkBox = [
+    "git-clone",
+    "mvn-test",
+    "mvn-build"
+  ];
 
 
 
@@ -59,7 +72,7 @@ export class CreateWorkflowComponent implements OnInit{
 
   // options
   showLegend = false;
-  orientation: string = 'TB'; // LR, RL, TB, BT
+  orientation: string = 'LR'; // LR, RL, TB, BT
 
   orientations: any[] = [
     {
@@ -112,7 +125,7 @@ export class CreateWorkflowComponent implements OnInit{
     this.selectChart(this.chartType);
 
     /*setInterval(this.updateData.bind(this), 1000);*/
-      
+     this.selectedColorScheme = "aqua"; 
     this.openWnameDialog()
 
     if (!this.fitContainer) {
@@ -242,7 +255,7 @@ updateData() {
       //this.map.set(result.taskName, result.taskType);
       this.updateData(); 
       // this.workflow.push(taskMap);
-      
+      console.log(result);
     });
   }
 
@@ -279,12 +292,16 @@ export class DialogOverviewDialog {
     public dialogRef: MatDialogRef<DialogOverviewDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
 
-/* this.form = new FormBuilder().group({
-            chips: [['chip'], []]
-});*/
+  /* this.form = new FormBuilder().group({
+              chips: [['chip'], []]
+  });*/
 
-  }
-   
+    } 
+
+    onItemAdded(item){
+      console.log("SELECTED ITEM", item.value);
+      this.data.dependsOn.push(item.value);
+    }
   onNoClick(): void { 
     this.dialogRef.close();
   }
@@ -306,5 +323,7 @@ export class WnameOverviewDialog {
   onNoClick(): void { 
     this.dialogRef.close();
   }
+  
+
 
 }

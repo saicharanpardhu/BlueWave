@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<div class="container">
+   <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Workflows
+        </mat-panel-title>
+        <mat-panel-description>
+          List of workflows
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-card-content>
+        <mat-card id="workflowcard"  *ngFor = "let data of datas">
+          <mat-card-header>
+              <mat-card-title class="workflowtitle">{{data.workFlowName}}</mat-card-title>
+                <mat-card-actions id="workflowmodify">
+                  <button mat-raised-button (click) = "getTask(data.workFlowName);">VIEW <i class="material-icons">visibility</i></button>
+                  <button mat-raised-button>MODIFY <i class="material-icons">cached</i></button>
+                </mat-card-actions>
+              </mat-card-header>
+            </mat-card>
+          </mat-card-content>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+
+
+
