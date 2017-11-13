@@ -1,0 +1,48 @@
+
+  <!-- <h1 mat-dialog-title>Add a new task to the workflow</h1> -->
+<!--   <div mat-dialog-content>
+    <p>New Task</p>
+    <mat-form-field>
+      <input matInput tabindex="1" placeholder="TaskName" [(ngModel)]="data.taskName">
+    </mat-form-field> 
+    <mat-form-field>
+      <mat-select placeholder="TaskType" [(ngModel)]="data.taskType" name="tasks">
+          <mat-option *ngFor="let task of tasks" [value]="task">
+            {{task}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div> -->
+ <h1 mat-dialog-title>Add a new task to the workflow</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+      <input matInput tabindex="1" placeholder="TaskName" [(ngModel)]="data.taskName">
+    </mat-form-field>
+    <mat-form-field> 
+    <mat-select placeholder="TaskType" [(ngModel)]="data.taskType" name="tasks">
+          <mat-option *ngFor="let task of data.taskTypes" [value]="task">
+            {{task}}
+          </mat-option>
+    </mat-select>
+    </mat-form-field>
+     <mat-form-field>
+    <mat-select placeholder="Depends On" [(ngModel)]="data.dependsOn" name="depends">
+          <mat-option *ngFor="let task of data.taskAliases" [value]="task">
+            {{task}}
+          </mat-option>
+    </mat-select> 
+
+    </mat-form-field>  
+    <mat-form-field> 
+    <mat-select placeholder="Input" [(ngModel)]="data.input" name="input">
+          <mat-option *ngFor="let task of data.taskAliases" [value]="task">
+            {{task}}
+          </mat-option>
+    </mat-select>
+    </mat-form-field>
+    </div>        
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data" tabindex="2">Add task</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>  
+ 

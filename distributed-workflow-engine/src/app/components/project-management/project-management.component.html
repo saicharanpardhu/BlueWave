@@ -1,0 +1,40 @@
+<!-- <h3>Your Projects</h3>
+
+    <mat-card *ngFor="let project of projects">
+        <mat-card-header>
+          <mat-card-title>{{project.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{project.description}}</p>
+        </mat-card-content>  
+    </mat-card>
+   -->
+   <app-navbar></app-navbar> 
+<div class="container">
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Your Projects
+      </mat-panel-title>
+      <mat-panel-description>
+        View your projects
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-list> 
+      <mat-list-item *ngFor="let project of projects"> 
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{project.name}}
+                </mat-panel-title>
+                <mat-panel-description>{{project.description}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul> 
+                <li *ngFor="let workflow of project.workflows"> {{workflow}}</li>
+            </ul>    
+        </mat-expansion-panel>
+      </mat-list-item> 
+    </mat-list>
+    
+</mat-expansion-panel> 
+</div>

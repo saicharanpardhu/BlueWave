@@ -1,0 +1,9 @@
+ div{
+   
+   text-align:center;
+ }
+
+tag-input tag-input-dropdown /deep/ ng2-dropdown div.ng2-dropdown-menu {
+    top: inherit !important;
+    left: inherit !important;
+}

@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      CI-CD Workflow
+    </mat-card-header>
+    <mat-card-content>
+      <br>
+        <mat-horizontal-stepper *ngIf="displayStepper" [linear]="isLinear">
+          <mat-step *ngFor="let name of tasks">
+            <form >
+              <ng-template matStepLabel>{{name}}</ng-template> 
+            </form>
+          </mat-step> 
+        </mat-horizontal-stepper>
+        <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
+        <br><br> 
+
+         <!-- <mat-form-field [hideRequiredMarker]="true">
+          <input #messageBox matInput placeholder="Message" [type]="'text'" >  
+        </mat-form-field> 
+        <button mat-raised-button (click)="sendMessage(messageBox.value)" color="primary">Submit</button>
+        <br><br> -->
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Reports
+              </mat-panel-title> 
+            </mat-expansion-panel-header>  
+        </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+</div>
