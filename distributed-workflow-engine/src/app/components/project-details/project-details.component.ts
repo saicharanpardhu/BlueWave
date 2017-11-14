@@ -11,8 +11,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   public datas : any;
 
-    constructor(private workflow_service : WorkflowDetailsService,
-    private router:Router) {
+    constructor(private workflow_service : WorkflowDetailsService,private router:Router) {
     }
 
     ngOnInit(){

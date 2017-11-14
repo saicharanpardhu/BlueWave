@@ -10,7 +10,7 @@ import { CreateWorkflowComponent } from '../components/create-workflow/create-wo
 import { ExecuteWorkflowComponent } from '../components/execute-workflow/execute-workflow.component';
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
 import { WorkflowDetailsComponent } from '../components/workflow-details/workflow-details.component';
-
+import { ProjectDetailsComponent } from '../components/project-details/project-details.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +25,7 @@ const routes: Routes = [
   {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]} , 
   {path : 'addworkflow', component: CreateWorkflowComponent},
+  {path : 'workflow' , component: ProjectDetailsComponent},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]},  
   {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] } 
   

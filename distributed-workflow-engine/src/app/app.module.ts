@@ -22,12 +22,13 @@ import { CreateWorkflowComponent, DialogOverviewDialog,WnameOverviewDialog } fro
 import { ExecuteWorkflowComponent } from './components/execute-workflow/execute-workflow.component'; 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { SocketService } from './services/socket/socket.service';
+import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 import { APP_BASE_HREF, Location } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxChartsDagModule } from '@swimlane/ngx-charts-dag';
 import { TagInputModule } from 'ngx-chips';
 import { WorkflowDetailsComponent } from './components/workflow-details/workflow-details.component';
-
+import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
     DialogOverviewDialog,
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
-    WorkflowDetailsComponent
+    WorkflowDetailsComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule, 
@@ -58,12 +60,7 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
     NgxChartsDagModule,
     TagInputModule
   ],
-  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService,
-    {
-      provide: APP_BASE_HREF,
-      useFactory: getBaseLocation
-    }
-  ],
+  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService, WorkflowDetailsService],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog]
 })
