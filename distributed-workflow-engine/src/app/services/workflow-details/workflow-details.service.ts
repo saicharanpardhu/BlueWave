@@ -24,7 +24,6 @@ export class WorkflowDetailsService {
       console.log(this.tasks);
     });
    }
-
    getTasks(){
      return this.tasks;
    }

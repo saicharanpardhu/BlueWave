@@ -20,6 +20,8 @@ const routes: Routes = [
   {path : 'index', component: LoginHomeComponent},
   {path : 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
+  {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
+  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]} , 
   {path : 'addworkflow', component: CreateWorkflowComponent},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  
 ];

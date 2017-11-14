@@ -26,6 +26,8 @@ import { APP_BASE_HREF, Location } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxChartsDagModule } from '@swimlane/ngx-charts-dag';
 import { TagInputModule } from 'ngx-chips';
+import { WorkflowDetailsComponent } from './components/workflow-details/workflow-details.component';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { TagInputModule } from 'ngx-chips';
     CreateWorkflowComponent,
     DialogOverviewDialog,
     WnameOverviewDialog,
-    ExecuteWorkflowComponent 
+    ExecuteWorkflowComponent ,
+    WorkflowDetailsComponent
   ],
   imports: [
     BrowserModule, 

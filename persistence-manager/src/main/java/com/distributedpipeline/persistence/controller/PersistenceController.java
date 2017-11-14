@@ -136,6 +136,18 @@ public class PersistenceController {
 	public ResponseEntity<String> getWorkflowforuser(@PathVariable(value="userName") String userName, @PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
 		return new ResponseEntity<String>(persistenceservice.userPermissions(workFlowName, userName),HttpStatus.OK);
 	}
+
+	/*--------------------------------- get tasks name for a workflow --------------------------- */
+	@RequestMapping(value="/tasks/{workFlowName}" , method=RequestMethod.GET)
+	public ResponseEntity<List<String>> getWorkflowforuser(@PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
+		return new ResponseEntity<List<String>>(persistenceservice.getTasksOfWorkflow(workFlowName),HttpStatus.OK);
+	}
+	
+	/*--------------------------------- get tasks Details by task name of a workflow --------------------------- */
+	@RequestMapping(value="/tasks/{workFlowName}/{task_name}" , method=RequestMethod.GET)
+	public ResponseEntity<Tasks> getWorkflowDetails(@PathVariable(value="workFlowName") String workFlowName, @PathVariable(value="task_name") String task_name) {
+		return new ResponseEntity<>(persistenceservice.getDetailsOfTask(workFlowName, task_name),HttpStatus.OK);
+	}
 	
 	
 	
