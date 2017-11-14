@@ -153,4 +153,38 @@ public class PersistenceServiceImpl implements PersistenceService {
 			return "user not authorised to access workflow";
 		}
 	}
+	
+	/*-------------------------- Method to get tasks inside workflow -----------------------------*/
+	
+	@Override
+	public List<String> getTasksOfWorkflow(String workFlowName) {
+		
+		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
+		Map<String,Tasks> tasks = new HashMap<String,Tasks>();
+		tasks = workflow.getTasks();
+		List<String> task_list = new ArrayList<String>();
+		Set<String> keys = tasks.keySet();	
+		for (String key : keys) {
+			task_list.add(key);
+		}
+		return task_list;
+	}
+	
+	/*-------------------------- Method to get details of a task in a workflow -----------------------*/
+	
+	@Override
+	public Tasks getDetailsOfTask(String workFlowName, String task_name) {
+		
+		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
+		Map<String,Tasks> tasks = new HashMap<String,Tasks>();
+		Map<String,Tasks> mapOfTasks = new HashMap<String,Tasks>();
+		tasks = workflow.getTasks();
+		Tasks taskDetails = null;
+		for (Map.Entry<String, Tasks> entry : tasks.entrySet()) {	
+			if(entry.getKey().equals(task_name)) {
+				taskDetails = entry.getValue();
+			}
+		}
+		return taskDetails;
+	}
 }
