@@ -27,8 +27,8 @@ const routes: Routes = [
   {path : 'addworkflow', component: CreateWorkflowComponent},
   {path : 'workflow' , component: ProjectDetailsComponent},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]},  
-  {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] } 
-  
+  {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] },
+  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  
 ];
 @NgModule({ 
   imports: [ RouterModule.forRoot(routes) ],
