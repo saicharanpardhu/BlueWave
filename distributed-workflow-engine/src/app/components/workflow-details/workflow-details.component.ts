@@ -9,12 +9,8 @@ import { Component, OnInit } from '@angular/core';
 
 })
 export class WorkflowDetailsComponent implements OnInit {
-<<<<<<< HEAD
 
   panelOpenState: boolean = false;
-=======
-  
->>>>>>> ed98ce2d92897bf9d7c949cbea54d9cf1de7a5b0
   tasks : any;
 
   constructor(private workflowService : WorkflowDetailsService ) {

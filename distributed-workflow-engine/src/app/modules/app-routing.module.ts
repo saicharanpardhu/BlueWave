@@ -9,8 +9,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateWorkflowComponent } from '../components/create-workflow/create-workflow.component';
 import { ExecuteWorkflowComponent } from '../components/execute-workflow/execute-workflow.component';
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
-import { WorkflowDetailsComponent } from '../components/workflow-details/workflow-details.component';
-
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,8 +22,6 @@ const routes: Routes = [
   {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
   {path : 'addworkflow', component: CreateWorkflowComponent},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  
-  {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] } 
-  
 ];
 @NgModule({ 
   imports: [ RouterModule.forRoot(routes) ],
