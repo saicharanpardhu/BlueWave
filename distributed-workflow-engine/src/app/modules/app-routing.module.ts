@@ -24,7 +24,7 @@ const routes: Routes = [
   {path : 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
   {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
-  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  
+  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]} , 
   {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] } 
   
 ];
