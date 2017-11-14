@@ -26,6 +26,10 @@ export class ProjectDetailsComponent implements OnInit {
       });
     }
 
+    getCurrentWorkflow(workFlowName : String) {
+      this.workflow_service.currentWorkflowName = workFlowName;
+    }
+
 
     getTask(workFlowName : String) {
       this.workflow_service.getTasksOfWorkflow(workFlowName).then(()=>

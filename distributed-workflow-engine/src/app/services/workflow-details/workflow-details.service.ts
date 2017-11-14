@@ -1,4 +1,4 @@
-import { Http,HttpModule,Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
@@ -7,13 +7,16 @@ import 'rxjs/add/operator/toPromise'
 export class WorkflowDetailsService {
   // public workflow_obj : any;
 
-
-
   public datas : any;
   public tasks : any;
+  public taskDetails : any;
+  public currentWorkflowName : any;
+
   constructor(private _http:Http){
     console.log("service running");
   }
+
+
   getWorkflow(){
 
       return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow').map(res=>res.json());  }
@@ -24,6 +27,12 @@ export class WorkflowDetailsService {
       console.log(this.tasks);
     });
    }
+
+  getTaskDetailsOfWorkflow(workFlowName : String, taskName : String) {
+    return this._http.get("http://localhost:8080/v1.0/persistence/tasks/"+workFlowName+"/"+taskName).
+          toPromise();
+  }
+
    getTasks(){
      return this.tasks;
    }
