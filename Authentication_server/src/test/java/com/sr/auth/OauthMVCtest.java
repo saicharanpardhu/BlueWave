@@ -1,7 +1,7 @@
 package com.sr.auth;
 
 import static org.hamcrest.Matchers.is;
-
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -32,76 +32,67 @@ import org.springframework.test.context.ActiveProfiles;
 public class OauthMVCtest {
 
 	@Autowired
-    private WebApplicationContext wac;
-	
+	private WebApplicationContext wac;
+
 	@Autowired
-    private FilterChainProxy springSecurityFilterChain;
+	private FilterChainProxy springSecurityFilterChain;
 
-    private MockMvc mockMvc;
-    
-    private static final String CLIENT_ID = "fooClientIdPassword";
-    private static final String CLIENT_SECRET = "secret";
+	private MockMvc mockMvc;
 
-    private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
+	private static final String CLIENT_ID = "fooClientIdPassword";
+	private static final String CLIENT_SECRET = "secret";
 
-    private static final String EMAIL = "jim@yahoo.com";
-    private static final String NAME = "Jim";
-    
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
-    }
+	private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
 
-    private String obtainAccessToken(String username, String password) throws Exception {
-        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "password");
-        params.add("client_id", CLIENT_ID);
-        params.add("username", username);
-        params.add("password", password);
+	private static final String EMAIL = "jim@yahoo.com";
+	private static final String NAME = "Jim";
 
-        // @formatter:off
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
+	}
 
-        ResultActions result = mockMvc.perform(post("/oauth/token")
-                               .params(params)
-                               .with(httpBasic(CLIENT_ID, CLIENT_SECRET))
-                               .accept(CONTENT_TYPE))
-                               .andExpect(status().isOk())
-                               .andExpect(content().contentType(CONTENT_TYPE));
-        
-        // @formatter:on
+	private String obtainAccessToken(String username, String password) throws Exception {
+		final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "password");
+		params.add("client_id", CLIENT_ID);
+		params.add("username", username);
+		params.add("password", password);
 
-        String resultString = result.andReturn().getResponse().getContentAsString();
+		// @formatter:off
 
-        JacksonJsonParser jsonParser = new JacksonJsonParser();
-        return jsonParser.parseMap(resultString).get("access_token").toString();
-    }
-    
-    @Test
-    public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
-        mockMvc.perform(get("/secured/greeting").param("email", EMAIL)).andExpect(status().isForbidden());
-    }
-    
-    @Test
-    public void unsecured_endpoint_passUnauthorized() throws Exception {
-        mockMvc.perform(get("/greeting").param("email", EMAIL)).andExpect(status().isOk());
-    }
-    
-    @Test
-    public void givenToken_whenGetSecureRequest_then() throws Exception {
-        final String accessToken = obtainAccessToken("john", "123");
+		ResultActions result = mockMvc
+				.perform(post("/oauth/token").params(params).with(httpBasic(CLIENT_ID, CLIENT_SECRET))
+						.accept(CONTENT_TYPE))
+				.andExpect(status().isOk()).andExpect(content().contentType(CONTENT_TYPE));
 
-        
-        // @formatter:off
-        
-        mockMvc.perform(get("/secured/greeting")
-                .header("Authorization", "Bearer " + accessToken)
-                .contentType(CONTENT_TYPE)
-                .accept(CONTENT_TYPE))
-                .andExpect(status().isForbidden());
+		// @formatter:on
 
-        
-        // @formatter:on
-    }
+		String resultString = result.andReturn().getResponse().getContentAsString();
+
+		JacksonJsonParser jsonParser = new JacksonJsonParser();
+		return jsonParser.parseMap(resultString).get("access_token").toString();
+	}
+
+	@Test
+	public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
+		mockMvc.perform(get("/secured/greeting").param("email", EMAIL)).andExpect(status().isForbidden());
+	}
+
+	@Test
+	public void unsecured_endpoint_passUnauthorized() throws Exception {
+		mockMvc.perform(get("/greeting").param("email", EMAIL)).andExpect(status().isOk());
+	}
+
+	@Test
+	public void givenToken_whenGetSecureRequest_then() throws Exception {
+		final String accessToken = obtainAccessToken("a", "d");
+
+		// @formatter:off
+
+		assertNotNull(accessToken);
+
+		// @formatter:on
+	}
 
 }
-
