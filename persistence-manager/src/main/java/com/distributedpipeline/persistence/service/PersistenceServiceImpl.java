@@ -1,18 +1,10 @@
 package com.distributedpipeline.persistence.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
-import com.distributedpipeline.persistence.domain.Tasks;
 import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundException;
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
@@ -144,19 +136,17 @@ public class PersistenceServiceImpl implements PersistenceService {
 		}
 	}   
 	
-	
-	/*-------------------------- Method to authenticate a user ----------------------------*/
+	/*------------------------------- Check Permissions for different users ------------------- */
 	@Override
 	public String userPermissions(String workFlowName, String userName) {
 		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
-		
-		if(workflow!=null && Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
+		if(Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
 			return "user can edit workflow";
 		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
+		else if(Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
 			return "user can execute workflow";
 		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
+		else if(Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
 			return "user can view workflow";
 		}
 		else {

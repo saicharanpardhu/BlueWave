@@ -13,11 +13,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.repo.PersistenceWorkflowRepo;
-import com.distributedpipeline.persistence.service.PersistenceServiceImpl;
+
+
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class WorkflowControllersTest {
+public class PersistenceServiceTest {
 	
 	@Spy
     private PersistenceServiceImpl persistServiceSpy;
@@ -45,7 +46,7 @@ public class WorkflowControllersTest {
          //Arrange
          Mockito.doReturn(workflow).when(persistenceWorkflowRepository).save(workflow);
          //Act
-         Workflow savedWorkflow = persistServiceSpy.addWorkflow(workflow);
+         String savedWorkflow = persistServiceSpy.addWorkflow(workflow);
          //Assert
          assertThat(savedWorkflow, is(equalTo(workflow)));
      } 
@@ -74,10 +75,7 @@ public class WorkflowControllersTest {
         Mockito.verify(persistServiceSpy).getWorkflow();
         Mockito.verify(persistServiceSpy,never()).getWorkflowByName("CAL");
         Mockito.verify(persistServiceSpy,never()).addWorkflow(workflow);
-//        Mockito.verify(reportServiceSpy).getReportByYear(2017);
-//        Mockito.verify(reportServiceSpy,never()).saveReport(report);
-//        Mockito.verify(reportServiceSpy,never()).getReportById(new Long(5));
-//        Mockito.verify(reportServiceSpy,never()).getReportByUser("akshaydv");
+
     }
     @Test
     public void shouldVerifyThatOnlyWorkflowUpdateIsCalled() throws Exception {
@@ -89,22 +87,10 @@ public class WorkflowControllersTest {
         Mockito.verify(persistServiceSpy).updateWorkflow(workflowReport);
         Mockito.verify(persistServiceSpy,never()).addWorkflow(workflow);
         Mockito.verify(persistServiceSpy,never()).getWorkflow() ;
-        //Mockito.verify(persistServiceSpy,never()).updateWorkflow(workflowReport);/*Check this*/
+       
     }
     
-//    @Test
-//    public void shouldVerifyThatOnlyDeleteWorkFlowIsCalled() throws Exception {
-//        //Arrange
-//        Mockito.doReturn(true).when(persistServiceSpy).deleteWorkflow("CAL");
-//        //Act
-//       // Boolean workflowReport = persistServiceSpy.deleteWorkflow("CAL");
-//        //Assert
-//        Mockito.verify(persistServiceSpy).deleteWorkflow("CAL");
-//       // Mockito.verify(persistServiceSpy).updateWorkflow(workflowReport);
-//        Mockito.verify(persistServiceSpy,never()).addWorkflow(workflow);
-//        Mockito.verify(persistServiceSpy,never()).getWorkflow() ;
-//        //Mockito.verify(persistServiceSpy,never()).updateWorkflow(workflowReport);/*Check this*/
-//    }
+
     
     
 }

@@ -1,8 +1,5 @@
 package com.distributedpipeline.persistence.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
-import com.distributedpipeline.persistence.domain.Tasks;
 import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.exceptions.NotNullException;
 import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundException;
@@ -37,6 +33,7 @@ public class PersistenceController {
 	private PersistenceServiceImpl persistenceservice;
 		
 	/*----------------------------------Get workflow ------------------------------------ */
+	/*------Record the logs for Reporting Service----------- */
 	@LogExecutionTime
 	@RequestMapping(value="/workflow" , method=RequestMethod.GET)
 	public ResponseEntity<Iterable<Workflow>> getWorkflow() throws WorkflowNotFoundException {
@@ -133,12 +130,13 @@ public class PersistenceController {
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 	
-	/*--------------------------------- user authentication --------------------------- */
+	
+	/*--------------------------------- Check Permissions for different users -------- */
 	@RequestMapping(value="/workflow/{userName}/{workFlowName}" , method=RequestMethod.GET)
 	public ResponseEntity<String> getWorkflowforuser(@PathVariable(value="userName") String userName, @PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
 		return new ResponseEntity<String>(persistenceservice.userPermissions(workFlowName, userName),HttpStatus.OK);
 	}
-	
+
 	/*--------------------------------- get tasks name for a workflow --------------------------- */
 	@RequestMapping(value="/tasks/{workFlowName}" , method=RequestMethod.GET)
 	public ResponseEntity<List<String>> getWorkflowforuser(@PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
@@ -150,6 +148,7 @@ public class PersistenceController {
 	public ResponseEntity<Tasks> getWorkflowDetails(@PathVariable(value="workFlowName") String workFlowName, @PathVariable(value="task_name") String task_name) {
 		return new ResponseEntity<>(persistenceservice.getDetailsOfTask(workFlowName, task_name),HttpStatus.OK);
 	}
+	
 	
 	
 	
