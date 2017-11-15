@@ -18,7 +18,7 @@ import { StompService } from 'ng2-stomp-service'
 import { FormControl , ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { Http, HttpModule } from '@angular/http';
-import { CreateWorkflowComponent, DialogOverviewDialog,WnameOverviewDialog } from './components/create-workflow/create-workflow.component';
+import { CreateWorkflowComponent, DialogOverviewDialog,WnameOverviewDialog ,JsonEditor,SettingsDialog} from './components/create-workflow/create-workflow.component';
 import { ExecuteWorkflowComponent } from './components/execute-workflow/execute-workflow.component'; 
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { SocketService } from './services/socket/socket.service';
@@ -29,7 +29,7 @@ import { NgxChartsDagModule } from '@swimlane/ngx-charts-dag';
 import { TagInputModule } from 'ngx-chips';
 import { WorkflowDetailsComponent } from './components/workflow-details/workflow-details.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
-
+import { Ng4JsonEditorModule } from 'angular4-jsoneditor' 
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +45,8 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
     CreateWorkflowComponent,
     DialogOverviewDialog,
     WnameOverviewDialog,
+    SettingsDialog,
+    JsonEditor,
     ExecuteWorkflowComponent ,
     WorkflowDetailsComponent,
     ProjectDetailsComponent
@@ -58,11 +60,12 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
     FormsModule,
     NgxChartsModule, 
     NgxChartsDagModule,
-    TagInputModule
+    TagInputModule,
+    Ng4JsonEditorModule
   ],
   providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService, WorkflowDetailsService],
   bootstrap: [AppComponent],
-  entryComponents:[DialogOverviewDialog,WnameOverviewDialog]
+  entryComponents:[DialogOverviewDialog,WnameOverviewDialog,JsonEditor,SettingsDialog]
 })
 export class AppModule { }
  

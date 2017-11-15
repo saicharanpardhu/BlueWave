@@ -123,7 +123,7 @@ export function getTurbineData() {
   const nodes = [];
   const links = [];
 
-  for (const key in (<any>data).tasks) {
+/*  for (const key in (<any>data).tasks) {
     const node = (<any>data).tasks[key];
     node.id = id();
     node.label = key;
@@ -155,7 +155,7 @@ export function getTurbineData() {
         });
       }
     }
-  }
+  }*/
 
   return {nodes, links};
 }

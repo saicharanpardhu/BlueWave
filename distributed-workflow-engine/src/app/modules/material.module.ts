@@ -21,7 +21,8 @@ import {MatCardModule ,
   MatDialogRef,
   MatStepperModule,
   MatMenuModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+   MatRadioModule,
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -68,7 +69,8 @@ import { Validators } from '@angular/forms';
     MatAutocompleteModule,
     MatDialogModule,
     MatStepperModule, 
-    MatMenuModule
+    MatMenuModule,
+     MatRadioModule,
   ],
 })
 export class MaterialModule { }

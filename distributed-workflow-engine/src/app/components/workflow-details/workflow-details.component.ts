@@ -23,7 +23,7 @@ export class WorkflowDetailsComponent implements OnInit {
   // taskDetail?
 
   ngOnInit() {
-    this.loadWorkFlowDetails(this.tasks[i]);
+    //this.loadWorkFlowDetails(this.tasks[i]);
     this.tasks = this.workflowService.tasks;
     this.workFlowName = this.workflowService.currentWorkflowName;
     console.log("Wfname "+this.workFlowName);

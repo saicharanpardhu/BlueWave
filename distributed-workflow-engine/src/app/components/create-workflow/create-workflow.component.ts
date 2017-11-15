@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
- import {Component, OnInit, Inject,ViewEncapsulation} from '@angular/core';
+ import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { FormControl } from '@angular/forms';
 import * as shape from 'd3-shape';
@@ -16,6 +16,9 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import { TagInputModule } from 'ngx-chips';
 import 'rxjs/add/operator/debounceTime';
+import {MatRadioModule} from '@angular/material/radio';
+import { JsonEditorComponent, JsonEditorOptions } from 'angular4-jsoneditor/jsoneditor/jsoneditor.component';
+import { TSMap } from "typescript-map"
 /**
  * @title Dialog Overview
  */ 
@@ -29,16 +32,21 @@ export class CreateWorkflowComponent implements OnInit{
 
   public tasks: Array<String> = ["git-clone","mvn-package"];
   // workflow: Array<Map<String,String>> = [];
-  map : Map<String,Task> = new Map();
-  workflow = new Workflow();
-  task :Task;
+  myMap = new TSMap<String,Task>();
+  map = new TSMap<String,Task>();
+  workflow :Workflow = {};
+  task :Task ={};
   Wname  :String;
   taskName :String;
   taskType : String;
-  dependsOn :String[];
+  dependsOn : any;
+  depends_on : any;
   input :String;
   status = "created";
-  wTaskAliases : string[];
+  wTaskAliases : String[] = [];
+  deleteMode : boolean = false;
+  deleteModeButton ="DELETE TASKS"
+  
   items = ['Javascript', 'Typescript'];
   autocompleteItems = ['Item1', 'item2', 'item3'];
   autocompleteItemsAsObjects = [
@@ -91,14 +99,16 @@ export class CreateWorkflowComponent implements OnInit{
   ];
 
   // line interpolation
-  curveType: string = 'Linear';
+  curveType: string = 'Step';
   curve: any = shape.curveLinear;
   interpolationTypes = [
     'Bundle', 'Cardinal', 'Catmull Rom', 'Linear', 'Monotone X',
     'Monotone Y', 'Natural', 'Step', 'Step After', 'Step Before'
   ];
+  
 
-  colorSets: any;
+  colorSets:any;
+  colorSets1 =["vivid","natural","cool",'fire','solar','air','aqua','flame','ocean','forest','horizon','neons','picnic','night','nightLights'];
   colorScheme: any;
   schemeType: string = 'ordinal';
   selectedColorScheme: string;
@@ -114,25 +124,28 @@ export class CreateWorkflowComponent implements OnInit{
       chartGroups,
       hierarchialGraph: getTurbineData(),
     });
-
+   
     this.setColorScheme('picnic');
     this.setInterpolationType('Bundle');
   }
 
 
   ngOnInit() { 
+       
       
     this.selectChart(this.chartType);
 
     /*setInterval(this.updateData.bind(this), 1000);*/
      this.selectedColorScheme = "aqua"; 
     this.openWnameDialog()
-
+    //this.task.taskType="gitclopne"
+    /*this.myMap.set("wefef",this.task);
+    console.log(this.myMap.toJSON());*/
     if (!this.fitContainer) {
       this.applyDimensions();
     }
   }
-updateData() {
+updateNodes(taskname:String) {
     /*if (!this.realTimeData) {
       return;
     }*/
@@ -146,21 +159,78 @@ updateData() {
 
       const hNode = {
         id:id(),
-        label: "India"
+        label: taskname,
       };
 
       this.hierarchialGraph.nodes.push(hNode);
 
-      this.hierarchialGraph.links.push({
-        source: this.hierarchialGraph.nodes[Math.floor(Math.random() * (this.hierarchialGraph.nodes.length - 1))].id,
-        target: hNode.id,
-        label: 'on success'
-      });
+     /* let len = dependson.length;
+      let len2 =  this.hierarchialGraph.nodes.length;
+*/
+    /* for(let i=0;i<len2;i++){
 
+          for(let j=0;j<len;j++){
+
+            if(this.hierarchialGraph.nodes[i].label==dependson[j])
+                {
+                  this.hierarchialGraph.links.push({
+                   source: this.hierarchialGraph.nodes[i].id,
+                   target: hNode.id,
+                   label: 'on success'
+
+      });
+                  console.log("ggghjhjhjkkk");
+        }
+       }
+
+       }*/
       this.hierarchialGraph.links = [...this.hierarchialGraph.links];
       this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
     }
   
+  updateLinks(depends :String[],taskname :String){
+
+
+      let target :any;
+
+      let len = depends.length;
+      let len2 =  this.hierarchialGraph.nodes.length;
+
+      for(let i=0;i<len2;i++){
+
+          if(this.hierarchialGraph.nodes[i].label==taskname)
+          {
+
+            target = this.hierarchialGraph.nodes[i].id;
+          }
+
+      }
+
+
+
+     for(let i=0;i<len2;i++){
+
+          for(let j=0;j<len;j++){
+
+            if(this.hierarchialGraph.nodes[i].label==depends[j])
+                {
+                  this.hierarchialGraph.links.push({
+                   source: this.hierarchialGraph.nodes[i].id,
+                   target: target,
+                   label: 'on success'
+
+      });
+                  console.log("ggghjhjhjkkk");
+        }
+       }
+
+       }
+
+      this.hierarchialGraph.links = [...this.hierarchialGraph.links];
+      this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
+
+
+  }
 
   applyDimensions() {
     this.view = [this.width, this.height];
@@ -189,10 +259,67 @@ updateData() {
       }
     }
   }
+  
+  deletemode(){
+    if(!this.deleteMode){
+        this.deleteMode = true;
+    alert("You are in deletion mode.Click on the nodes to delete them");
+     this.deleteModeButton = "EXIT MODE";
+  }
+
+    else{
+          this.deleteMode = false;
+    alert("You are out of deletion mode");
+           this.deleteModeButton = "DELETE TASKS";
+           //console.log(this.hierarchialGraph.links );
+           //console.log(this.hierarchialGraph.nodes);
+    }
+  }
 
   select(data) {
     console.log('Item clicked', data);
+    if(this.deleteMode){
+      
+
+     this.deleteTask(data.label);
+
+    }
   }
+
+  deleteTask(label:String){
+       console.log(label)
+       console.log(this.map);
+      this.map.delete(label);
+      this.wTaskAliases = this.wTaskAliases.filter(item => item != label);
+      console.log(this.map);
+      //console.log(this.wTaskAliases);
+      this.workflow.tasks = this.map;
+      this.workflowToGraph(this.map);
+
+  }
+
+workflowToGraph(map :TSMap<String,Task> ){
+
+this.hierarchialGraph = getTurbineData();
+
+//console.log(this.hierarchialGraph.links );
+//console.log(this.hierarchialGraph.nodes);
+let len =  this.wTaskAliases.length;
+
+for(let i=0;i<len;i++){
+
+
+      this.updateNodes(this.wTaskAliases[i]);
+      
+      if(map.get(this.wTaskAliases[i]).depends_on!=null){
+      this.updateLinks(map.get(this.wTaskAliases[i]).depends_on,this.wTaskAliases[i]);
+      console.log(map.get(this.wTaskAliases[i]).depends_on,this.wTaskAliases[i]);}
+
+}
+
+
+}
+
 
   setColorScheme(name) {
     this.selectedColorScheme = name;
@@ -249,13 +376,44 @@ updateData() {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // var taskMap = new Map();
-      // taskMap.set(result.taskName, result.taskType); 
-      //console.log(result.taskName, result.taskType, result,'The dialog was closed');
-      //this.map.set(result.taskName, result.taskType);
-      this.updateData(); 
-      // this.workflow.push(taskMap);
-      console.log(result);
+      
+      let task : Task ={};
+      this.taskName = result.taskName;
+      task.taskType = result.taskType;
+      this.depends_on = result.dependsOn;
+       task.input = result.input;
+      this.wTaskAliases.push(result.taskName);
+      
+      task.depends_on =[];
+      //console.log(this.task.depends_on[0]);
+      this.updateNodes(this.taskName);
+
+      if(this.depends_on!=undefined){
+        //console.log(this.depends_on.length);
+       let len2 = this.depends_on.length;
+       for(let i=0;i<len2;i++){
+         if(i==0)
+        {//console.log(JSON.parse(JSON.stringify(result.dependsOn[i])).value);
+        task.depends_on.push(JSON.parse(JSON.stringify(result.dependsOn[i])).value);}
+         else 
+        {//console.log(JSON.stringify(result.dependsOn[i]).replace(/\"/g,'')); 
+          task.depends_on.push(JSON.stringify(result.dependsOn[i]).replace(/\"/g,''));}
+         }
+        //console.log(this.task.depends_on);
+        this.updateLinks(task.depends_on,this.taskName);
+         
+      }
+
+      //console.log(this.task.depends_on);
+      console.log(this.taskName)
+      this.map.set(this.taskName,task);
+      this.workflow.tasks = this.map;
+      console.log(this.map);
+      //console.log(this.map.get(this.taskName).depends_on);
+
+      //console.log(result);
+      //console.log(this.task);
+      //console.log(this.wTaskAliases);
     });
   }
 
@@ -269,14 +427,52 @@ updateData() {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // var taskMap = new Map();
-      // taskMap.set(result.taskName, result.taskType); 
-      this.workflow.workFlowName=result.Wname;
+      
+      this.workflow.workFlowName=result;
       console.log(this.workflow.workFlowName,'The dialog was closed');
-      // this.workflow.push(taskMap);
+      
       
     });
   }
+  openjsoneditor(): void {
+    let json =this.map.toJSON();
+    let dialogRef = this.dialog.open(JsonEditor, {
+     data: { json: json },
+     width: '700px',
+     height: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+       let aliases :any;
+       this.myMap.fromJSON(result);
+       console.log(this.myMap);
+       this.map=this.myMap;
+       //this.workflow.tasks =this.map;
+       //let len = this.map.length;
+       //aliases = this.map.keys;
+       this.wTaskAliases =this.map.keys();
+       //console.log(len);
+       this.workflowToGraph(this.map);
+
+      
+    });
+  }
+  openSettings(): void {
+   
+    let dialogRef = this.dialog.open(SettingsDialog, {
+     data: { orientations: this.orientations,orientation :this.orientation ,colors:this.colorSets1,color:this.selectedColorScheme,curveTypes : this.interpolationTypes,curveType :this.curveType},
+     width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+       
+                this.orientation = result.orientation;
+                this.setColorScheme(result.color);
+                this.setInterpolationType(result.curveType);
+    });
+  }
+
+ 
 
 }
 
@@ -286,26 +482,25 @@ updateData() {
   styleUrls : ['dialog-overview-dialog.css']
 })
 export class DialogOverviewDialog {
-  //tasks: Array<String> = ["git-clone","mvn-package"]; 
-  ///form: FormGroup;
+  
+  
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Inject(MAT_DIALOG_DATA) public data: any) { } 
 
-  /* this.form = new FormBuilder().group({
-              chips: [['chip'], []]
-  });*/
-
-    } 
-
-    onItemAdded(item){
-      console.log("SELECTED ITEM", item.value);
-      this.data.dependsOn.push(item.value);
-    }
+    
   onNoClick(): void { 
-    this.dialogRef.close();
-  }
 
+   if (this.data.taskName == null||this.data.taskType == null)
+       alert("Please give task name and type");
+
+   if (this.data.taskName != null&&this.data.taskType != null)  
+    this.dialogRef.close(this.data);
+  }
+ onCancelClick(): void{
+    this.dialogRef.close();
+
+ }
 }
 
 
@@ -321,7 +516,63 @@ export class WnameOverviewDialog {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
    
   onNoClick(): void { 
-    this.dialogRef.close();
+
+    if (this.data.Wname == null)
+       alert("Please give a name to the workflow");
+    if (this.data.Wname != null)
+      this.dialogRef.close(this.data.Wname);
+  }
+  
+
+
+}
+
+@Component({
+  selector: 'jsoneditor-overview-dialog',
+  templateUrl: 'jsoneditor-overview-dialog.html',
+  styleUrls : ['jsoneditor-overview-dialog.css']
+})
+export class JsonEditor {
+  
+  public editorOptions: JsonEditorOptions;
+  public jsondata: any;
+  @ViewChild(JsonEditorComponent) editor: JsonEditorComponent;
+  constructor(
+    public dialogRef: MatDialogRef<JsonEditor >,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.editorOptions = new JsonEditorOptions()
+    this.editorOptions.modes = ['code', 'text', 'tree', 'view']; 
+    this.jsondata = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]};
+ 
+   
+  }
+
+  onNoClick(): void { 
+
+      console.log(this.editor.get())
+      this.dialogRef.close(this.editor.get());
+  }
+  
+
+
+}
+@Component({
+  selector: 'settings-overview-dialog',
+  templateUrl: 'settings-overview-dialog.html',
+  styleUrls : ['settings-overview-dialog.css']
+})
+export class SettingsDialog {
+  
+  
+  
+  constructor(
+    public dialogRef: MatDialogRef<SettingsDialog >,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void { 
+
+      
+      this.dialogRef.close(this.data);
   }
   
 
