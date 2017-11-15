@@ -1,5 +1,7 @@
 package com.distributedpipeline.persistence.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
+import com.distributedpipeline.persistence.domain.Tasks;
 import com.distributedpipeline.persistence.domain.Workflow;
 import com.distributedpipeline.persistence.exceptions.NotNullException;
 import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundException;
@@ -139,7 +142,7 @@ public class PersistenceController {
 
 	/*--------------------------------- get tasks name for a workflow --------------------------- */
 	@RequestMapping(value="/tasks/{workFlowName}" , method=RequestMethod.GET)
-	public ResponseEntity<List<String>> getWorkflowforuser(@PathVariable(value="workFlowName") String workFlowName) throws WorkflowNotFoundException, TaskLibraryNotFoundException {
+	public ResponseEntity<List<String>> getWorkflowforuser(@PathVariable(value="workFlowName") String workFlowName) {
 		return new ResponseEntity<List<String>>(persistenceservice.getTasksOfWorkflow(workFlowName),HttpStatus.OK);
 	}
 	
