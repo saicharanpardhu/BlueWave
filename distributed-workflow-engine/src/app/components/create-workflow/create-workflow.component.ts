@@ -392,7 +392,7 @@ for(let i=0;i<len;i++){
         //console.log(this.depends_on.length);
        let len2 = this.depends_on.length;
        for(let i=0;i<len2;i++){
-         if(i==0)
+         if(JSON.parse(JSON.stringify(result.dependsOn[i])).value!=null)
         {//console.log(JSON.parse(JSON.stringify(result.dependsOn[i])).value);
         task.depends_on.push(JSON.parse(JSON.stringify(result.dependsOn[i])).value);}
          else 
