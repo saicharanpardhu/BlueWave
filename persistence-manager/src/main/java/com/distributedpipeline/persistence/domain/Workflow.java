@@ -84,7 +84,6 @@ public class Workflow {
 		this.workFlowStatus = workFlowStatus;
 	}
 
-
 	public Map<String, Tasks> getTasks() {
 		return tasks;
 	}
