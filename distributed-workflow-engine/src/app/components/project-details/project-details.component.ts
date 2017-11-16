@@ -11,7 +11,8 @@ export class ProjectDetailsComponent implements OnInit {
 
   public datas : any;
 
-    constructor(private workflow_service : WorkflowDetailsService,private router:Router) {
+    constructor(private workflow_service : WorkflowDetailsService,
+    private router:Router) {
     }
 
     ngOnInit(){
@@ -24,10 +25,6 @@ export class ProjectDetailsComponent implements OnInit {
         console.log(datas);
         this.datas = datas ;
       });
-    }
-
-    getCurrentWorkflow(workFlowName : String) {
-      this.workflow_service.currentWorkflowName = workFlowName;
     }
 
 

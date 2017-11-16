@@ -11,12 +11,20 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SocketService {
   stompClient:any;
-  socketMessageSource = new Subject<String>();
-  socketUrl = 'http://172.23.238.216:8080/gs-guide-websocket'; 
+  socketUrl = 'http://172.23.238.216:9000/gs-guide-websocket'; 
+
   socket: any;
-  messageSubscription:any;
-  socketMessage: String = "Default";
+
+  messageSubscription:any; 
+  socketMessageSource = new Subject<String>();
+  socketMessage: String = "Default"; 
   socketMessages = this.socketMessageSource.asObservable();
+
+  errorSubscription:any; 
+  socketErrorSource = new Subject<String>(); 
+  socketErrors = this.socketErrorSource.asObservable();
+
+
   numberSubscription:any; 
   socketNumber:number;
   nameSubscription : any; 
@@ -50,6 +58,26 @@ subscribe(){
         this.socketMessageSource.next(temp);
         console.log(temp);
       }); 
+
+      if(this.errorSubscription != null)
+      this.errorSubscription.unsubscribe();
+  
+
+   this.errorSubscription = this.stomp.subscribe('/error',(response) => {
+      let temp : String = response.message;
+      this.socketErrorSource.next(temp);
+      console.log(temp);
+    }); 
+
+      if(this.errorSubscription != null)
+      this.messageSubscription.unsubscribe();
+  
+
+   this.messageSubscription = this.stomp.subscribe('/response',(response) => {
+      let temp : String = response.message;
+      this.socketMessageSource.next(temp);
+      console.log(temp);
+    }); 
 
       if(this.numberSubscription != null)
       this.numberSubscription.unsubscribe();

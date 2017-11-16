@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { Input, Output } from '@angular/core';
+import { WorkflowDetailsService } from './../../services/workflow-details/workflow-details.service';
 
 @Component({
   selector: 'app-workflow',
@@ -8,16 +10,31 @@ import { Router } from '@angular/router';
   styleUrls: ['./workflow.component.css']
 })
 export class WorkflowComponent implements OnInit {
-
-  constructor(
-    private authentication : AuthenticationService,
-    private router: Router) { }
-
-  ngOnInit() {
-    // console.log("Logged in: ", !(this.authentication.getAccessToken() === ''));
-    // if(this.authentication.getAccessToken() === ''){
-    //   this.router.navigate(['/index']);
-    // }
-  }
+ 
+    public datas : any;
+    
+        constructor(private workflow_service : WorkflowDetailsService,
+        private router:Router) {
+        }
+    
+        ngOnInit(){
+          this.load_workflows();
+    
+        }
+    
+        load_workflows() {
+          console.log("Loading workflows..")
+          return this.workflow_service.getWorkflow().subscribe(datas => {
+            console.log(datas);
+            this.datas = datas ;
+          });
+        }
+    
+    
+        getTask(workFlowName : String) {
+          this.workflow_service.getTasksOfWorkflow(workFlowName).then(()=>
+          this.router.navigate(['/workflow/workflowdetails'])
+        );
+      }
 
 }

@@ -1,3 +1,4 @@
+import { ProjectDetailsComponent } from './../components/project-details/project-details.component';
 import { ReportsComponent } from './../components/reports/reports.component';
 import { ProfileComponent } from './../components/profile/profile.component';
 import { LoginHomeComponent } from './../components/login-home/login-home.component';
@@ -9,8 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateWorkflowComponent } from '../components/create-workflow/create-workflow.component';
 import { ExecuteWorkflowComponent } from '../components/execute-workflow/execute-workflow.component';
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
-import { WorkflowDetailsComponent } from '../components/workflow-details/workflow-details.component';
-import { ProjectDetailsComponent } from '../components/project-details/project-details.component'
+import { WorkflowComponent } from '../components/workflow/workflow.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,11 +23,9 @@ const routes: Routes = [
   {path : 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
   {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
-  {path : 'executeworkflow', component: ExecuteWorkflowComponent} , 
+  {path : 'workflows', component: WorkflowComponent, canActivate: [AuthGuardService]},
+  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]} , 
   {path : 'addworkflow', component: CreateWorkflowComponent},
-  {path : 'workflow' , component: ProjectDetailsComponent},
-  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]},  
-  {path : 'workflow/workflowdetails', component: WorkflowDetailsComponent ,canActivate: [AuthGuardService] },
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  
 ];
 @NgModule({ 

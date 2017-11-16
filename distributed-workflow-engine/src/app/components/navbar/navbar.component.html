@@ -11,8 +11,8 @@
   </a> 
   
 
-  <a _ngcontent-c1="" aria-label="My Projects" class="docs-navbar-hide-small docs-button mat-button" 
-    mat-button=""   tabindex="0" aria-disabled="false" [routerLink]="['/workflow']">
+  <a _ngcontent-c1="" aria-label="My Workflows" class="docs-navbar-hide-small docs-button mat-button" 
+    mat-button=""   tabindex="0" aria-disabled="false" [routerLink]="['/workflows']">
     <span class="mat-button-wrapper">
         <mat-icon>work</mat-icon> <span>My Workflows</span>
     </span>
@@ -32,20 +32,19 @@
   <span class="fill-remaining-space"></span>
   
   
-  <button mat-button [matMenuTriggerFor]="menu" (click)="notif = !notif" _ngcontent-c1="" aria-label="Notifications" 
+  <button mat-button [matMenuTriggerFor]="menu"  (click)="notif = !notif" _ngcontent-c1="" aria-label="Notifications" 
   mat-icon-button   tabindex="0" aria-disabled="false"> 
       <mat-icon *ngIf="notif" >notifications</mat-icon> 
       
       <mat-icon *ngIf="!notif">notifications_active</mat-icon> 
-</button> 
-<mat-menu #menu="matMenu"> 
-  <div mat-menu-item>
-          Notifiaofjwopajdapowjndpoajwopjnadijadwp
-        </div> 
-        <div mat-menu-item>
-            Notifiaofjwopajdapowjndpoajwopjnadijadwp
-          </div> 
-  </mat-menu>
+      <br><br>
+      <mat-menu #menu="matMenu">
+        <div mat-menu-item>Notifications 1 </div>
+        <div mat-menu-item>Notifications 1 </div>
+      </mat-menu>
+</button>  
+
+
 
   <a _ngcontent-c1="" aria-label="Add Workflow" [routerLink]="['/addworkflow']" class="docs-navbar-hide-small docs-button mat-button" 
   mat-button   tabindex="0" aria-disabled="false" >

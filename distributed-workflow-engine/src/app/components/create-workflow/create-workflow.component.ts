@@ -32,7 +32,7 @@ export class CreateWorkflowComponent implements OnInit{
 
   public tasks: Array<String> = ["git-clone","mvn-package"];
   // workflow: Array<Map<String,String>> = [];
-  myMap = new TSMap<String,Task>();
+  
   map = new TSMap<String,Task>();
   workflow :Workflow = {};
   task :Task ={};
@@ -443,10 +443,10 @@ for(let i=0;i<len;i++){
     });
 
     dialogRef.afterClosed().subscribe(result => {
-       let aliases :any;
-       this.myMap.fromJSON(result);
-       console.log(this.myMap);
-       this.map=this.myMap;
+      let myMap = new TSMap<String,Task>();
+       myMap.fromJSON(result);
+       console.log(myMap);
+       this.map=myMap;
        //this.workflow.tasks =this.map;
        //let len = this.map.length;
        //aliases = this.map.keys;

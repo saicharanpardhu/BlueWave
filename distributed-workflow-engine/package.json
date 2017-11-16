@@ -25,9 +25,9 @@
     "@angular/router": "4.4.6",
     "@stomp/ng2-stompjs": "0.4.2",
     "@swimlane/ngx-charts-dag": "^2.1.4",
+    "angular2-notifications-lite": "^0.1.2",
     "core-js": "2.4.1",
     "d3": "^4.11.0",
-    "angular4-jsoneditor": "^1.0.7",
     "express": "4.15.2",
     "hammerjs": "2.0.8",
     "ng2-stomp-service": "^1.2.2",
@@ -36,6 +36,7 @@
     "sockjs-client": "^1.1.4",
     "stompjs": "^2.3.3",
     "typescript-map": "0.0.5",
+   "angular4-jsoneditor": "^1.0.7",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -20,6 +20,6 @@ export class HomeComponent implements OnInit {
     this.persistence.sendWorkFlow();
   }
   executeWorkflow(){ 
-    this.persistence.triggerEngine("git-process");
+    this.persistence.triggerEngine("git-process2");
   }
 }

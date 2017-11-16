@@ -12,6 +12,7 @@ import {MatCardModule ,
   MatSelectModule,
   MatIconModule,
   MatTabsModule,
+  MatRadioModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatTableModule,
@@ -19,10 +20,9 @@ import {MatCardModule ,
   MatDialogModule,
   MatDialog,
   MatDialogRef,
-  MatStepperModule,
+  MatStepperModule,  
   MatMenuModule,
-  MatCheckboxModule,
-   MatRadioModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -36,6 +36,7 @@ import { Validators } from '@angular/forms';
     MatProgressBarModule,
     MatExpansionModule,  
     MatGridListModule,
+    MatRadioModule,
     MatCardModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
@@ -58,6 +59,7 @@ import { Validators } from '@angular/forms';
     MatExpansionModule,
     MatSnackBarModule, 
     MatGridListModule,
+    MatRadioModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -69,8 +71,7 @@ import { Validators } from '@angular/forms';
     MatAutocompleteModule,
     MatDialogModule,
     MatStepperModule, 
-    MatMenuModule,
-     MatRadioModule,
+    MatMenuModule
   ],
 })
 export class MaterialModule { }

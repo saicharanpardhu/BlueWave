@@ -1,15 +1,6 @@
 <app-navbar></app-navbar>
 <div class= "container">
-  <mat-tab-group>
-    <div *ngFor = "let task of this.tasks">
-    <mat-tab label={{task}}>
-     <button (click) = "loadWorkFlowDetails(task)"> Click </button>
-      <div *ngIf="show">TaskType : {{this.taskDetails.taskType}}</div>
-      <div *ngIf="show">Status : {{this.taskDetails.status}}</div>
-      <div *ngIf="show">Dependencies : {{this.taskDetails.depends_on}}</div>
-      <div *ngIf="show">Output : {{this.taskDetails.output}}</div>
-      <div *ngIf="show">Input : {{this.taskDetails.input}}</div>
-    </mat-tab>
-  </div>
+  <mat-tab-group *ngFor = "let task of this.tasks">
+    <mat-tab label={{task}}>Content</mat-tab>
   </mat-tab-group>
 </div>

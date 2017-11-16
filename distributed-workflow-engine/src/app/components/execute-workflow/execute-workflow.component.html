@@ -6,13 +6,11 @@
     </mat-card-header>
     <mat-card-content>
       <br>
-        <mat-horizontal-stepper *ngIf="displayStepper" [linear]="isLinear">
-          <mat-step *ngFor="let name of tasks">
-            <form >
-              <ng-template matStepLabel>{{name}}</ng-template> 
-            </form>
-          </mat-step> 
-        </mat-horizontal-stepper>
+        <ul *ngIf="displayStepper" style="list-style: none; ">
+          <li *ngFor="let name of tasks" style="display: inline-block">
+            <mat-card class="cards">  {{name}}</mat-card>
+          </li> 
+        </ul>
         <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
         <br><br> 
 
