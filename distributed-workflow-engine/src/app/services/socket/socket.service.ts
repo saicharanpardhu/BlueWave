@@ -7,24 +7,17 @@ import { Subject }    from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-
 @Injectable()
-export class SocketService {
+export class SocketService implements OnInit{
+  public username: String;
+
   stompClient:any;
-  socketUrl = 'http://172.23.238.216:9000/gs-guide-websocket'; 
-
-  socket: any;
-
-  messageSubscription:any; 
   socketMessageSource = new Subject<String>();
-  socketMessage: String = "Default"; 
+  socketUrl = 'http://172.23.238.216:9000/gs-guide-websocket'; 
+  socket: any;
+  messageSubscription:any;
+  socketMessage: String = "Default";
   socketMessages = this.socketMessageSource.asObservable();
-
-  errorSubscription:any; 
-  socketErrorSource = new Subject<String>(); 
-  socketErrors = this.socketErrorSource.asObservable();
-
-
   numberSubscription:any; 
   socketNumber:number;
   nameSubscription : any; 
@@ -32,9 +25,17 @@ export class SocketService {
   socketNameSource = new Subject<String>();
   socketNames = this.socketNameSource.asObservable();
 
+  socketConsoleSubscription : any; 
+  
+  socketConsoleMap : any;
+  
+  ngOnInit(){
+    // console.log(this.username);
+  }
  constructor(
     private http:Http,
-    private stomp: StompService) {   
+    private stomp: StompService,) {   
+      
     this.connect();
   } 
 connect(){
@@ -44,58 +45,45 @@ connect(){
     queue: {'init': false}
   });
   this.stomp.startConnect().then(() => {
-    this.stomp.done('init'); 
-    this.subscribe(); 
+    this.stomp.done('init');  
   });
 }
 subscribe(){
+
+  this.username= localStorage.getItem("Email");
   if(this.messageSubscription != null)
         this.messageSubscription.unsubscribe();
     
   
-     this.messageSubscription = this.stomp.subscribe('/response',(response) => {
-        let temp : String = response.message;
+     this.messageSubscription = this.stomp.subscribe('/response/'+this.username,(response) => {
+        let temp : String = response.output;
+        console.log("OUTPUT: ",response.output);
         this.socketMessageSource.next(temp);
         console.log(temp);
       }); 
-
-      if(this.errorSubscription != null)
-      this.errorSubscription.unsubscribe();
-  
-
-   this.errorSubscription = this.stomp.subscribe('/error',(response) => {
-      let temp : String = response.message;
-      this.socketErrorSource.next(temp);
-      console.log(temp);
-    }); 
-
-      if(this.errorSubscription != null)
-      this.messageSubscription.unsubscribe();
-  
-
-   this.messageSubscription = this.stomp.subscribe('/response',(response) => {
-      let temp : String = response.message;
-      this.socketMessageSource.next(temp);
-      console.log(temp);
-    }); 
-
       if(this.numberSubscription != null)
       this.numberSubscription.unsubscribe();
   
-
    this.numberSubscription = this.stomp.subscribe('/number',(response) => {
-      let temp : String = response.message;
-      this.socketNumber = response.message;
-      console.log(this.socketNumber); 
+      let temp : String = response;
+      this.socketNumber = response;
+      console.log("TOTAL NUMBER OF TASKS", temp); 
     }); 
-
     if(this.nameSubscription != null)
     this.nameSubscription.unsubscribe();
-
-
- this.nameSubscription = this.stomp.subscribe('/name',(response) => {
-    let temp : String = response.message; 
+ this.nameSubscription = this.stomp.subscribe('/name/'+this.username,(response) => {
+    let temp : String = response.taskName; 
     console.log("RECEIEVED TASKNAME: " , temp); 
+    this.socketNameSource.next(temp); 
+  }); 
+
+  if(this.socketConsoleSubscription != null)
+  this.socketConsoleSubscription.unsubscribe();
+  this.socketConsoleSubscription = this.stomp.subscribe('/console/'+this.username,(response) => {
+    let temp : String = response.taskName; 
+    console.log("RECEIEVED Console TASKNAME: " , temp); 
+    this.socketConsoleMap[response.taskName] = response.console;
+    console.log("console output: ",this.socketConsoleMap);
     this.socketNameSource.next(temp); 
   }); 
 }
@@ -105,12 +93,13 @@ subscribe(){
     console.log(message);
     this.stomp.send('/app/topic/messages',{"message":message}); 
   }
-
  disconnect(){
     this.stomp.send('/app/topic/messages',{"message":"logout notification"});
     this.stomp.disconnect().then(() => {
       console.log( 'Connection closed' )
     });
   }
-
+  showUsername(){
+    console.log(this.username);
+  }
 }

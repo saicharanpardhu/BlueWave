@@ -2,7 +2,6 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../../model/task';
 import { WorkFlow } from '../../model/workflow';
-
 @Injectable()
 export class PerisitenceService {
   constructor(private http: Http) { }
@@ -35,19 +34,13 @@ export class PerisitenceService {
     console.log("hey"+JSON.stringify(workflow));
     // this.http.post("http://172.23.238.147:8080/v1.0/persistence/workflow", JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response.json()));
   }
-
-
   //triggered when save clicked in UI for a workflow
-
   sendWorkFlow2(workflowName, owner, status, tasks){
     // console.log("w "+workflowName+" O "+owner+" status "+status);
     // console.log(JSON.stringify(tasks));
-
     // tasks = JSON.stringify(tasks);
     let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
-
     this.http.post("http://172.23.238.147:8080/v1.0/persistence/workflow",
      JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response));
   }
-
 }

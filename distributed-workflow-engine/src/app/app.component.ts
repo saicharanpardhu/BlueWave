@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private snackBar:MatSnackBar,
               private socketService: SocketService){}
   ngOnInit(){ 
-    
+    localStorage.clear();
     this.socketService.socketMessages.subscribe( data => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;

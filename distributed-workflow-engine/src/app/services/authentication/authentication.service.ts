@@ -12,6 +12,8 @@ export class AuthenticationService {
   }
   public setAccessToken(){
     this.access_token = '';
+    localStorage.clear();
+    localStorage.removeItem("Email");
   }
   constructor(private http: Http) { }
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',

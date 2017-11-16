@@ -23,9 +23,10 @@ export class ExecuteWorkflowComponent implements OnInit {
   response: any;
   value = 0;
   tasksComplete = 0;
-  
+  consoleOutput;
   tasks : Array<String> = [];
   displayStepper = false;
+  cardDisplay = false;
   ngOnInit() {    
 
     // this.tasks = this.socketService.taskNames;
@@ -45,12 +46,21 @@ export class ExecuteWorkflowComponent implements OnInit {
     });
   
   }
-  isLinear = true; 
-  
+  isLinear = true;  
   sendMessage(message){
     this.socketService.sendMessage(message);
   }
 
+  loadConsole(taskName){
+    this.consoleOutput = this.socketService.socketConsoleMap[taskName]; 
+  }
+
   ngOnDestroy(){ 
+    this.value = 0;
+    this.tasksComplete = 0;
+    this.consoleOutput = null;
+    this.tasks  = [];
+    this.displayStepper = false;
+    this.cardDisplay = false
   }
 }

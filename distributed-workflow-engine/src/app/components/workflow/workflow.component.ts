@@ -3,7 +3,6 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { Router } from '@angular/router';
 import { Input, Output } from '@angular/core';
 import { WorkflowDetailsService } from './../../services/workflow-details/workflow-details.service';
-
 @Component({
   selector: 'app-workflow',
   templateUrl: './workflow.component.html',
@@ -20,12 +19,12 @@ export class WorkflowComponent implements OnInit {
   
       ngOnInit(){
         this.load_workflows();
-  
+        console.log("uiawfchiwfc");
       }
   
       load_workflows() {
         return this.workflow_service.getAllWorkflows().subscribe(datas => {
-          console.log(datas);
+          console.log(datas+"aerfeugrfeiufeiu");
           this.datas = datas ;
         });
       }
@@ -38,12 +37,9 @@ export class WorkflowComponent implements OnInit {
         this.workflow_service.getTasksOfWorkflow(workFlowName).then(()=>
         this.router.navigate(['/workflows/workflowdetails'])
       );
-
       
     }
-
     getWorkflow(workFlowName){
       this.workflow_service.getWorkflow(workFlowName).then(()=> this.router.navigate(['/addworkflow']));
     }
-
 }

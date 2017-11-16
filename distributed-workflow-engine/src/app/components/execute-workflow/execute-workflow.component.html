@@ -8,7 +8,7 @@
       <br>
         <ul *ngIf="displayStepper" style="list-style: none; ">
           <li *ngFor="let name of tasks" style="display: inline-block">
-            <mat-card class="cards">  {{name}}</mat-card>
+            <mat-card class="cards" (click)="loadConsole(name);cardDisplay = !cardDisplay;">  {{name}}</mat-card>
           </li> 
         </ul>
         <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
@@ -26,6 +26,27 @@
               </mat-panel-title> 
             </mat-expansion-panel-header>  
         </mat-expansion-panel>
+        <mat-card class="console" *ngIf="cardDisplay">
+          <mat-card-title>Console output</mat-card-title>
+          <mat-card-content>
+            <div class="consolecontainer">  <pre>
+  .   ____          _            __ _ _
+  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+  =========|_|==============|___/=/_/_/_/
+  :: Spring Boot ::        (v1.5.8.RELEASE)
+
+2017-11-16 17:34:57.779  INFO 16166 --- [           main] com.sr.stomp.Application                 : Starting Application on akshay-Latitude-E5440 with PID 16166 (/home/akshay/Desktop/Workspace/New/SocketService/target/classes started by akshay in /home/akshay/Desktop/Workspace/New/SocketService)
+2017-11-16 17:34:57.781  INFO 16166 --- [           main] com.sr.stomp.Application                 : No active profile set, falling back to default profiles: default
+2017-11-16 17:34:57.812  INFO 16166 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@105fece7: startup date [Thu Nov 16 17:34:57 IST 2017]; root of context hierarchy
+2017-11-16 17:34:58.483  INFO 16166 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$ab29372c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-11-16 17:34:58.786  INFO 16166 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 9000 (http)
+2017-11-16 17:34:58.792  INFO 16166 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+            </pre></div>
+            </mat-card-content>
+        </mat-card>
     </mat-card-content>
   </mat-card>
 </div>
