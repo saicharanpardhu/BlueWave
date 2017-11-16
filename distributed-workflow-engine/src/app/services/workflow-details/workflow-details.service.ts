@@ -12,21 +12,20 @@ export class WorkflowDetailsService {
   public taskDetails : any;
   public currentWorkflowName : any;
   public workflow;
+  public displayWorkflow;
   constructor(private _http:Http){
     console.log("service running");
   }
 
 
   getAllWorkflows(){ 
-      return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow').map(res=>{
-        this.workflow = res.json();
-      });  
+      return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow').map(res=> res.json());  
     
   }
 
   getWorkflow(workFlowName){ 
     return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res=>{
-      this.workflow = res.json();
+      this.displayWorkflow = res.json();
     });  
   
 }

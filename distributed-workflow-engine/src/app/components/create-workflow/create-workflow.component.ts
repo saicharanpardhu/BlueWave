@@ -1,4 +1,6 @@
 import { PerisitenceService } from './../../services/persistence/perisitence.service';
+import { WorkflowDetailsService } from './../../services/workflow-details/workflow-details.service';
+
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
  import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
@@ -118,7 +120,9 @@ export class CreateWorkflowComponent implements OnInit{
     public dialog: MatDialog, 
     private authentication : AuthenticationService,
     private persistence: PerisitenceService,
-    private router: Router) {
+    private router: Router,
+    private workflowService: WorkflowDetailsService
+  ) {
 
     Object.assign(this, {
       countries,
@@ -139,13 +143,28 @@ export class CreateWorkflowComponent implements OnInit{
 
     /*setInterval(this.updateData.bind(this), 1000);*/
      this.selectedColorScheme = "aqua"; 
-    this.openWnameDialog()
+    
     //this.task.taskType="gitclopne"
     /*this.myMap.set("wefef",this.task);
     console.log(this.myMap.toJSON());*/
     if (!this.fitContainer) {
       this.applyDimensions();
     }
+    if (this.workflowService.displayWorkflow!=null){
+      console.log(this.workflowService.displayWorkflow.tasks);
+          this.map.fromJSON( this.workflowService.displayWorkflow.tasks);
+          this.wTaskAliases = this.map.keys();
+          this.workflowToGraph(this.map);
+      console.log(this.map);    
+    }
+    else{
+      this.openWnameDialog()
+
+    }
+
+
+
+
   }
 updateNodes(taskname:String) {
     /*if (!this.realTimeData) {
@@ -303,6 +322,8 @@ updateNodes(taskname:String) {
 workflowToGraph(map :TSMap<String,Task> ){
 
 this.hierarchialGraph = getTurbineData();
+
+console.log("YY");
 
 //console.log(this.hierarchialGraph.links );
 //console.log(this.hierarchialGraph.nodes);

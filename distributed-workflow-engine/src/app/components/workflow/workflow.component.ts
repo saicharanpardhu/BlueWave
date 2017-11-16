@@ -20,12 +20,12 @@ export class WorkflowComponent implements OnInit {
   
       ngOnInit(){
         this.load_workflows();
-  
+        console.log("uiawfchiwfc");
       }
   
       load_workflows() {
         return this.workflow_service.getAllWorkflows().subscribe(datas => {
-          console.log(datas);
+          console.log(datas+"aerfeugrfeiufeiu");
           this.datas = datas ;
         });
       }
