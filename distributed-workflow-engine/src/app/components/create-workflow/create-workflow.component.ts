@@ -1,3 +1,4 @@
+import { PerisitenceService } from './../../services/persistence/perisitence.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
  import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
@@ -42,7 +43,7 @@ export class CreateWorkflowComponent implements OnInit{
   dependsOn : any;
   depends_on : any;
   input :String;
-  status = "created";
+  status = "created";                           //workFlow Status
   wTaskAliases : String[] = [];
   deleteMode : boolean = false;
   deleteModeButton ="DELETE TASKS"
@@ -116,9 +117,10 @@ export class CreateWorkflowComponent implements OnInit{
   constructor(
     public dialog: MatDialog, 
     private authentication : AuthenticationService,
+    private persistence: PerisitenceService,
     private router: Router) {
 
-        Object.assign(this, {
+    Object.assign(this, {
       countries,
       colorSets,
       chartGroups,
@@ -417,8 +419,14 @@ for(let i=0;i<len;i++){
     });
   }
 
-
-
+//calling the function for saving the data about workflow to persistence database
+    saveWorkflow(): void {
+      
+      //owner is hardcoded
+      this.workflow.owner = "chutiya";
+      this.persistence.sendWorkFlow2(this.workflow.workFlowName,
+                                      this.workflow.owner,this.status,this.map);    
+    }
 
     openWnameDialog(): void {
     let dialogRef = this.dialog.open(WnameOverviewDialog, {
