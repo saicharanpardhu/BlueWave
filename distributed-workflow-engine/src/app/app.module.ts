@@ -58,12 +58,7 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
     NgxChartsDagModule,
     TagInputModule
   ],
-  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService,
-    {
-      provide: APP_BASE_HREF,
-      useFactory: getBaseLocation
-    }
-  ],
+  providers: [AuthenticationService, PerisitenceService, AuthGuardService, SocketService, StompService],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog]
 })
