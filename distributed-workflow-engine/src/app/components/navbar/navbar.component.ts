@@ -1,6 +1,8 @@
+
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import {MatToolbarModule,MatProgressSpinnerModule} from '@angular/material';
+import { WorkflowDetailsService } from './../../services/workflow-details/workflow-details.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +11,7 @@ import {MatToolbarModule,MatProgressSpinnerModule} from '@angular/material';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authentication: AuthenticationService) { }
+  constructor(private authentication: AuthenticationService,private workflowService:WorkflowDetailsService) { }
 
   notif = true;
   ngOnInit() {
@@ -18,5 +20,9 @@ export class NavbarComponent implements OnInit {
   logout(){
     this.authentication.setAccessToken(); 
   }
+  viewmodeexit():void{
+    this.workflowService.displayWorkflow=null;
 
+
+  }
 }

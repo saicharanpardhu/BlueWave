@@ -21,7 +21,8 @@ import { TagInputModule } from 'ngx-chips';
 import 'rxjs/add/operator/debounceTime';
 import {MatRadioModule} from '@angular/material/radio';
 import { JsonEditorComponent, JsonEditorOptions } from 'angular4-jsoneditor/jsoneditor/jsoneditor.component';
-import { TSMap } from "typescript-map"
+import { TSMap } from "typescript-map";
+import { OnDestroy } from '@angular/core';
 /**
  * @title Dialog Overview
  */ 
@@ -31,7 +32,7 @@ import { TSMap } from "typescript-map"
   templateUrl: './create-workflow.component.html',
   styleUrls: ['./create-workflow.component.css']
 })
-export class CreateWorkflowComponent implements OnInit{
+export class CreateWorkflowComponent implements OnInit, OnDestroy{
 
   public tasks: Array<String> = ["git-clone","mvn-package"];
   // workflow: Array<Map<String,String>> = [];
@@ -166,6 +167,12 @@ export class CreateWorkflowComponent implements OnInit{
 
 
   }
+
+  ngOnDestroy() {
+    this.workflowService.displayWorkflow=null;
+  }
+
+  
 updateNodes(taskname:String) {
     /*if (!this.realTimeData) {
       return;
@@ -404,7 +411,8 @@ for(let i=0;i<len;i++){
       this.taskName = result.taskName;
       task.taskType = result.taskType;
       this.depends_on = result.dependsOn;
-       task.input = result.input;
+      task.input = [];
+       task.input.push(result.input);
       this.wTaskAliases.push(result.taskName);
       
       task.depends_on =[];
@@ -446,7 +454,8 @@ for(let i=0;i<len;i++){
       //owner is hardcoded
       this.workflow.owner = "chutiya";
       this.persistence.sendWorkFlow2(this.workflow.workFlowName,
-                                      this.workflow.owner,this.status,this.map);    
+                                      this.workflow.owner,this.status,this.map);
+                                      console.log(this.map);    
     }
 
     openWnameDialog(): void {
