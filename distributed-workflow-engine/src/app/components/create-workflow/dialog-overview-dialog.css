@@ -14,3 +14,6 @@ tag-input tag-input-dropdown /deep/ ng2-dropdown{
   left: inherit !important;
   z-index: 100000;
 }
+.radio-button {
+  margin: 5px;
+}

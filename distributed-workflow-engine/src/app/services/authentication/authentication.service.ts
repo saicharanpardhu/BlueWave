@@ -18,8 +18,8 @@ export class AuthenticationService {
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
   isLoggedIn(){
-    // return true;
-    return !(this.access_token === '');
+    return true;
+    // return !(this.access_token === '');
   }
 
   signup(firstName, lastName, email, userName, password){

@@ -1,35 +1,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.stackroute</groupId>
-  <artifactId>DistributedPipeline</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>DistributedPipeline</name>
-  <url>http://maven.apache.org</url>
-
+  <groupId>com.distributedworkflowengine.java</groupId>
+  <artifactId>distributedworkflowengine</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>distributedworkflowengine</name>
+  
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+  	<maven.compiler.source>8</maven.compiler.source>
+  	<maven.compiler.targer>8</maven.compiler.targer>
   </properties>
+  
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.8.RELEASE</version>
+  </parent>
+  <modules>
+  	<module>Api-Gateway</module>
+  	<module>Authentication_server</module>
+  	<module>Config-server</module>
+  	<module>persistence-manager</module>
+  	<module>ReportingService</module>
+  	<module>eureka-server</module>
+  	<module>SocketService</module>
+  	<module>user-persistence</module>
+  </modules>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>  
-    <dependency>
-		 <groupId>org.apache.logging.log4j</groupId>
-		 <artifactId>log4j-core</artifactId>
-		 <version>2.8.2</version>
-	</dependency>
-    <dependency>
-    	<groupId>org.springframework.boot</groupId>
-    	<artifactId>spring-boot-starter-test</artifactId>
-    	<version>1.5.8.RELEASE</version>
-    </dependency> 
-  </dependencies>
+
+ 
 </project>

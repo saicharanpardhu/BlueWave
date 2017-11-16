@@ -8,9 +8,10 @@
     <version>0.1.0</version>
 	<name>stomp</name>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
+        <groupId>com.distributedworkflowengine.java</groupId>
+        <artifactId>distributedworkflowengine</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <dependencies>

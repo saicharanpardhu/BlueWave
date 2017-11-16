@@ -7,11 +7,30 @@
     
    </button> 
   
-<button  (click)="openDialog()"  style="z-index: 10;position: fixed; right: 0px; bottom: 5%;" mat-raised-button color="primary">
-   <mat-icon>add_circle</mat-icon> <span>DELETE TASK</span>
-   
-  </button> 
-  </div>
+<ul style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
+<li>
+<button  mat-raised-button  color="primary" >
+   <mat-icon>done_all</mat-icon> <span>SAVE</span>
+</button> 
+</li>
+<li>
+<button (click)="deletemode()"  mat-raised-button color="warn"  >
+   <mat-icon>delete</mat-icon> <span>{{deleteModeButton}}</span>
+</button> 
+</li>
+<li>
+<button   (click)="openjsoneditor()" mat-raised-button color="primary" >
+   <mat-icon>code</mat-icon> <span>EDIT JSON</span>
+</button> 
+</li>
+<li>
+<button (click)="openSettings()" mat-raised-button  >
+   <mat-icon>settings</mat-icon> <span>SETTINGS</span>
+</button> 
+</li>
+
+</ul>
+  
 <main [class]="theme" >
 <div class="chart-col" >
 
@@ -74,6 +93,6 @@
   
 </main>
 
-   
+   </div>
 
  
