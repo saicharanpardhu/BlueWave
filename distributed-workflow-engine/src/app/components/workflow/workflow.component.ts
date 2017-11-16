@@ -11,30 +11,39 @@ import { WorkflowDetailsService } from './../../services/workflow-details/workfl
 })
 export class WorkflowComponent implements OnInit {
  
-    public datas : any;
-    
-        constructor(private workflow_service : WorkflowDetailsService,
-        private router:Router) {
-        }
-    
-        ngOnInit(){
-          this.load_workflows();
-    
-        }
-    
-        load_workflows() {
-          console.log("Loading workflows..")
-          return this.workflow_service.getWorkflow().subscribe(datas => {
-            console.log(datas);
-            this.datas = datas ;
-          });
-        }
-    
-    
-        getTask(workFlowName : String) {
-          this.workflow_service.getTasksOfWorkflow(workFlowName).then(()=>
-          this.router.navigate(['/workflow/workflowdetails'])
-        );
+  
+  public datas : any;
+  
+      constructor(private workflow_service : WorkflowDetailsService,
+      private router:Router) {
       }
+  
+      ngOnInit(){
+        this.load_workflows();
+  
+      }
+  
+      load_workflows() {
+        return this.workflow_service.getAllWorkflows().subscribe(datas => {
+          console.log(datas);
+          this.datas = datas ;
+        });
+      }
+      getCurrentWorkflow(workFlowName : String) {
+        this.workflow_service.currentWorkflowName = workFlowName;
+      }
+  
+  
+      getTask(workFlowName : String) {
+        this.workflow_service.getTasksOfWorkflow(workFlowName).then(()=>
+        this.router.navigate(['/workflows/workflowdetails'])
+      );
+
+      
+    }
+
+    getWorkflow(workFlowName){
+      this.workflow_service.getWorkflow(workFlowName).then(()=> this.router.navigate(['/addworkflow']));
+    }
 
 }

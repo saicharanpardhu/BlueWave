@@ -1,6 +1,14 @@
 <app-navbar></app-navbar>
 <div class= "container">
-  <mat-tab-group *ngFor = "let task of this.tasks">
-    <mat-tab label={{task}}>Content</mat-tab>
+  <mat-card *ngIf="showTasks">
+  <mat-tab-group> 
+    <mat-tab *ngFor = "let task of this.tasks"> 
+      <div >TaskType : {{this.task.taskType}}</div>
+      <div >Status : {{this.task.status}}</div>
+      <div >Dependencies : {{this.task.depends_on}}</div>
+      <div >Output : {{this.task.output}}</div>
+      <div >Input : {{this.task.input}}</div>
+    </mat-tab> 
   </mat-tab-group>
+</mat-card>
 </div>

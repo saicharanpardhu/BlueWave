@@ -11,6 +11,7 @@ import { CreateWorkflowComponent } from '../components/create-workflow/create-wo
 import { ExecuteWorkflowComponent } from '../components/execute-workflow/execute-workflow.component';
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
 import { WorkflowComponent } from '../components/workflow/workflow.component';
+import { WorkflowDetailsComponent } from '../components/workflow-details/workflow-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
   {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
   {path : 'workflows', component: WorkflowComponent, canActivate: [AuthGuardService]},
+  {path : 'workflows/workflowdetails', component: WorkflowDetailsComponent, canActivate: [AuthGuardService]},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]} , 
   {path : 'addworkflow', component: CreateWorkflowComponent},
   {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]}  

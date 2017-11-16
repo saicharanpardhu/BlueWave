@@ -5,17 +5,15 @@
     width: 80%;
     margin: 0 auto;
     margin-top: 50px;
-  }
- 
-
-#workflowmodify{
-  margin-right:0%;
 }
+ 
+.fill-remaining-space { 
+    flex: 1 1 auto;
+} 
 
 .workflowtitle{
     font-size: 20px;
-    padding-top: 15px;
-
+    padding-top: 15px; 
 }
 
 #workflowcard{
