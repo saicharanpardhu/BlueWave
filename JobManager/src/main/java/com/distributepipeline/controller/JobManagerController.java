@@ -24,20 +24,34 @@ public class JobManagerController{
 	@Autowired
 	JobManagerProducer jobManagerProducer;
     
+	
+	@Autowired
+	JobManagerProducer producer;
 	//for resource sharing
+	private String userName;
 	
 	@CrossOrigin(origins="*") 
 	
 	//getting workflow name from user using request mapping
 	
-	@RequestMapping(path="/workflowname/{workFlowName}") 
-	public ResponseEntity<?> echoWord(@PathVariable String workFlowName) {
+	@RequestMapping(path="/workflowname/{userName}/{workFlowName}") 
+	public ResponseEntity<?> echoWord(@PathVariable("userName") String userName ,@PathVariable("workFlowName") String workFlowName) {
 		
 		//sending workflow name to workflow persistence
 		
 		System.out.println("sending...");
+		this.userName=userName;
+		producer.jobIdDetailsToPersistence(userName, workFlowName);
 		jobManagerProducer.sendWorkFlowName(workFlowName); 
 		return new ResponseEntity<String>(workFlowName, HttpStatus.OK); 
 	}  
     //method to add a new user
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
     }

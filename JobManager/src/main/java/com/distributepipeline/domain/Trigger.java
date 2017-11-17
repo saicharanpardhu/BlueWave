@@ -8,6 +8,7 @@ public class Trigger {
 	//fields for the trigger class
 	
 	private String jobId;
+	private String userName;
 	private WorkFlow workFlow;
 	
 	public Trigger() {
@@ -16,9 +17,10 @@ public class Trigger {
 	
 	//constructor for the trigger class
 	
-	public Trigger(String jobId, WorkFlow workFlow) {
+	public Trigger(String jobId, String userName, WorkFlow workFlow) {
 		super();
 		this.jobId = jobId;
+		this.userName=userName;
 		this.workFlow = workFlow;
 	}
 	
@@ -35,6 +37,14 @@ public class Trigger {
 	}
 	public void setWorkflow(WorkFlow workFlow) {
 		this.workFlow = workFlow;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 }
