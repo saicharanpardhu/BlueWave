@@ -1,4 +1,4 @@
-package com.distributedpipeline.persistence.utility;
+package com.distributedpipeline.userpersistence.utility;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -8,10 +8,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
  
-
+//<!----Aspect for the logger -->
 @Aspect 
 @Component
-public class MethodLogger {
+public class MethodLogger { 
 	private static Logger logger = LogManager.getLogger("MethodLogger.class");
 	
 	@Around("@annotation(LogExecutionTime)")

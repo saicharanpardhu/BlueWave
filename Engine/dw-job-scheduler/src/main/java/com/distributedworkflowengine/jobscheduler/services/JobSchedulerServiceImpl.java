@@ -120,6 +120,7 @@ public class JobSchedulerServiceImpl implements JobSchedulerService{
 			
 			
 	@Override
+	@LogExecutionTime
 	public WorkFlow getData(String jobid) {
 
         String str=redisTemplate.opsForValue().get(jobid);
