@@ -22,7 +22,8 @@ import {MatCardModule ,
   MatDialogRef,
   MatStepperModule,  
   MatMenuModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSidenavModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -38,6 +39,7 @@ import { Validators } from '@angular/forms';
     MatGridListModule,
     MatRadioModule,
     MatCardModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
@@ -52,6 +54,7 @@ import { Validators } from '@angular/forms';
   ],
   exports: [
     MatButtonModule, 
+    MatSidenavModule,
     BrowserAnimationsModule, 
     MatToolbarModule,
     MatCheckboxModule,

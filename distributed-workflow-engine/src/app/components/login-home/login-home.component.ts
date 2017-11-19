@@ -54,11 +54,7 @@ export class LoginHomeComponent implements OnInit {
     this.authenticationService.login(email,password).then(() => this.router.navigate(['/home']));
     // if(email){
     //   email = JSON.stringify(email);
-    // }
-    localStorage.setItem('Email', email);
-    this.user = localStorage.getItem('Email');
-    console.log(this.user);
-    this.socket.subscribe();
+    // } 
     // console.log("Authenticated from login", this.authenticationService.getAccessToken());  
   }
   

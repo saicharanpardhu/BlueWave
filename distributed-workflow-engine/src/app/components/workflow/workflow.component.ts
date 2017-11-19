@@ -1,3 +1,4 @@
+import { PerisitenceService } from './../../services/persistence/perisitence.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
@@ -14,7 +15,8 @@ export class WorkflowComponent implements OnInit {
   public datas : any;
   
       constructor(private workflow_service : WorkflowDetailsService,
-      private router:Router) {
+      private router:Router,
+      private persistence: PerisitenceService) {
       }
   
       ngOnInit(){
@@ -24,7 +26,6 @@ export class WorkflowComponent implements OnInit {
   
       load_workflows() {
         return this.workflow_service.getAllWorkflows().subscribe(datas => {
-          console.log(datas+"aerfeugrfeiufeiu");
           this.datas = datas ;
         });
       }
@@ -40,6 +41,14 @@ export class WorkflowComponent implements OnInit {
       
     }
     getWorkflow(workFlowName){
-      this.workflow_service.getWorkflow(workFlowName).then(()=> this.router.navigate(['/addworkflow']));
+      this.workflow_service.getWorkflow(workFlowName).then(()=> this.router.navigate(['/viewworkflow']));
+    }
+
+    executeWorkFlow(workFlowName){
+      this.persistence.triggerEngine(workFlowName);
+    }
+
+    deleteWorkFlow(workFlowName){
+      this.persistence.deleteWorkFlow(workFlowName);
     }
 }

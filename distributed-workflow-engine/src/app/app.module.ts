@@ -29,7 +29,7 @@ import { TagInputModule } from 'ngx-chips';
 import { WorkflowDetailsComponent } from './components/workflow-details/workflow-details.component';
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 
-import { Ng4JsonEditorModule } from 'angular4-jsoneditor'
+import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
 
 @NgModule({
   declarations: [

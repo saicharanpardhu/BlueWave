@@ -1,5 +1,7 @@
+import { SocketService } from './../socket/socket.service';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,13 +17,15 @@ export class AuthenticationService {
     localStorage.clear();
     localStorage.removeItem("Email");
   }
-  constructor(private http: Http) { }
+  constructor(private http: Http, private socket:SocketService,
+    private snackBar:MatSnackBar) { }
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
   isLoggedIn(){
-    return true;
-    // return !(this.access_token === '');
+    // return true;
+    // console.log("Logged in status: ", !(localStorage.getItem('access_token') == null));
+    return !(localStorage.getItem('access_token') == null);
   }
 
   signup(firstName, lastName, email, userName, password){
@@ -48,9 +52,16 @@ export class AuthenticationService {
     console.log("Logging in using the credentials..",username,password);
     return this.http.post('http://172.23.238.176:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
       // response = response.json();
-      this.access_token = response.json().access_token;
-      this.refresh_token = response.json().refresh_token; 
-      console.log("Access token from service",this.access_token, this.refresh_token);
+      localStorage.setItem('access_token',response.json().access_token);
+      localStorage.setItem('refresh_token',response.json().refresh_token);
+      localStorage.setItem('Email', username);
+      console.log('USER',localStorage.getItem('Email'));
+      this.socket.subscribe();
+      console.log("Access token from service",localStorage.getItem('access_token'), localStorage.getItem('refresh_token'));
+    }).catch(() => {
+      let config = new MatSnackBarConfig();
+      config.duration = 1000;
+      this.snackBar.open("Wrong username/password.", '', config) ;
     }) ;
   }
 }

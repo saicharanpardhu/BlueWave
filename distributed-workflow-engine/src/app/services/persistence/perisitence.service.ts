@@ -10,8 +10,8 @@ export class PerisitenceService {
   triggerEngine(workFlowName){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    
-    return this.http.get("http://172.23.238.186:8021/v1.0/workflowname/"+workFlowName, {headers:headers}).toPromise().then((response) => response.json());
+    console.log("http://172.23.238.186:8021/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName);
+    return this.http.get("http://172.23.238.186:8021/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName, {headers:headers}).toPromise().then((response) => response.json());
   }
   strMapToObj(strMap) {
     let obj = Object.create(null);
@@ -42,5 +42,10 @@ export class PerisitenceService {
     let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
     this.http.post("http://172.23.238.147:8080/v1.0/persistence/workflow",
      JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response));
+  }
+
+  deleteWorkFlow(workFlowName){
+    this.http.delete('http://172.23.238.147:8080/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res =>
+    console.log(res.json()));
   }
 }

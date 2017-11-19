@@ -1,0 +1,41 @@
+.fill-remaining-space{
+    flex:1 1 auto;
+}
+.leftsidenavBox{
+    min-width: 15vw;
+}
+.leftsidenavBox mat-toolbar{ 
+    align-items: center;
+    justify-content: center;
+} 
+.rightsidenavBox mat-toolbar{ 
+    align-items: center;
+    justify-content: center;
+} 
+.rightsidenavBox{
+    min-width: 25vw;
+}
+.leftsidenav a{ 
+    display:block;
+    top: 10px;
+    width: 85%;
+    margin-left: 15px;
+    margin-right: 0px;
+    text-align: left;
+    padding: 5px;
+} 
+.mat-icon-button{ 
+    margin: 0 7px;
+}
+.rightsidenav a{ 
+    display:block;
+    top: 10px;
+    width: 85%;
+    margin-left: 15px;
+    margin-right: 0px;
+    text-align: right;
+    padding: 5px;
+} 
+.mat-menu-item{
+    min-width: 9vw;
+}

@@ -31,7 +31,7 @@
                     <input #userName matInput  placeholder="Username" [formControl]="usernameValidator" required>
                     <mat-error *ngIf="usernameValidator.invalid">{{getUsernameErrorMessage()}}</mat-error>
                 </mat-form-field>  
-                 
+                  
               <mat-form-field [hideRequiredMarker]="true">
                   <input #passwordSignup matInput placeholder="Password" [type]="signUphide ? 'password' : 'text'" required> 
                   <mat-icon matSuffix id="password-hide" (click)="signUphide = !signUphide">{{signUphide ? 'visibility' : 'visibility_off'}}</mat-icon>

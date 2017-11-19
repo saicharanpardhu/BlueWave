@@ -1,11 +1,106 @@
-
 <!-- <mat-grid-list cols="20">
         <mat-grid-tile [colspan]="1"></mat-grid-tile>
         <mat-grid-tile [colspan]="18" id="content">
                 <router-outlet></router-outlet>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1"></mat-grid-tile>
-</mat-grid-list> -->  
+</mat-grid-list> -->
+<mat-sidenav-container fullscreen>
+	<mat-sidenav #sidenav class="leftsidenavBox" > 
+		<mat-toolbar color="primary">Menu</mat-toolbar>
+		<div class="leftsidenav">
+			<a _ngcontent-c1="" aria-label="Home" class=" docs-navbar docs-button mat-button" mat-button="" tabindex="0" aria-disabled="false"
+					[routerLink]="['/home']" (click)="sidenav.close()">
+					<span class="mat-button-wrapper">
+							<mat-icon>home</mat-icon>
+							<span>Home</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+				</a>
+
+
+			<a _ngcontent-c1="" aria-label="My Workflows" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+					aria-disabled="false"  (click)="sidenav.close()" [routerLink]="['/workflows']">
+					<span class="mat-button-wrapper">
+							<mat-icon>work</mat-icon>
+							<span>My Workflows</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+			</a>
+
+			<a _ngcontent-c1="" aria-label="Reports" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+					aria-disabled="false"  (click)="sidenav.close()" [routerLink]="['/reports']">
+					<span class="mat-button-wrapper">
+							<mat-icon>description</mat-icon>
+							<span>Reports</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+			</a> </div>
+	</mat-sidenav>
+	<mat-sidenav #rightsidenav position="end" class="rightsidenavBox" openedChange="sideNavopened()">
+			<mat-toolbar color="primary">Notifications</mat-toolbar>
+			<div class="rightsidenav">
+			<div *ngFor="let notification of notifications">
+				{{notification}}
+			</div>
+
+
+
+	</div>
+	</mat-sidenav>
+	<mat-toolbar *ngIf="true" color="primary">
+		<button mat-icon-button type="button" mat-button (click)="sidenav.open()">
+				<mat-icon>menu</mat-icon>
+		</button>
+
+
+		<span class="fill-remaining-space"></span>
+
+		<button mat-button (click)="rightsidenav.open();" aria-label="Notifications" mat-icon-button class="docs-navbar-hide-small docs-button mat-button"
+		tabindex="0" aria-disabled="false">
+		<mat-icon>notifications</mat-icon> 
+	</button>
+	<button mat-icon-button aria-label="Add Workflow"  (click)="viewmodeexit()"  [routerLink]="['/addworkflow']" class="docs-navbar-hide-small docs-button mat-button"><mat-icon>add_circle</mat-icon></button>
+	<button mat-icon-button aria-label="Options" [matMenuTriggerFor]="menu" class="docs-navbar-hide-small docs-button mat-button"><mat-icon>more_vert</mat-icon></button>
+	
+	<mat-menu #menu="matMenu"> 
+
+<button mat-menu-item  _ngcontent-c1="" aria-label="Profile" [routerLink]="['/profile']" class="docs-navbar-hide-small docs-button mat-button"
+		tabindex="0" aria-disabled="false">
+		<span class="mat-button-wrapper" id="profile">
+				<mat-icon>account_circle</mat-icon>
+				<span>Profile</span>
+		</span>
+		<div class="mat-button-ripple mat-ripple" matripple=""></div>
+		<div class="mat-button-focus-overlay"></div>
+</button>
+
+
+
+<button mat-menu-item  _ngcontent-c1="" aria-label="Logout" (click)="logout()" [routerLink]="['/index']" class="docs-navbar-hide-small docs-button mat-button"
+		 tabindex="0" aria-disabled="false">
+		<span class="mat-button-wrapper" id="logout">
+				<mat-icon>power_settings_new</mat-icon>
+				<span>Logout</span>
+		</span>
+		<div class="mat-button-ripple mat-ripple" matripple=""></div>
+		<div class="mat-button-focus-overlay"></div>
+</button>
+</mat-menu>
+	</mat-toolbar> 
+
+<!-- <app-navbar *ngIf="this.authService.isLoggedIn()"></app-navbar> -->
+
+
+
+
+
+
 <router-outlet>
-        
-</router-outlet>
+		
+						</router-outlet>
+
+					</mat-sidenav-container>

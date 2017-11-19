@@ -3,7 +3,7 @@ import { WorkflowDetailsService } from './../../services/workflow-details/workfl
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
  import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import * as shape from 'd3-shape';
 import { colorSets } from './color-sets';
@@ -12,8 +12,8 @@ import chartGroups from './chartTypes';
 import { id } from './id';
 import {Task} from "./task";
 import {Workflow} from "./workflow";
-import { FormBuilder, FormGroup } from '@angular/forms';
-import {MatChipInputEvent} from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MatChipInputEvent, MatSnackBarConfig} from '@angular/material';
 import 'rxjs/add/operator/filter'; 
 import 'rxjs/add/operator/map';
 import { TagInputModule } from 'ngx-chips';
@@ -111,7 +111,8 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
     private authentication : AuthenticationService,
     private persistence: PerisitenceService,
     private router: Router,
-    private workflowService: WorkflowDetailsService
+    private workflowService: WorkflowDetailsService,
+    private snackBar: MatSnackBar
   ) {
     Object.assign(this, {
       countries,
@@ -238,12 +239,17 @@ updateNodes(taskname:String) {
   deletemode(){
     if(!this.deleteMode){
         this.deleteMode = true;
-    alert("You are in deletion mode.Click on the nodes to delete them");
+        let config = new MatSnackBarConfig();
+        config.duration = 3000;
+        this.snackBar.open("You are in deletion mode.Click on the nodes to delete them",'',config);
+        
      this.deleteModeButton = "EXIT MODE";
   }
     else{
           this.deleteMode = false;
-    alert("You are out of deletion mode");
+          let config = new MatSnackBarConfig();
+          config.duration = 3000;
+          this.snackBar.open("You are out of deletion mode",'',config); 
            this.deleteModeButton = "DELETE TASKS";
            //console.log(this.hierarchialGraph.links );
            //console.log(this.hierarchialGraph.nodes);
@@ -372,7 +378,7 @@ for(let i=0;i<len;i++){
     saveWorkflow(): void {
       
       //owner is hardcoded
-      this.workflow.owner = "chutiya";
+      this.workflow.owner = localStorage.getItem('Email');
       this.persistence.sendWorkFlow2(this.workflow.workFlowName,
                                       this.workflow.owner,this.status,this.map);
                                       console.log(this.map);    
@@ -465,7 +471,10 @@ export class WnameOverviewDialog {
     if (this.data.Wname != null)
       this.dialogRef.close(this.data.Wname);
   }
-  
+  workflowNameValidator = new FormControl('', [Validators.required]); 
+  getworkflowNameErrorMessage() { 
+    return this.workflowNameValidator.hasError('required') ? 'Workflow name required' : '';
+  } 
 }
 @Component({
   selector: 'jsoneditor-overview-dialog',

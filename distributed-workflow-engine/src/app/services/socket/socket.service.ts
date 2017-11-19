@@ -13,7 +13,7 @@ export class SocketService implements OnInit{
 
   stompClient:any;
   socketMessageSource = new Subject<String>();
-  socketUrl = 'http://172.23.238.216:9000/gs-guide-websocket'; 
+  socketUrl = 'http://localhost:9000/gs-guide-websocket'; 
   socket: any;
   messageSubscription:any;
   socketMessage: String = "Default";
@@ -27,7 +27,7 @@ export class SocketService implements OnInit{
 
   socketConsoleSubscription : any; 
   
-  socketConsoleMap : any;
+  socketConsoleMap : Map<String,Array<String>> = new Map();
   
   ngOnInit(){
     // console.log(this.username);
@@ -46,14 +46,16 @@ connect(){
   });
   this.stomp.startConnect().then(() => {
     this.stomp.done('init');  
+    if(localStorage.getItem('Email')) this.subscribe();
   });
 }
 subscribe(){
 
   this.username= localStorage.getItem("Email");
-  if(this.messageSubscription != null)
+  if(this.messageSubscription != null){
         this.messageSubscription.unsubscribe();
-    
+        console.log("message unsubscribed");
+  }
   
      this.messageSubscription = this.stomp.subscribe('/response/'+this.username,(response) => {
         let temp : String = response.output;
@@ -69,22 +71,32 @@ subscribe(){
       this.socketNumber = response;
       console.log("TOTAL NUMBER OF TASKS", temp); 
     }); 
-    if(this.nameSubscription != null)
-    this.nameSubscription.unsubscribe();
+    if(this.nameSubscription != null){
+      this.nameSubscription.unsubscribe();
+      console.log("Name subscription unsubscribed");
+    }
  this.nameSubscription = this.stomp.subscribe('/name/'+this.username,(response) => {
     let temp : String = response.taskName; 
     console.log("RECEIEVED TASKNAME: " , temp); 
     this.socketNameSource.next(temp); 
   }); 
 
-  if(this.socketConsoleSubscription != null)
-  this.socketConsoleSubscription.unsubscribe();
+  if(this.socketConsoleSubscription != null){
+    this.socketConsoleSubscription.unsubscribe();
+    console.log("Console subscription unsubscribed");
+  }
+  console.log('/console/'+this.username);
   this.socketConsoleSubscription = this.stomp.subscribe('/console/'+this.username,(response) => {
     let temp : String = response.taskName; 
     console.log("RECEIEVED Console TASKNAME: " , temp); 
-    this.socketConsoleMap[response.taskName] = response.console;
-    console.log("console output: ",this.socketConsoleMap);
-    this.socketNameSource.next(temp); 
+    if(this.socketConsoleMap.get(response.taskName)){
+      this.socketConsoleMap.get(response.taskName).push(response.console);
+      console.log("consolemap: ",this.socketConsoleMap.get(response.taskName));
+    }else{
+      this.socketConsoleMap.set(response.taskName, []);
+      this.socketConsoleMap.get(response.taskName).push(response.console);
+    } 
+    console.log("console output: ",this.socketConsoleMap); 
   }); 
 }
  
