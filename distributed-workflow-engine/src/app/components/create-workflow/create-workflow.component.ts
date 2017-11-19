@@ -405,7 +405,8 @@ for(let i=0;i<len;i++){
     openWnameDialog(): void {
     let dialogRef = this.dialog.open(WnameOverviewDialog, {
       width: '300px',
-      data: { Wname: this.Wname }
+      data: { Wname: this.Wname },
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(result => {
