@@ -1,4 +1,4 @@
-import { Task } from './../create-workflow/task';
+import { Task } from './../create-workflow//models/task';
 import { Router, RouterModule } from '@angular/router';
 import { WorkflowDetailsService } from './../../services/workflow-details/workflow-details.service';
 import { Component, OnInit } from '@angular/core';
