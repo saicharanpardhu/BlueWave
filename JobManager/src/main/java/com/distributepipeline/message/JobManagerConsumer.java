@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import com.distributepipeline.domain.JobIdDetails;
+import com.distributepipeline.domain.ModelToSocket;
 import com.distributepipeline.domain.WorkFlow;
 
 
@@ -19,6 +21,11 @@ public class JobManagerConsumer {
 	    return latch;
 	  }
 	
+	 @Autowired
+	 ModelToSocket modelToSocket;
+	 
+	 @Autowired
+	 JobIdDetails jobIdDetails;
 	 
 	 @Autowired
 	 WorkFlow workFlow;
@@ -47,7 +54,11 @@ public class JobManagerConsumer {
 		//calling method to send tasknames to workflow-details(in angular)
 		
 		for(String key:workFlow.getTasks().keySet()) {
-			  jobManagerProducer.sendTaskName(key);
+			modelToSocket.setUserName(jobIdDetails.getUserName());
+			System.out.println("usernameconsumer "+jobIdDetails.getUserName());
+			modelToSocket.setTaskName(key);
+			System.out.println("tasknameconsumer "+key);
+			jobManagerProducer.sendTaskName(modelToSocket);
 		}	
 	
 		//calling method to send complete workflow to engine

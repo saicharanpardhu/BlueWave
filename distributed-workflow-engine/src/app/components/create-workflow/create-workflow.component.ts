@@ -6,14 +6,14 @@ import { AuthenticationService } from './../../services/authentication/authentic
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import * as shape from 'd3-shape';
-import { colorSets } from './color-sets';
-import { countries, generateHierarchialGraph, getTurbineData } from './data';
-import chartGroups from './chartTypes';
-import { id } from './id';
-import {Task} from "./task";
-import {Workflow} from "./workflow";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MatChipInputEvent, MatSnackBarConfig} from '@angular/material';
+import { colorSets } from './models/color-sets';
+import { countries, generateHierarchialGraph, getTurbineData } from './models/data';
+import chartGroups from './models/chartTypes';
+import { id } from './models/id';
+import {Task} from "./models/task";
+import {Workflow} from "./models/workflow";
+import { FormBuilder, FormGroup } from '@angular/forms';
+import {MatChipInputEvent} from '@angular/material';
 import 'rxjs/add/operator/filter'; 
 import 'rxjs/add/operator/map';
 import { TagInputModule } from 'ngx-chips';
@@ -32,35 +32,30 @@ import { OnDestroy } from '@angular/core';
   styleUrls: ['./create-workflow.component.css']
 })
 export class CreateWorkflowComponent implements OnInit, OnDestroy{
+  //Task Library 
   public tasks: Array<String> = ["git-clone","mvn-package"];
-  // workflow: Array<Map<String,String>> = [];
-  
+  //Tasks of the workflow
   map = new TSMap<String,Task>();
+  //Dummy workflow
   workflow :Workflow = {};
   task :Task ={};
+  //wORKFLOW Name
   Wname  :String;
   taskName :String;
   taskType : String;
   dependsOn : any;
   depends_on : any;
   input :String;
-  status = "created";                           //workFlow Status
+  //workFlow Status
+  status = "created"; 
+  //List of all aliases in a workflow                          
   wTaskAliases : String[] = [];
+  //DEletion Mode
   deleteMode : boolean = false;
-  deleteModeButton ="DELETE TASKS"
-  
-  items = ['Javascript', 'Typescript'];
-  autocompleteItems = ['Item1', 'item2', 'item3'];
-  autocompleteItemsAsObjects = [
-    {value: 'Item1', id: 0, extra: 0},
-    {value: 'item2', id: 1, extra: 1},
-    'item3'
-];
-  checkBox = [
-    "git-clone",
-    "mvn-test",
-    "mvn-build"
-  ];
+  deleteModeButton ="DELETE TASKS";
+
+
+  //Chart properties
   version = "APP_VERSION";
   theme = 'dark';
   chartType = 'directed-graph';
@@ -101,6 +96,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
     'Monotone Y', 'Natural', 'Step', 'Step After', 'Step Before'
   ];
   
+  //Colorset options
   colorSets:any;
   colorSets1 =["vivid","natural","cool",'fire','solar','air','aqua','flame','ocean','forest','horizon','neons','picnic','night','nightLights'];
   colorScheme: any;
@@ -124,16 +120,14 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
     this.setColorScheme('picnic');
     this.setInterpolationType('Bundle');
   }
+
+  //Display a worflow if user comes to view 
   ngOnInit() { 
        
       
     this.selectChart(this.chartType);
-    /*setInterval(this.updateData.bind(this), 1000);*/
-     this.selectedColorScheme = "aqua"; 
+    this.selectedColorScheme = "aqua"; 
     
-    //this.task.taskType="gitclopne"
-    /*this.myMap.set("wefef",this.task);
-    console.log(this.myMap.toJSON());*/
     if (!this.fitContainer) {
       this.applyDimensions();
     }
@@ -145,47 +139,28 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
       console.log(this.map);    
     }
     else{
-      this.openWnameDialog()
+      this.openWnameDialog();
     }
   }
+
+//DEstroy the workflow that the user viewed
   ngOnDestroy() {
     this.workflowService.displayWorkflow=null;
   }
-  
+
+
+//Update nodes to add a node to workflow  
 updateNodes(taskname:String) {
-    /*if (!this.realTimeData) {
-      return;
-    }*/
-   /* const country = this.countries[Math.floor(Math.random() * this.countries.length)];
-    const add = Math.random() < 0.7;
-    const remove = Math.random() < 0.5;
-    if (add) {*/
-      // directed graph
-      const hNode = {
+
+    const hNode = {
         id:id(),
         label: taskname,
       };
       this.hierarchialGraph.nodes.push(hNode);
-     /* let len = dependson.length;
-      let len2 =  this.hierarchialGraph.nodes.length;
-*/
-    /* for(let i=0;i<len2;i++){
-          for(let j=0;j<len;j++){
-            if(this.hierarchialGraph.nodes[i].label==dependson[j])
-                {
-                  this.hierarchialGraph.links.push({
-                   source: this.hierarchialGraph.nodes[i].id,
-                   target: hNode.id,
-                   label: 'on success'
-      });
-                  console.log("ggghjhjhjkkk");
-        }
-       }
-       }*/
       this.hierarchialGraph.links = [...this.hierarchialGraph.links];
       this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
     }
-  
+  //update links when add a node
   updateLinks(depends :String[],taskname :String){
       let target :any;
       let len = depends.length;
@@ -236,6 +211,7 @@ updateNodes(taskname:String) {
     }
   }
   
+  //Enter or exit deletion mode
   deletemode(){
     if(!this.deleteMode){
         this.deleteMode = true;
@@ -251,32 +227,33 @@ updateNodes(taskname:String) {
           config.duration = 3000;
           this.snackBar.open("You are out of deletion mode",'',config); 
            this.deleteModeButton = "DELETE TASKS";
-           //console.log(this.hierarchialGraph.links );
-           //console.log(this.hierarchialGraph.nodes);
-    }
+           }
   }
+//On select a node to delete
   select(data) {
     console.log('Item clicked', data);
     if(this.deleteMode){
-      
-     this.deleteTask(data.label);
+      this.deleteTask(data.label);
+
     }
   }
+//Delete a task and it's links
   deleteTask(label:String){
        console.log(label)
        console.log(this.map);
       this.map.delete(label);
       this.wTaskAliases = this.wTaskAliases.filter(item => item != label);
       console.log(this.map);
-      //console.log(this.wTaskAliases);
+      this.map.forEach((value: Task, key: String) => {
+    value.depends_on = value.depends_on.filter(item => item != label);
+    value.input =  value.input.filter(item => item != label);
+           });
       this.workflow.tasks = this.map;
       this.workflowToGraph(this.map);
   }
+//Convert any map to links
 workflowToGraph(map :TSMap<String,Task> ){
 this.hierarchialGraph = getTurbineData();
-console.log("YY");
-//console.log(this.hierarchialGraph.links );
-//console.log(this.hierarchialGraph.nodes);
 let len =  this.wTaskAliases.length;
 for(let i=0;i<len;i++){
       this.updateNodes(this.wTaskAliases[i]);
@@ -286,10 +263,14 @@ for(let i=0;i<len;i++){
       console.log(map.get(this.wTaskAliases[i]).depends_on,this.wTaskAliases[i]);}
 }
 }
+
+//To set a color scheme
   setColorScheme(name) {
     this.selectedColorScheme = name;
     this.colorScheme = this.colorSets.find(s => s.name === name);
   }
+
+// To SET A CURVE TYPE
   setInterpolationType(curveType) {
     this.curveType = curveType;
     if (curveType === 'Bundle') {
@@ -329,7 +310,8 @@ for(let i=0;i<len;i++){
   toggleExpand(node) {
     console.log('toggle expand', node);
   }
-  
+
+  //Dialog to add a task
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogOverviewDialog, {
       width: '500px',
@@ -346,36 +328,34 @@ for(let i=0;i<len;i++){
       this.wTaskAliases.push(result.taskName);
       
       task.depends_on =[];
-      //console.log(this.task.depends_on[0]);
+     
       this.updateNodes(this.taskName);
       if(this.depends_on!=undefined){
-        //console.log(this.depends_on.length);
+        
        let len2 = this.depends_on.length;
        for(let i=0;i<len2;i++){
          if(JSON.parse(JSON.stringify(result.dependsOn[i])).value!=null)
-        {//console.log(JSON.parse(JSON.stringify(result.dependsOn[i])).value);
+        {
         task.depends_on.push(JSON.parse(JSON.stringify(result.dependsOn[i])).value);}
          else 
-        {//console.log(JSON.stringify(result.dependsOn[i]).replace(/\"/g,'')); 
+        {
           task.depends_on.push(JSON.stringify(result.dependsOn[i]).replace(/\"/g,''));}
          }
-        //console.log(this.task.depends_on);
+        
         this.updateLinks(task.depends_on,this.taskName);
          
       }
-      //console.log(this.task.depends_on);
+
+      
       console.log(this.taskName)
       this.map.set(this.taskName,task);
       this.workflow.tasks = this.map;
       console.log(this.map);
-      //console.log(this.map.get(this.taskName).depends_on);
-      //console.log(result);
-      //console.log(this.task);
-      //console.log(this.wTaskAliases);
-    });
+       });
   }
-//calling the function for saving the data about workflow to persistence database
-    saveWorkflow(): void {
+
+//Save workflow to DB
+  saveWorkflow(): void {
       
       //owner is hardcoded
       this.workflow.owner = localStorage.getItem('Email');
@@ -383,10 +363,13 @@ for(let i=0;i<len;i++){
                                       this.workflow.owner,this.status,this.map);
                                       console.log(this.map);    
     }
+
+// Dialog for the workflow name
     openWnameDialog(): void {
     let dialogRef = this.dialog.open(WnameOverviewDialog, {
       width: '300px',
-      data: { Wname: this.Wname }
+      data: { Wname: this.Wname },
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
       
@@ -396,6 +379,8 @@ for(let i=0;i<len;i++){
       
     });
   }
+
+  //Dialog for jsoneditor
   openjsoneditor(): void {
     let json =this.map.toJSON();
     let dialogRef = this.dialog.open(JsonEditor, {
@@ -408,15 +393,15 @@ for(let i=0;i<len;i++){
        myMap.fromJSON(result);
        console.log(myMap);
        this.map=myMap;
-       //this.workflow.tasks =this.map;
-       //let len = this.map.length;
-       //aliases = this.map.keys;
+       
        this.wTaskAliases =this.map.keys();
-       //console.log(len);
+       
        this.workflowToGraph(this.map);
       
     });
   }
+
+  //Dialog for settings of the graph
   openSettings(): void {
    
     let dialogRef = this.dialog.open(SettingsDialog, {

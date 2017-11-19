@@ -14,6 +14,7 @@ public class RedisoprImpl implements Redisopr {
 	@Autowired
 	RedisTemplate<String, String> redisTemplate;
 	@Override
+	@LogExecutionTime
 	public void saveRedis(Trigger trigger) throws JsonProcessingException {
 
 		 ObjectMapper mapperObj = new ObjectMapper();

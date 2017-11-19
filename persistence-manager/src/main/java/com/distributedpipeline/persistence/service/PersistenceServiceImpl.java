@@ -16,6 +16,7 @@ import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundExcepti
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
 import com.distributedpipeline.persistence.repo.PersistenceTaskRepo;
 import com.distributedpipeline.persistence.repo.PersistenceWorkflowRepo;
+import com.distributedpipeline.persistence.utility.LogExecutionTime;
 
 @Service
 public class PersistenceServiceImpl implements PersistenceService {
@@ -53,6 +54,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*----------------------- Method to get workflow by name -----------------------------*/
 	@Override
+	@LogExecutionTime
 	public Workflow getWorkflowByName(String workFlowName) throws WorkflowNotFoundException {
 	       return persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
        }
@@ -61,12 +63,14 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*------------------------- Method to get all workflows -----------------------------*/
 	@Override
+	@LogExecutionTime
 	public Iterable<Workflow> getWorkflow() throws WorkflowNotFoundException {
 		return persistenceWorkflowRepo.findAll();
 	}
 
 	/*--------------------- Method to save workflow to repository -----------------------*/	
 	@Override
+	@LogExecutionTime
 	public String addWorkflow(Workflow workflow) {
 		String workFlowName = workflow.getWorkFlowName();
 		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName)==null) {
@@ -80,6 +84,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*-------------------------- Method to update a workflow ----------------------------*/
 	@Override
+	@LogExecutionTime
 	public Workflow updateWorkflow(Workflow workFlow) {
 		String workflowName = workFlow.getWorkFlowName();
 		persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
@@ -88,6 +93,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 
 	/*--------------------------- Method to delete workflow ----------------------------*/
 	@Override
+	@LogExecutionTime
 	public boolean deleteWorkflow(String workflowName) {
 		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workflowName) != null) {
 			persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
@@ -105,24 +111,28 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*--------------------- Method to get tasklibrary by taskname------------------------*/
     @Override
+    @LogExecutionTime
 	public TaskLibrary gettaskLibraryByName(String taskName) throws TaskLibraryNotFoundException{
 		return persistenceTaskRepo.getTaskLibraryByTaskName(taskName);
 	} 
 	
 	/*----------------------- Method to get all tasklibraries ---------------------------*/
 	@Override
+	@LogExecutionTime
 	public Iterable<TaskLibrary> getTaskLibrary() throws TaskLibraryNotFoundException {
 		return persistenceTaskRepo.findAll();
 	}
 	
 	/*--------------------------- Method to save a tasklibrary -------------------------*/
 	@Override
+	@LogExecutionTime
 	public TaskLibrary addTaskLibrary(TaskLibrary taskLibrary) {
 		return persistenceTaskRepo.save(taskLibrary);
 	}
 	
 	/*-------------------------- Method to update a tasklibrary ------------------------*/
 	@Override
+	@LogExecutionTime
 	public TaskLibrary updateTaskLibrary(TaskLibrary taskLibrary) {
         String taskName = taskLibrary.getTaskName();
 		persistenceTaskRepo.deleteByTaskName(taskName);
@@ -132,6 +142,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*-------------------------- Method to delete tasklibrary by id -------------------*/
 	@Override
+	@LogExecutionTime
 	public boolean deleteTaskLibrary(String taskName) {
 		if(persistenceTaskRepo.getTaskLibraryByTaskName(taskName) != null)  {
 			persistenceTaskRepo.deleteByTaskName(taskName);
@@ -144,6 +155,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*------------------------------- Check Permissions for different users ------------------- */
 	@Override
+	@LogExecutionTime
 	public String userPermissions(String workFlowName, String userName) {
 		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
 		if(Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
@@ -163,6 +175,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	/*-------------------------- Method to get tasks inside workflow -----------------------------*/
 	
 	@Override
+	@LogExecutionTime
 	public List<String> getTasksOfWorkflow(String workFlowName) {
 		
 		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
@@ -179,6 +192,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	/*-------------------------- Method to get details of a task in a workflow -----------------------*/
 	
 	@Override
+	@LogExecutionTime
 	public Tasks getDetailsOfTask(String workFlowName, String task_name) {
 		
 		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
