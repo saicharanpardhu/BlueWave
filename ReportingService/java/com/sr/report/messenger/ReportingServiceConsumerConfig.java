@@ -42,7 +42,7 @@ public class ReportingServiceConsumerConfig {
         props.put(
           ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        //props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
         return new DefaultKafkaConsumerFactory<>(props
 									        		,new StringDeserializer(),
 									        		new StringDeserializer()
@@ -67,7 +67,7 @@ public class ReportingServiceConsumerConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG,"something");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,JsonDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "largest");
+        //props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "largest");
         
         return new DefaultKafkaConsumerFactory<>(
         	      props,
