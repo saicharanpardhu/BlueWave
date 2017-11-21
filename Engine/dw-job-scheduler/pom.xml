@@ -6,7 +6,7 @@
     <groupId>com.distributedworkflowengine</groupId>
     <artifactId>dw</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath>../../Desktop/DP/dw</relativePath>
+    <relativePath>..</relativePath>
   </parent>
   <artifactId>dw-job-scheduler</artifactId>
   <name>dw-job-scheduler</name>
@@ -15,12 +15,79 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
-     <dependencies>
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-web</artifactId>
+    <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    	 <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <version>3.8.1</version>
+	      <scope>test</scope>
+	    </dependency>
+
+
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+
+	    <dependency>
+	    	<groupId>org.springframework.boot</groupId>
+	    	<artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+       <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.9.2</version>
+</dependency>
+           <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.6.7</version>
+</dependency>
+<dependency>
+       	<groupId>org.springframework.boot</groupId>
+       	<artifactId>spring-boot-starter</artifactId>
        </dependency>
-       <dependency>
+	    <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-server -->
+<dependency>
+
+            
+		    <groupId>de.codecentric</groupId>
+		    <artifactId>spring-boot-admin-starter-client</artifactId>
+		    <version>1.4.3</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency> 
+            <dependency>
+   <groupId>com.google.code.gson</groupId>
+   <artifactId>gson</artifactId>
+   <version>2.8.2</version>
+</dependency>
+
+        <dependency>
+
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+        </dependency>
+         <dependency>
            <groupId>org.springframework.boot</groupId>
            <artifactId>spring-boot-starter-test</artifactId>
            <scope>test</scope>
@@ -32,8 +99,7 @@
     <artifactId>springfox-swagger2</artifactId>
     <version>2.6.1</version>
 </dependency>
-       
-        <dependency>
+	<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.6.1</version>
@@ -47,83 +113,22 @@
             <version>1.2.17</version>
        </dependency>
        <dependency>
-	      <groupId>org.aspectj</groupId>
-	      <artifactId>aspectjrt</artifactId>
-	    </dependency>
-       
+	       <groupId>mysql</groupId>
+	       <artifactId>mysql-connector-java</artifactId>
+	       <scope>runtime</scope></dependency>
        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-redis</artifactId>
             <version>1.4.4.RELEASE</version>
-                    </dependency>
-       
-       
-       <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
-        
-        <dependency>
-           <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-starter-zuul</artifactId>
        </dependency>
-        
+      
+		<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.0-api</artifactId>
+		    <version>1.0.1.Final</version>
+		</dependency>
        
-       
-       
-       <dependency>
-           <groupId>com.jayway.jsonpath</groupId>
-           <artifactId>json-path</artifactId>
-           <scope>test</scope>
-       </dependency>
-        <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-data-jpa</artifactId>
-       </dependency>
-       <!-- Use MySQL Connector-J -->
-      <!--   <dependency>
-           <groupId>mysql</groupId>
-           <artifactId>mysql-connector-java</artifactId>
-       </dependency> -->
-       
-        <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-data-mongodb</artifactId>
-       </dependency>
-       <dependency>
-   <groupId>com.google.code.gson</groupId>
-   <artifactId>gson</artifactId>
-   <version>2.2.4</version>
-</dependency>
-       <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.6.1</version>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-           <groupId>com.fasterxml.jackson.core</groupId>
-           <artifactId>jackson-databind</artifactId>
-           <version>2.6.7</version>
-       </dependency>
-        
-         <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-            </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
-        </dependency>
-        
-   </dependencies>
-   
+  </dependencies>
    <dependencyManagement>
         <dependencies>
             <dependency>

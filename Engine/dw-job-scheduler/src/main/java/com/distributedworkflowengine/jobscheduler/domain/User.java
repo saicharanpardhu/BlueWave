@@ -1,23 +1,19 @@
 package com.distributedworkflowengine.jobscheduler.domain;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskToScheduler {
-	
+public class User {
+
 	private String jobId;
 	private String userName;
-	private Map<String,Task> listOfTasks;
-
-	
-	public TaskToScheduler(String jobId, String userName, Map<String, Task> listOfTasks) {
+	public User() {
+		super();
+	}
+	public User(String jobId, String userName) {
 		super();
 		this.jobId = jobId;
 		this.userName = userName;
-		this.listOfTasks = listOfTasks;
 	}
 	public String getJobId() {
 		return jobId;
@@ -25,20 +21,10 @@ public class TaskToScheduler {
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
 	}
-	public Map<String,Task> getListOfTasks() {
-		return listOfTasks;
-	}
-	public void setListOfTasks(Map<String,Task> listOfTasks) {
-		this.listOfTasks = listOfTasks;
-	}
-	public TaskToScheduler() {
-		super();
-	}
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
 }

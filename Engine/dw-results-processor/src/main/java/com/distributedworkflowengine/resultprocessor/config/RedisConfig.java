@@ -1,4 +1,5 @@
-package com.distributedworkflowengine.jobscheduler.config;
+package com.distributedworkflowengine.resultprocessor.config;
+
 
 import org.apache.log4j.Logger;
 import org.springframework.cache.annotation.CacheConfig;
@@ -11,17 +12,15 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
+//import com.distributedpipeline.engine.domain.Task;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-// Redis Configuration
 
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig  extends CachingConfigurerSupport {
 private static final Logger log = Logger.getLogger(CacheConfig.class);
 
-// Constructs a new JedisConnectionFactory instance with default settings
+//creating beans
 @Bean
 public JedisConnectionFactory redisConnectionFactory() {
   JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
@@ -29,8 +28,6 @@ public JedisConnectionFactory redisConnectionFactory() {
   redisConnectionFactory.setPort(6379);
   return redisConnectionFactory;
 }
-
-//Constructs a RedisTemplate 
 @Bean
 public RedisTemplate<String, String> redisTemplate() {
   RedisTemplate<String, String> rt = new RedisTemplate<>();
@@ -39,14 +36,10 @@ public RedisTemplate<String, String> redisTemplate() {
   rt.setValueSerializer(new StringRedisSerializer());
   return rt;
 }
-
-//Constructs an objectMapper
 @Bean
 public ObjectMapper objectMapper() {
     return new ObjectMapper();
 }
-
-//Constructs a RedisCacheManager
 @Bean
 public RedisCacheManager cacheManager() {
   RedisCacheManager rcm = new RedisCacheManager(redisTemplate());
@@ -56,3 +49,5 @@ public RedisCacheManager cacheManager() {
 }
 
 }
+
+

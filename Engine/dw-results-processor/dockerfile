@@ -1,4 +1,0 @@
-FROM java:8-jre
-ADD target/dw-results-processor-1.0-SNAPSHOT.jar results-processor.jar
-ENTRYPOINT ["java", "-jar", "/results-processor.jar"]
-EXPOSE 8065

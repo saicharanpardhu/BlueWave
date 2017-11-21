@@ -1,10 +1,12 @@
 package com.distributedworkflowengine.jobscheduler.message;
 
 
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,63 +17,58 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class JsConsumer {
-	
+
 	@Autowired
 	JobSchedulerServiceImpl service;
-	
+
 	@Autowired
 	WorkFlow jobInfo;
+
+	@Autowired
+	ReportModel reportModel;
 	
 	@Autowired
 	TaskToScheduler taskToScheduler;
-	
+
 	@Autowired
 	JsProducer producer;
-	
+
 	private CountDownLatch latch = new CountDownLatch(1);
 
-    public CountDownLatch getLatch() {
-      return latch;
-    }
-  
-  
-  @KafkaListener(topics = "StateToJobSche",
-		  containerFactory="kafkaListenerContainerFactory")
-          public void reportlistener(String job) throws JsonProcessingException {
-              System.out.println(job);
-//              System.out.println("aaaaaaaaa");
+	public CountDownLatch getLatch() {
+		return latch;
+	}
 
-	  System.out.println("jobId recieved");
-      
-	  jobInfo=service.getData(job);
-              System.out.println("jobInfo recieved");
-              System.out.println(jobInfo);
-              
-             Map<String,Task> map=service.selectJob(jobInfo,job);
-             if(!map.isEmpty()) {
-              taskToScheduler.setJobId(job);
-              taskToScheduler.setListOfTasks(map);
-              producer.sendMessage2(taskToScheduler);
-              latch.countDown();
-             }
-             else
-            	 System.out.println("Task completed");
-            
-//              System.out.println(taskToScheduler.getListOfTasks().get("clone").getStatus());
-//              System.out.println(taskToScheduler);
-              
-//              ObjectMapper mapperObj = new ObjectMapper();
-//              String jsonStr = mapperObj.writeValueAsString(taskToScheduler);
-//              
-//              System.out.println(jsonStr);
-              
-              
-          }
-//  @KafkaListener(topics = "StateToJobSche",
-//		  containerFactory="kafkaListenerContainerFactory")
-//          public void reportlistenerResult(String job) throws JsonProcessingException {
-//	  		System.out.println(job+"dfdsfsf");
-//              latch.countDown();
-//          }
+    //method to consume unique job id from state initializer
+	
+	 
+	@KafkaListener(topics = "${kafka.topic.bootnew}",
+			containerFactory="UserKafkaListenerContainerFactory")
+
+	public void reportlistener(User user) throws JsonProcessingException {
+		
+		reportModel.setJobStartTime(new Timestamp(System.currentTimeMillis()));
+		System.out.println(user.getJobId());
+		jobInfo=service.getData(user.getJobId());   
+		Map<String,Task> map=service.selectJob(jobInfo,user.getJobId(),user.getUserName());
+		
+		if(!map.isEmpty()) {
+			taskToScheduler.setJobId(user.getJobId());
+			taskToScheduler.setListOfTasks(map);
+			System.out.println(user.getUserName());
+			taskToScheduler.setUserName(user.getUserName());
+			producer.sendToTaskSche(taskToScheduler);
+			latch.countDown();
+		}
+		else
+			{
+			
+				System.out.println("Job completed");
+			}
+
+
+
+
+	}
 
 }
