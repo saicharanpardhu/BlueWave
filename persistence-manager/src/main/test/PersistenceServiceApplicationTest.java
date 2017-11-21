@@ -1,4 +1,3 @@
-package com.distributedpipeline.persistence;
 
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import junit.framework.TestCase;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PersistenceManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PersistenceControllerTest extends TestCase {
+public class PersistenceServiceApplicationTest extends TestCase {
 	
 	@LocalServerPort
 	private int port;
@@ -34,21 +33,21 @@ public class PersistenceControllerTest extends TestCase {
 	HttpHeaders headers = new HttpHeaders();
 	Workflow workflow;
 	
-	String taskType = "null";
-	String status= "null";
 	String[] dependsOn = {"a","b"};
 	String[] output = {"c"};
 	String[] input = {"d"};
 	
-	Tasks task = new Tasks();
+	Tasks task = new Tasks("clone-submission","git-clone",dependsOn, output, input);
 	
-
+	//List<String> tasklist = new ArrayList<String>();
+	//tasklist.add(task);
+	
 	List<Tasks> listTask = new ArrayList<Tasks>();
 	
 	@Before
     public void setUp() throws Exception {
 		listTask.add(task);
-		workflow = new Workflow();
+		workflow = new Workflow("CAL4", listTask);
 		
     }
 	private String createURLWithPort(String uri) {

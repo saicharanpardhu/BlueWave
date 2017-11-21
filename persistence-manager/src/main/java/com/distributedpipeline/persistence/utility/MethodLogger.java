@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @Aspect 
 @Component
 public class MethodLogger {
-	private static Logger logger = LogManager.getLogger("MethodLogger.class");
-	
 	@Around("@annotation(LogExecutionTime)")
 	public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
 	    long start = System.currentTimeMillis();
@@ -22,7 +20,7 @@ public class MethodLogger {
 	 
 	    long executionTime = System.currentTimeMillis() - start;
 	 
-	    logger.info(joinPoint.getSignature() + " executed in " + executionTime + "ms");
+	    System.out.println(joinPoint.getSignature() + " executed in " + executionTime + "ms");
 	    return proceed;
 	}
 }

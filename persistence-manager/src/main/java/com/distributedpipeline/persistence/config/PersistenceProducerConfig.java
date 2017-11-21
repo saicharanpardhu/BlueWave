@@ -1,4 +1,4 @@
-package com.distributedpipeline.persistence.message;
+package com.distributedpipeline.persistence.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -20,14 +21,17 @@ import com.distributedpipeline.persistence.domain.Workflow;
 
 
 @Configuration
-
 public class PersistenceProducerConfig {
+	
+	@Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServer;
+	
 	@Bean
     public ProducerFactory<String, Workflow> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.158:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -41,7 +45,7 @@ public class PersistenceProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.158:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -56,7 +60,7 @@ public class PersistenceProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.158:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -71,7 +75,7 @@ public class PersistenceProducerConfig {
 	       Map<String, Object> configProps = new HashMap<>();
 	       configProps.put(
 	         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-	         "172.23.238.158:9092");
+	         bootstrapServer);
 	       configProps.put(
 	         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
 	         StringSerializer.class);
@@ -86,7 +90,7 @@ public class PersistenceProducerConfig {
 	       Map<String, Object> configProps = new HashMap<>();
 	       configProps.put(
 	         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-	         "172.23.238.158:9092");
+	         bootstrapServer);
 	       configProps.put(
 	         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
 	         StringSerializer.class);
