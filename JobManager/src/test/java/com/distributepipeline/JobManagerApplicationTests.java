@@ -1,4 +1,4 @@
-package com.distributepipeline.task;
+package com.distributepipeline;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
