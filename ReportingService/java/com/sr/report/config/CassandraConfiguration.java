@@ -25,7 +25,7 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
 //    private static final String USERNAME = "cassandra";
 //    private static final String PASSWORD = "cassandra";172.23.238.153
     
-    private  String NODES= "localhost" ; // comma seperated nodes
+    private  String NODES= "172.23.238.176" ; // comma seperated nodes
 
 
     @Bean

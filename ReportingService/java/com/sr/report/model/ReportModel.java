@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.datastax.driver.core.DataType.Name;
 import com.sr.report.model.*;
-
 import org.springframework.cassandra.core.PrimaryKeyType;
 import org.springframework.data.cassandra.mapping.*;
 
