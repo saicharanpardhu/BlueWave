@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Router } from '@angular/router'; 
 import { SocketService } from './../../services/socket/socket.service';
 import { PerisitenceService } from './../../services/persistence/perisitence.service';
@@ -26,41 +27,91 @@ import { Timestamp } from 'rxjs';
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-
-
-
-export class ReportsComponent {
-  displayedColumns = ['position', 'blob', 'level'];
- // dataSource = ELEMENT_DATA;
+export class GetReportComponent implements OnInit {
   
+    reports: any;
+    jobIdnames: any;
+    jobId: String;
+    tasks:any;
+    jobEndTime="sfsfgvsvgsvs";
+    jobStartTime: any;
+    jobStatus :any;
+    constructor(private _service:ReportService) { }
+  
+    ngOnInit() {
 
- // @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  /**
-   * Set the paginator after the view init since this component will
-   * be able to query its view for the initialized paginator.
-   */
-  ngAfterViewInit() {
-    //this.dataSource.paginator = this.paginator;
-    //console.log(this.dataSource);
+      this._service.getJobID(localStorage.getItem('Email'))
+      .subscribe(resData1 => {this.jobIdnames = resData1;
+        console.log('jobidnames',this.jobIdnames);
+        console.log('jobId',this.jobIdnames[0].jobId);
+        console.log('WjobId',this.jobIdnames[0].workFlowName);
+        this.jobId= this.jobIdnames[0].jobId;
+        this.jobIdnames.forEach(element => {
+          console.log('job id is',element.jobId);
+          this.callLater(element.jobId);
+        });
+        
+        })
+        // this._service.getReport("5a0f90ba-dde4-49cc-ae11-0999227eec37")
+        // .subscribe((resData) => {
+        //   console.log('response data is',resData);
+        //   this.reports = resData;
+        //   //console.log('reports',this.reports);
+        //   //console.log('jobId',this.reports[0].jobId);
+        //   //console.log('WjobId',this.reports[0].workFlowName);
+    
+        //   })
+
+
+
+
+      
+
+        // this._service.getReport(this.jobId)
+        // .subscribe(resData => {this.jobIdname = resData;
+        //   console.log('jobIds',this.jobIdname);
+        console.log('USER',localStorage.getItem('Email'));
+          
+    
+        //   })
+      
+      
+    }
+    callLater(val) {
+      console.log('val is in call leater',val);
+      this._service.getReport(val)
+      .subscribe((resData) => {
+        console.log('response data is',resData);
+        this.reports = resData;
+        //console.log('reports',this.reports);
+        //console.log('jobId',this.reports[0].jobId);
+        //console.log('WjobId',this.reports[0].workFlowName);
+  
+        })
+        return this.reports;
+    }
+    // loadTasks(jobId:String){
+           
+    //        this.callLater(jobId).subscribe(
+    //         (resData) => {
+    //           this.tasks = resData;
+    //         }
+    //        );
+    //        if(this.tasks[0].jobEndTime!=undefined)
+    //        this.jobEndTime =this.tasks[0].jobEndTime;
+    //        if(this.tasks[0].jobStartTime!=undefined)
+    //        this.jobStartTime = this.tasks[0].jobStartTime;
+    //        if(this.tasks[0].jobStatus!=undefined)
+    //        this.jobStatus = this.tasks[0].jobStatus;
+    // }
   }
-} 
-
-export interface Element {
-  blob: string;
-  position: number;
-  level: string;
-}
-
-const ELEMENT_DATA: Element[] = [
-  {position: 1, blob: 'Message1', level: 'low'},
-  {position: 2, blob: 'Message2', level: 'low'},
-  {position: 3, blob: 'Message3', level: 'low'},
-  {position: 4, blob: 'Message4', level: 'low'},
-  {position: 5, blob: 'Message5', level: 'low'},
-  {position: 6, blob: 'Message6', level: 'low'},
-  {position: 7, blob: 'Message7', level: 'low'},
-];
+  
+  @Component({
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    styleUrls: ['./reports.component.css']
+  })
 
 export class ExpansionSteps {
   step = 0;

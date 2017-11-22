@@ -76,3 +76,18 @@
 .content {
   padding: 16px;
 }
+
+.main{
+  width: 1000px;
+}
+
+.mat-card{
+  padding: 16px;
+}
+/* .mat-tab-body-content {
+  text-align: left;
+} */
+.logsreport{
+  text-align: left;
+  padding-left: 10px;
+}
