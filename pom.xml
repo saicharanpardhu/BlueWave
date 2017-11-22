@@ -25,10 +25,18 @@
   	<module>Authentication_server</module>
   	<module>Config-server</module>
   	<module>persistence-manager</module>
-  	<module>ReportingService</module>
+  	
   	<module>eureka-server</module>
   	<module>SocketService</module>
+        
   	<module>user-persistence</module>
+        <module>Engine_dw-job-scheduler</module>
+        <module>Engine_dw-results-processor</module>
+        <module>Engine_dw-state-initializer</module>
+        <module>Engine_dw-task-scheduler</module>
+
+        <module>JobManager</module>
+        <module>ReportingService</module>
   </modules>
 
 

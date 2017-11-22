@@ -1,6 +1,4 @@
-FROM java:8-jdk-alpine
-RUN mkdir /app
-WORKDIR /app
-COPY target .
-ENTRYPOINT ["java", "-jar", "user-persistence-0.0.1-SNAPSHOT.jar"]
-EXPOSE 8091
+FROM java:8-jre
+ADD target/user-persistence-0.0.1-SNAPSHOT.jar user_persistence.jar
+ENTRYPOINT ["java","-Xmx200m", "-jar", "/user_persistence.jar"]
+EXPOSE 8088
