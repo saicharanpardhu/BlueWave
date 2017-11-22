@@ -1,4 +1,0 @@
-FROM java:8-jre
-ADD target/BuildAgent-0.0.1-SNAPSHOT.jar BuildAgent.jar
-ENTRYPOINT ["java", "-jar", "/BuildAgent.jar"]
-EXPOSE 8075
