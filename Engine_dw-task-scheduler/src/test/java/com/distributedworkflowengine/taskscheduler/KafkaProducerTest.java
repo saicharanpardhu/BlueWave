@@ -93,7 +93,8 @@ public class KafkaProducerTest {
    
       // AssertJ Condition to check the key
 //    assertThat(received).has(key(null));
-     Agent agent2=new Agent("xyz","clone","hello");
+	  String[]  str= {"a","b"};
+     Agent agent2=new Agent("xyz","cloneSubmission", str,"jaggu","clone") ;
       sender.sendMessage("task",agent2);
 //     check that the message was received
     ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);

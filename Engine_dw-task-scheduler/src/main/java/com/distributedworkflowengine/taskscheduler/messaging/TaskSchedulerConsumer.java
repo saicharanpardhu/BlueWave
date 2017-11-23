@@ -70,7 +70,7 @@ public class TaskSchedulerConsumer {
 				agent.setTaskname(entry.getKey());
 				agent.setUserName(model1.getUserName());
 				if(model1.getListOfTasks().get(entry.getKey()).getInput()!=null)
-				agent.setInput(model1.getListOfTasks().get(entry.getKey()).getInput()[0]);
+				agent.setInput(model1.getListOfTasks().get(entry.getKey()).getInput());
 	           
 				ObjectMapper mapperObj2 = new ObjectMapper();
 				agent.setType(entry.getValue().getType());

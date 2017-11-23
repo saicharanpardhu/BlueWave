@@ -8,7 +8,7 @@ public class Agent {
 
 	private String jobId;
 	private String taskname;
-	private String input;
+	private String[] input;
 	private String userName;
 	private String type;
 	
@@ -23,7 +23,7 @@ public class Agent {
 	public String getJobId() {
 		return jobId;
 	}
-	public Agent(String jobId, String taskname, String input, String userName, String type) {
+	public Agent(String jobId, String taskname, String[] input, String userName, String type) {
 		super();
 		this.jobId = jobId;
 		this.taskname = taskname;
@@ -40,18 +40,18 @@ public class Agent {
 	public void setTaskname(String taskname) {
 		this.taskname = taskname;
 	}
-	public String getInput() {
+	public String[] getInput() {
 		return input;
 	}
-	public void setInput(String input) {
+	public void setInput(String[] input) {
 		this.input = input;
 	}
-	public Agent(String jobId, String taskname, String input) {
-		super();
-		this.jobId = jobId;
-		this.taskname = taskname;
-		this.input = input;
-	}
+//	public Agent(String jobId, String taskname, String[] input) {
+//		super();
+//		this.jobId = jobId;
+//		this.taskname = taskname;
+//		this.input = input;
+//	}
 	public Agent() {}
 	public String getUserName() {
 		return userName;
