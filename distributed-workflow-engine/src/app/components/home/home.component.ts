@@ -38,9 +38,9 @@ export class HomeComponent implements OnInit {
     };
     ticks = 0;
   ngOnInit() {  
-    this.reportService.getReport("28e84ec8-a46f-4c0d-9ae0-98126f6bf211").then( res => {
+    /*this.reportService.getReport("28e84ec8-a46f-4c0d-9ae0-98126f6bf211").then( res => {
       this.loadChart(res);
-    });
+    });*/
     let timer = Observable.timer(1,1);
     timer.subscribe(
       t => {

@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProjectManagementComponent } from './components/project-management/project-management.component';
 import { WorkflowComponent } from './components/workflow/workflow.component';
 import { WorkflowExecutionComponent } from './components/workflow-execution/workflow-execution.component';
-import { ExpansionSteps, GetReportComponent } from './components/reports/reports.component';
+import { GetReportComponent } from './components/reports/reports.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -48,7 +48,7 @@ import { ReportService } from './services/report/report.service';
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
     WorkflowDetailsComponent,
-    JsonEditor,SettingsDialog,GetReportComponent, ExpansionSteps
+    JsonEditor,SettingsDialog,GetReportComponent
   ],
   imports: [
     BrowserModule, 

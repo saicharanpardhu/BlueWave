@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
  import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl} from '@angular/forms';
 import * as shape from 'd3-shape';
 import { colorSets } from './models/color-sets';
 import { countries, generateHierarchialGraph, getTurbineData } from './models/data';
@@ -13,7 +13,7 @@ import { id } from './models/id';
 import {Task} from "./models/task";
 import {Workflow} from "./models/workflow";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MatChipInputEvent, MatSnackBarConfig} from '@angular/material';
+import {MatChipInputEvent} from '@angular/material';
 import 'rxjs/add/operator/filter'; 
 import 'rxjs/add/operator/map';
 import { TagInputModule } from 'ngx-chips';
@@ -125,7 +125,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
   //Display a worflow if user comes to view 
   ngOnInit() { 
        
-      
+       this.updateNodes("Start");
     this.selectChart(this.chartType);
     this.selectedColorScheme = "aqua"; 
     
@@ -163,19 +163,28 @@ updateNodes(taskname:String) {
       this.hierarchialGraph.nodes.push(hNode);
       this.hierarchialGraph.links = [...this.hierarchialGraph.links];
       this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
+      let len2 =  this.hierarchialGraph.nodes.length;
+
+
     }
   //update links when add a node
   updateLinks(depends :String[],taskname :String){
       let target :any;
       let len = depends.length;
       let len2 =  this.hierarchialGraph.nodes.length;
+
       for(let i=0;i<len2;i++){
           if(this.hierarchialGraph.nodes[i].label==taskname)
           {
             target = this.hierarchialGraph.nodes[i].id;
           }
       }
-     for(let i=0;i<len2;i++){
+     
+
+
+          
+      for(let i=0;i<len2;i++){
+         
           for(let j=0;j<len;j++){
             if(this.hierarchialGraph.nodes[i].label==depends[j])
                 {
@@ -185,12 +194,15 @@ updateNodes(taskname:String) {
                    label: 'on success'
       });
                   console.log("ggghjhjhjkkk");
-        }
+        
        }
-       }
+       
+     }
+   }
       this.hierarchialGraph.links = [...this.hierarchialGraph.links];
       this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
   }
+
   applyDimensions() {
     this.view = [this.width, this.height];
   }
@@ -258,6 +270,7 @@ updateNodes(taskname:String) {
 //Convert any map to links
 workflowToGraph(map :TSMap<String,Task> ){
 this.hierarchialGraph = getTurbineData();
+this.updateNodes("Start");
 let len =  this.wTaskAliases.length;
 for(let i=0;i<len;i++){
       this.updateNodes(this.wTaskAliases[i]);
@@ -265,6 +278,11 @@ for(let i=0;i<len;i++){
       if(map.get(this.wTaskAliases[i]).depends_on!=null){
       this.updateLinks(map.get(this.wTaskAliases[i]).depends_on,this.wTaskAliases[i]);
       console.log(map.get(this.wTaskAliases[i]).depends_on,this.wTaskAliases[i]);}
+      else{
+          let start_depends =[];
+           start_depends.push("Start");
+        this.updateLinks(start_depends,this.wTaskAliases[i]);
+      }
 }
 }
 
@@ -348,6 +366,11 @@ for(let i=0;i<len;i++){
         
         this.updateLinks(task.depends_on,this.taskName);
          
+      }
+      else{
+          let start_depends =[];
+           start_depends.push("Start");
+        this.updateLinks(start_depends,this.taskName);
       }
 
       
@@ -458,11 +481,39 @@ export class DialogOverviewDialog {
     private snackBar:MatSnackBar) { } 
     
   onNoClick(): void { 
+
+     let close:boolean;
+     close = true;
+
    if (this.data.taskName == null||this.data.type == null)
-   this.snackBar.open("Please give a name to the workflow",'');
-   if (this.data.taskName != null&&this.data.type != null)  
+   this.snackBar.open("Please give taskName and taskType");
+
+   if(this.data.type=="clone"||this.data.type=="Build"||this.data.type=="Run"||this.data.type=="test2")
+   {
+      
+     if(this.data.type=="clone"||this.data.type=="Build"||this.data.type=="Run")
+     {
+
+       if(this.data.input.match("(\\w+://)(.+@)*([\\w\\d\\.]+)(:[\\d]+){0,1}/*(.*)")&&this.data.input.match( "(.+@)*([\\w\\d\\.]+):(.*)"))
+       {
+              close = true;
+       }
+       else{
+
+         close =false;
+         this.snackBar.open("Please give proper input for task type",this.data.type);
+       }
+
+     }
+  
+
+
+   }
+   if (this.data.taskName != null&&this.data.type != null&&close)  
     this.dialogRef.close(this.data);
+
   }
+
  onCancelClick(): void{
     this.dialogRef.close();
  }

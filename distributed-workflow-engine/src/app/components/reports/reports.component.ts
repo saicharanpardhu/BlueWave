@@ -21,6 +21,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import { Timestamp } from 'rxjs';
+import {Task} from './task';
 
 @Component({
   selector: 'app-reports',
@@ -30,27 +31,30 @@ import { Timestamp } from 'rxjs';
 export class GetReportComponent implements OnInit {
   
     reports: any;
+    reports1: any;
     jobIdnames: any;
     jobId: String;
-    tasks:any;
-    jobEndTime="sfsfgvsvgsvs";
+    task:Task =[];
+    tasks:any[];
+    tasks1:any;
+    jobEndTime:any;
     jobStartTime: any;
     jobStatus :any;
     constructor(private _service:ReportService) { }
   
     ngOnInit() {
 
-
+console.log("ngonit reports component ");
       this._service.getJobID(localStorage.getItem('Email'))
       .subscribe(resData1 => {this.jobIdnames = resData1;
         console.log('jobidnames',this.jobIdnames);
         console.log('jobId',this.jobIdnames[0].jobId);
         console.log('WjobId',this.jobIdnames[0].workFlowName);
         this.jobId= this.jobIdnames[0].jobId;
-        this.jobIdnames.forEach(element => {
+        /*this.jobIdnames.forEach(element => {
           console.log('job id is',element.jobId);
           this.callLater(element.jobId);
-        });
+        });*/
         
         })
         // this._service.getReport("5a0f90ba-dde4-49cc-ae11-0999227eec37")
@@ -78,10 +82,10 @@ export class GetReportComponent implements OnInit {
       
       
     }
-    callLater(val) {
+    /*callLater(val) {
       console.log('val is in call leater',val);
       this._service.getReport(val)
-      .subscribe((resData) => {
+      .then((resData) => {
         console.log('response data is',resData);
         this.reports = resData;
         //console.log('reports',this.reports);
@@ -90,6 +94,36 @@ export class GetReportComponent implements OnInit {
   
         })
         return this.reports;
+    }*/
+
+
+    getJobReports(jobId:String){
+          
+        this.reports1=[];
+       this._service.getReport(jobId).subscribe(response => {
+       
+        this.jobStartTime = new Date(response.json()[0]["jobStartTime"]);
+        this.jobEndTime = new Date(response.json()[0]["jobEndTime"]);
+        this.jobStatus =  response.json()[0]["jobStatus"];
+         console.log(response.json().length);
+         let len = response.json().length;
+         this.tasks =[];
+
+        for(let i=0;i<len;i++){
+                
+                this.task =[];
+                this.task.taskAlias =  response.json()[i]["taskAlias"] ;
+                this.task.taskStartTime = new Date( response.json()[i]["taskStartTime"] );         
+                this.task.taskEndTime =  new Date(response.json()[i]["taskEndTime"]) ;   
+                this.task.taskLogs =  response.json()[i]["taskLogs"] ;  
+                this.tasks.push(this.task);     
+                console.log(this.tasks);
+
+        }
+
+      
+
+       });
     }
     // loadTasks(jobId:String){
            
@@ -107,24 +141,24 @@ export class GetReportComponent implements OnInit {
     // }
   }
   
-  @Component({
-    selector: 'app-reports',
-    templateUrl: './reports.component.html',
-    styleUrls: ['./reports.component.css']
-  })
+//   @Component({
+//     selector: 'app-reports',
+//     templateUrl: './reports.component.html',
+//     styleUrls: ['./reports.component.css']
+//   })
 
-export class ExpansionSteps {
-  step = 0;
+// export class ExpansionSteps {
+//   step = 0;
 
-  setStep(index: number) {
-    this.step = index;
-  }
+//   setStep(index: number) {
+//     this.step = index;
+//   }
 
-  nextStep() {
-    this.step++;
-  }
+//   nextStep() {
+//     this.step++;
+//   }
 
-  prevStep() {
-    this.step--;
-  }
-}
+//   prevStep() {
+//     this.step--;
+//   }
+// }

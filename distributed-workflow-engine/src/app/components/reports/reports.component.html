@@ -11,10 +11,10 @@
         <mat-card-content>
         
          
-            <form>
+           <!--  <form>
               <input type="search" class="search" placeholder="Search Reports..." />
               <button class="go"><span class="entypo-search"></span></button>
-            </form>
+            </form> -->
           
     
           <p>Choose the job for which you wish to see the report!</p>
@@ -23,7 +23,7 @@
         <div *ngFor="let name of jobIdnames; let i = index" >
           <div *ngIf="i<10">
         <mat-expansion-panel >
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header (click)= getJobReports(name.jobId)>
               <mat-panel-title>
                 Job-ID
               </mat-panel-title>
@@ -56,7 +56,8 @@
                           <mat-card-title>Job Start Time</mat-card-title>
                         </mat-card-header>
                         <mat-card-content>
-                          <!-- <p> {{reports.jobStartTime}}</p> -->
+                          <!-- {{reports1[0].jobStartTime}}  -->
+                          {{jobStartTime}}
                         </mat-card-content>
                       </mat-card>
     
@@ -70,6 +71,7 @@
                     </mat-card-header>
                     <mat-card-content>
                         <!-- <p> {{reports.jobEndTime}}</p> -->
+                        {{jobEndTime}}
                     </mat-card-content>
                   </mat-card>
                 
@@ -82,17 +84,17 @@
                       <mat-card-title>Job Status</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                      <!-- <p> {{reports.jobStatus}}</p> -->
+                      {{jobStatus}}
                     </mat-card-content>
                   </mat-card>
-                  
+                
                   <!-- Task Reports-->
-                  <div *ngFor = "let report of reports">
+                  <div *ngFor = "let task of tasks">
                   <mat-card class="attributes">
                   <mat-expansion-panel>
                       <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{report.taskAlias}}
+                            {{task.taskAlias}}
                         </mat-panel-title>
                           
                       </mat-expansion-panel-header>
@@ -111,22 +113,22 @@
                           <mat-tab-group class="taskReports">
                               <mat-tab label="taskAlias">
                                 <div class="content">
-                                  <p>{{report.taskAlias}}</p>
+                                  <p>{{task.taskAlias}}</p>
                                 </div>
                               </mat-tab>
                               <mat-tab label="taskStartTime">
                                 <div class="content">
-                                    {{report.taskStartTime}}
+                                    {{task.taskStartTime}}
                                 </div>  
                               </mat-tab>
                               <mat-tab label="taskEndTime">
                                 <div class="content">
-                                    {{report.taskEndTime}}      
+                                    {{task.taskEndTime}}      
                                 </div>
                               </mat-tab>
                               <mat-tab label="taskLogs">
-                              <div class="logs-list"  *ngIf="this.report.taskLogs!=null">
-                                  <div class="logsreport" *ngFor = "let line of this.report.taskLogs.split('\n')" >
+                              <div class="logs-list"  *ngIf="this.task.taskLogs!=null">
+                                  <div class="logsreport" *ngFor = "let line of this.task.taskLogs.split('\n')" >
                                       <div >{{line}}</div>
                                   </div> 
                                 </div>

@@ -10,9 +10,9 @@
    <p style="float :left; font-size: 25px;font-weight:500;" *ngIf="this.workflow.workFlowName">{{this.workflow.workFlowName}}</p>
   <!-- / <mat-card-content style="float :left; padding: 10px; font-size: 25px;font-weight:1000;" *ngIf="this.workflow.workFlowName">{{this.workflow_service.displayWorkflow.workFlowName}}</mat-card-content> -->
    </div>
-   <button mat-fab color="primary"  class="app-fab-absolute">
+  <!--  <button mat-fab color="primary"  class="app-fab-absolute">
     <i class="material-icons">menu</i>
-  </button>
+  </button> -->
 <ul [hidden]="false" style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
  <li>
   <button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" mat-raised-button color="primary"  >
