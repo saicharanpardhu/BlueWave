@@ -1,6 +1,0 @@
-FROM java:8-jre
-
-ADD target/Authorization-Server-0.0.1-SNAPSHOT.jar authservice.jar
-ENTRYPOINT ["java", "-jar", "/authservice.jar"]
-
-EXPOSE 8087

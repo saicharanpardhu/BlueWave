@@ -1,6 +1,6 @@
 import { ExecuteWorkflowComponent } from './../components/execute-workflow/execute-workflow.component';
 import { ProjectDetailsComponent } from './../components/project-details/project-details.component';
-import { ReportsComponent } from './../components/reports/reports.component';
+import { GetReportComponent, ExpansionSteps } from './../components/reports/reports.component';
 import { ProfileComponent } from './../components/profile/profile.component';
 import { LoginHomeComponent } from './../components/login-home/login-home.component';
 import { HomeComponent } from './../components/home/home.component';
@@ -22,8 +22,7 @@ const routes: Routes = [
   },
   {path : 'index', component: LoginHomeComponent},
   {path : 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
-  {path : 'executeworkflow', component: ExecuteWorkflowComponent, canActivate: [AuthGuardService]},
-  {path : 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
+  {path : 'reports', component: GetReportComponent, canActivate: [AuthGuardService]},
   {path : 'addworkflow', component: CreateWorkflowComponent, canActivate: [AuthGuardService]},
   {path : 'workflows', component: WorkflowComponent, canActivate: [AuthGuardService]},
   {path : 'workflows/workflowdetails', component: WorkflowDetailsComponent, canActivate: [AuthGuardService]}, 

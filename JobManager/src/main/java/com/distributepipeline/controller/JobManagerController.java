@@ -40,6 +40,7 @@ public class JobManagerController{
 		//sending workflow name to workflow persistence
 		
 		System.out.println("sending...");
+		System.out.println(workFlowName);
 		this.userName=userName;
 		producer.jobIdDetailsToPersistence(userName, workFlowName);
 		jobManagerProducer.sendWorkFlowName(workFlowName); 

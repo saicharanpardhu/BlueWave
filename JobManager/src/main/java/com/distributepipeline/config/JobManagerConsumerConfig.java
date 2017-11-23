@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -18,6 +19,9 @@ import com.distributepipeline.domain.WorkFlow;
 @Configuration
 @EnableKafka
 public class JobManagerConsumerConfig {
+	
+	@Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServer;
 
 	//Kafka Consumer Bean having a String as key and WorkFlow as value
 	 @Bean
@@ -25,7 +29,7 @@ public class JobManagerConsumerConfig {
 	        Map<String, Object> props = new HashMap<>();
 	        props.put(
 	          ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-	          "172.23.238.158:9092");
+	          bootstrapServer);
 	        
 	        props.put(
 	          ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
@@ -58,7 +62,7 @@ public class JobManagerConsumerConfig {
 	        Map<String, Object> props = new HashMap<>();
 	        props.put(
 	          ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-	          "172.23.238.158:9092");
+	          bootstrapServer);
 	        props.put(
 	          ConsumerConfig.GROUP_ID_CONFIG, 
 	          "something22");

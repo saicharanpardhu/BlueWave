@@ -13,8 +13,7 @@ public class TaskLibrary{
 	private String taskName;
 	private String inputType;
 	private String outputType;
-	
-	
+	private String taskCommand;	
 	
 	/*--------------------- Getters and Setters for the fields -----------------------------*/
 	public String getTaskName() {
@@ -35,22 +34,12 @@ public class TaskLibrary{
 	public void setOutputType(String outputType) {
 		this.outputType = outputType;
 	}
-	
-	/*--------------------------------- Constructors--------------------------- */
-	public TaskLibrary(String taskName, String inputType, String outputType) {
-		super();
-		this.taskName = taskName;
-		this.inputType = inputType;
-		this.outputType = outputType;
+	public String getTaskCommand() {
+		return taskCommand;
 	}
-	
-	/*------------------------------ Default Constructors --------------------- */
-	public TaskLibrary() {
-		super();
+	public void setTaskCommand(String taskCommand) {
+		this.taskCommand = taskCommand;
 	}
-	
-	
-	
 	
 	
 }

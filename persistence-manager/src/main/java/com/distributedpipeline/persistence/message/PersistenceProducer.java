@@ -2,6 +2,7 @@ package com.distributedpipeline.persistence.message;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.distributedpipeline.persistence.domain.*;
@@ -13,9 +14,11 @@ public class PersistenceProducer {
 	private KafkaTemplate<String, Workflow> kafkaTemplate;
 	
 
+@Value("${kafka.topic.workflowfrompersistence}")
+private String topic1;
 	 
 	public void sendMessage(Workflow workFlow) {
-	    kafkaTemplate.send("workFlow", workFlow);
+	    kafkaTemplate.send(topic1, workFlow);
 
 		System.out.println("producing");
 	   

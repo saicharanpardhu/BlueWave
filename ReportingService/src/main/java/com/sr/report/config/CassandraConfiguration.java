@@ -24,8 +24,8 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
     private static final String KEYSPACE = "Reporting";
 //    private static final String USERNAME = "cassandra";
 //    private static final String PASSWORD = "cassandra";172.23.238.153
-    
-    private  String NODES= "localhost" ; // comma seperated nodes
+    @Value("${spring.data.cassandra.uri}")
+    private  String NODES; // comma seperated nodes
 
 
     @Bean

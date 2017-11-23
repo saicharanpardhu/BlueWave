@@ -1,24 +1,28 @@
 package com.distributedpipeline.persistence.domain;
 
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 public class Tasks {
 
 	@NotNull
-	private String taskType;
+	private String type;
 	private String status;
 	private String[] depends_on;
 	private String[] output;
 	private String[] input;
-	public String getTaskType() {
-		return taskType;
-	}	
+	
 	
 	/*------------------------ Getters and Setters for the fields-----------------------------*/
-		
-	public void setTaskType(String taskType) {
-		this.taskType = taskType;
+	
+	public String getType() {
+		return type;
 	}
+
+	public void setType(String type) {
+		this.type = type;
+	}	
+	
 	public String[] getDepends_on() {
 		return depends_on;
 	}
@@ -46,19 +50,7 @@ public class Tasks {
 	public void setInput(String[] input) {
 		this.input = input;
 	}
-	
-	/*-------------------------------------- Constructors------- ------------------- */
 
-	public Tasks(String taskType, String status, String[] depends_on, String[] output, String[] input) {
-		super();
-		this.taskType = taskType;
-		this.status = status;
-		this.depends_on = depends_on;
-		this.output = output;
-		this.input = input;
-	}
-
-	/*--------------------------------- Default Constructors ------------------------ */
 	public Tasks() {
 		super();
 	}

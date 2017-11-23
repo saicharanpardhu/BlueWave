@@ -25,8 +25,8 @@ public class ReportingServiceConsumer {
 
 	@Autowired
 	private ReportModelCRUDRepository reportModelCRUDRepository;
-    
-    @KafkaListener(topics="reports",
+	
+    @KafkaListener(topics="${kafka.topic.projectModeltopic}",
     		containerFactory = "projectModelKafkaListenerContainerFactory")
    public void processMessage(ReportModel report) {
     	

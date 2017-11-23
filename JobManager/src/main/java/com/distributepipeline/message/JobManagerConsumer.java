@@ -41,7 +41,7 @@ public class JobManagerConsumer {
 
 	//Kafka Listener to get workFlow from Persistence Manager
 	
-	@KafkaListener(topics = "workFlow", 
+	@KafkaListener(topics = "${kafka.topic.workflowfrompersistence}", 
 			  containerFactory = "reportKafkaListenerContainerFactory")
 			public void inputlistener(WorkFlow workFlow) throws IOException, InterruptedException {
 		

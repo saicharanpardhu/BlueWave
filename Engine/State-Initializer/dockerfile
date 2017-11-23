@@ -1,7 +1,0 @@
-FROM java:8-jre
-ADD target/dw-state-initializer-1.0-SNAPSHOT.jar state-initializer.jar
-ENTRYPOINT ["java", "-jar", "/state-initializer.jar"]
-EXPOSE 8078
-
-
-

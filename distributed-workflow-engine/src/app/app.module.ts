@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProjectManagementComponent } from './components/project-management/project-management.component';
 import { WorkflowComponent } from './components/workflow/workflow.component';
 import { WorkflowExecutionComponent } from './components/workflow-execution/workflow-execution.component';
-import { ReportsComponent } from './components/reports/reports.component';
+import { ExpansionSteps, GetReportComponent } from './components/reports/reports.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -39,7 +39,6 @@ import { ReportService } from './services/report/report.service';
     ProjectManagementComponent,
     WorkflowComponent,
     WorkflowExecutionComponent,
-    ReportsComponent,
     FooterComponent,
     NavbarComponent,
     ProfileComponent,
@@ -49,7 +48,7 @@ import { ReportService } from './services/report/report.service';
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
     WorkflowDetailsComponent,
-    JsonEditor,SettingsDialog
+    JsonEditor,SettingsDialog,GetReportComponent, ExpansionSteps
   ],
   imports: [
     BrowserModule, 
@@ -63,7 +62,7 @@ import { ReportService } from './services/report/report.service';
     TagInputModule,
     Ng4JsonEditorModule
   ],
-  providers: [AuthenticationService, ReportService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService ],
+  providers: [AuthenticationService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService, ReportService ],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog,JsonEditor,SettingsDialog]
 })

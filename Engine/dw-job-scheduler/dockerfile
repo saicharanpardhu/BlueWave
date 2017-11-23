@@ -1,4 +1,0 @@
-FROM java:8-jre
-ADD target/dw-job-scheduler-1.0-SNAPSHOT.jar job-scheduler.jar
-ENTRYPOINT ["java", "-jar", "/job-scheduler.jar"]
-EXPOSE 8060
