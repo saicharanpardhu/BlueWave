@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.abhinav</groupId>
-  <artifactId>Config-server</artifactId>
+  <groupId>com.distributedpipeline</groupId>
+  <artifactId>configserver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Config-server</name>
+  <name>configserver</name>
   <url>http://maven.apache.org</url>
   
   <parent>

@@ -41,5 +41,20 @@ public class TaskLibrary{
 		this.taskCommand = taskCommand;
 	}
 	
+	/*-----------------------     Constructors -----------------------------------------------*/
+	public TaskLibrary() {
+		super();
+	}
+	public TaskLibrary(String taskName, String inputType, String outputType, String taskCommand) {
+		super();
+		this.taskName = taskName;
+		this.inputType = inputType;
+		this.outputType = outputType;
+		this.taskCommand = taskCommand;
+	}
+	
+	
+	
+	
 	
 }

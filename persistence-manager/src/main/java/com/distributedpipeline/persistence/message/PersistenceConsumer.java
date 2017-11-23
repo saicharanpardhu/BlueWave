@@ -7,12 +7,14 @@ import com.distributedpipeline.persistence.domain.*;
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
 import com.distributedpipeline.persistence.service.PersistenceServiceImpl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
 @Service
 public class PersistenceConsumer {
 	
+	  final static Logger logger = Logger.getLogger(PersistenceConsumer.class);
 	  private CountDownLatch latch = new CountDownLatch(1);
 
 	  @Autowired
@@ -37,6 +39,7 @@ public class PersistenceConsumer {
           public void kafkalistener(JobIdDetails jobIdDetails) {
 			service.addJobDetails(jobIdDetails);
               latch.countDown();
+              logger.info("listening");
           }
 
 

@@ -1,4 +1,4 @@
-package com.distributedpipeline.Config_server;
+package com.distributedpipeline.configserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
