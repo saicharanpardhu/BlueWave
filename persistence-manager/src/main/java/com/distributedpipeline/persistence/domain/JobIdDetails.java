@@ -12,11 +12,11 @@ public class JobIdDetails {
 	private String jobId;
     private String userName;
     private String workFlowName;
-	public String getJobId() {
-		return jobId;
-	}
 	
 	/*--------------------- Getters and Setters for the fields -----------------------------*/
+    public String getJobId() {
+		return jobId;
+	}
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
 	}

@@ -15,7 +15,6 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.distributedpipeline.persistence.domain.JobIdDetails;
-import com.distributedpipeline.persistence.domain.Report;
 
 @Configuration
 @EnableKafka
@@ -25,37 +24,7 @@ public class PersistenceConsumerConfig {
 	@Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
       
-	@Bean
-    public ConsumerFactory<String, Report> createConsumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(
-          ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          bootstrapServer);
-        
-        props.put(
-          ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
-          StringDeserializer.class);
-        props.put(
-          ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, 
-          JsonDeserializer.class);
-        props.put(
-                ConsumerConfig.GROUP_ID_CONFIG, 
-                "something");
-        return new DefaultKafkaConsumerFactory<>(
-        	      props,
-        	      new StringDeserializer(), 
-        	      new JsonDeserializer<>(Report.class));
-    }
- 
-	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, Report> 
-	  reportKafkaListenerContainerFactory() {
-	 
-	    ConcurrentKafkaListenerContainerFactory<String, Report> factory
-	      = new ConcurrentKafkaListenerContainerFactory<>();
-	    factory.setConsumerFactory(createConsumerFactory());
-	    return factory;
-	}
+	
 	@Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();

@@ -31,13 +31,14 @@ import com.distributedpipeline.persistence.utility.LogExecutionTime;
 @RequestMapping("/v1.0/persistence")
 @CrossOrigin(origins="*")
 public class PersistenceController {
-      //final static Logger logger = Logger.getLogger(PersistenceController.class);
+     final static Logger logger = Logger.getLogger(PersistenceController.class);
 	
 	@Autowired
 	PersistenceProducer persistenceProducer;
 	
 	@Autowired
 	PersistenceJobRepos persistenceJobRepos;
+	
 	@Autowired
 	private PersistenceServiceImpl persistenceservice;
 		
@@ -133,9 +134,9 @@ public class PersistenceController {
     {
 		TaskLibrary tasklibrary1= persistenceservice.updateTaskLibrary(taskLibrary);
         if(tasklibrary1==taskLibrary) {
-        	return new ResponseEntity<String>("workflow updated", HttpStatus.OK);
+        	return new ResponseEntity<String>("TaskLibrary updated", HttpStatus.OK);
         }
-        throw new WorkflowAlreadyExistsException("workflow already exists");
+        throw new WorkflowAlreadyExistsException("TaskLibrary already exists");
     }
         
 	/*--------------------------------- delete tasklibrary --------------------------- */
@@ -168,6 +169,13 @@ public class PersistenceController {
 	public ResponseEntity<Tasks> getWorkflowDetails(@PathVariable(value="workFlowName") String workFlowName, @PathVariable(value="task_name") String task_name) {
 		return new ResponseEntity<>(persistenceservice.getDetailsOfTask(workFlowName, task_name),HttpStatus.OK);
 	}
+	
+	
+	/*------------------------                    ----------------------------------------
+                                 Method For Job Manager   
+     --------------------------                    --------------------------------------*/
+	
+	
 	
 	/* ------------------------------ get job details by user name ------------------------------- */
 	@RequestMapping(value = "/jobdetails/userName/{userName}", method = RequestMethod.GET)
