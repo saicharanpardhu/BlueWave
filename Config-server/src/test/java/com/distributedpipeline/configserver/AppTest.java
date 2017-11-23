@@ -1,4 +1,4 @@
-package com.distributedpipeline.Config_server;
+package com.distributedpipeline.configserver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
