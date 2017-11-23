@@ -9,6 +9,10 @@ tag-input tag-input-dropdown /deep/ ng2-dropdown div.ng2-dropdown-menu {
     z-index: 100000;
 }
 
+#dialog-content{
+  overflow: hidden;  
+}
+
 tag-input tag-input-dropdown /deep/ ng2-dropdown{
   top: inherit !important;
   left: inherit !important;

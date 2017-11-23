@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router'; 
 import { MatSnackBarConfig } from '@angular/material';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-execute-workflow',
@@ -18,30 +19,34 @@ export class ExecuteWorkflowComponent implements OnInit {
   private authentication : AuthenticationService,
   private router: Router, private socketService: SocketService
   ) { 
+    
+  }
+  response: any;
+  value = 0;
+  tasksComplete = 0;
+  consoleOutput : Array<String>;
+  tasks : Array<String>;
+  displayStepper = false;
+  cardDisplay = false;
+  notLoaded = false;
+  color = "primary";
+  ngOnInit() {    
     this.value = 0;
     this.tasksComplete = 0;
     this.consoleOutput = [];
     this.tasks  = [];
     this.displayStepper = false;
     this.cardDisplay = false
-  }
-  response: any;
-  value = 0;
-  tasksComplete = 0;
-  consoleOutput : Array<String> = [];
-  tasks : Array<String> = [];
-  displayStepper = false;
-  cardDisplay = false;
-  notLoaded = false;
-  ngOnInit() {    
 
     // this.tasks = this.socketService.taskNames;
     this.socketService.socketMessages.subscribe( data => {
-
+ 
       this.tasksComplete += 1;
       console.log("Completed" + this.tasksComplete + " of " + this.socketService.socketNumber);
       // this.tasksComplete += 1;
-      this.value = (this.tasksComplete/this.socketService.socketNumber)*100; 
+      console.log(data.indexOf("failed"));
+      if(data.indexOf("failed") !== -1) this.color="warn";
+      else this.value = (this.tasksComplete/this.socketService.socketNumber)*100; 
       console.log(this.value); 
     }); 
 
@@ -58,6 +63,8 @@ export class ExecuteWorkflowComponent implements OnInit {
   }
 
   loadConsole(taskName){
+    this.cardDisplay = !this.cardDisplay;
+    if(!this.cardDisplay) this.consoleOutput = []; 
     try{
       let taskOutput = this.socketService.socketConsoleMap.get(taskName);
       this.notLoaded = false;

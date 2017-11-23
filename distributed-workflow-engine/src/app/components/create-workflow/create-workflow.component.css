@@ -13,3 +13,16 @@
   padding: 0;
   height: 100%;
 }
+.fill-remaining-space{
+  flex:1 1 auto;
+}
+
+.app-fab-absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.app-fab-absolute:hover{
+  cursor: pointer;
+}

@@ -20,13 +20,13 @@ export class WorkflowComponent implements OnInit {
       }
   
       ngOnInit(){
-        this.load_workflows();
-        console.log("uiawfchiwfc");
+        this.load_workflows(); 
       }
   
       load_workflows() {
-        return this.workflow_service.getAllWorkflows().subscribe(datas => {
+        return this.workflow_service.getAllWorkflows().then(datas => {
           this.datas = datas ;
+          console.log(this.datas);
         });
       }
       getCurrentWorkflow(workFlowName : String) {
@@ -41,7 +41,9 @@ export class WorkflowComponent implements OnInit {
       
     }
     getWorkflow(workFlowName){
-      this.workflow_service.getWorkflow(workFlowName).then(()=> this.router.navigate(['/viewworkflow']));
+      this.workflow_service.getWorkflow(workFlowName).then(()=> {
+        this.router.navigate(['/viewworkflow']); 
+      });
     }
 
     executeWorkFlow(workFlowName){
@@ -49,6 +51,9 @@ export class WorkflowComponent implements OnInit {
     }
 
     deleteWorkFlow(workFlowName){
-      this.persistence.deleteWorkFlow(workFlowName);
+      this.persistence.deleteWorkFlow(workFlowName).then(() => {
+      console.log("Loading new workflows..");
+      this.load_workflows();
+    });
     }
 }

@@ -1,7 +1,7 @@
 export class Task{
 
 
-    type ?: String ; 	
+taskType ?: String ; 	
 status ?: String; 	
 depends_on ?: String[]; 	
 output ?: String[]; 	

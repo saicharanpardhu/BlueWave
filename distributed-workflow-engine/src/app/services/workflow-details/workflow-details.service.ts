@@ -16,23 +16,32 @@ export class WorkflowDetailsService {
     console.log("service running");
   }
   getAllWorkflows(){ 
-      return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow').map(res=> res.json());  
+      return this._http.get('http://172.23.238.147:8099/v1.0/persistence/workflow').toPromise().then(res=> res.json());  
     
   }
+
+  saveTaskType(taskType,command){
+    let json = {
+      "shellScript":"#!/bin/bash\nchmod +x Clone-Plugin.sh\nsource config.sh\nmkdir $directory_path\ncd $directory_path\ngit clone $git_url",
+      "shellPath":"/home/prashant/Desktop/pmd/shell_script/Test",
+      "fileName":"testingthrouh.sh"
+  }
+    // return this._http.post();
+  }
   getWorkflow(workFlowName){ 
-    return this._http.get('http://172.23.238.147:8080/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res=>{
+    return this._http.get('http://172.23.238.147:8099/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res=>{
       this.displayWorkflow = res.json();
     });  
   
 }
   getTasksOfWorkflow(workFlowName : String){
-    return this._http.get("http://172.23.238.147:8080/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
+    return this._http.get("http://172.23.238.147:8099/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
       this.tasks = res.json();
       console.log(this.tasks);
     });
    }
   getTaskDetailsOfWorkflow(workFlowName : String, taskName : String) {
-    return this._http.get("http://172.23.238.147:8080/v1.0/persistence/tasks/"+workFlowName+"/"+taskName).
+    return this._http.get("http://172.23.238.147:8099/v1.0/persistence/tasks/"+workFlowName+"/"+taskName).
           toPromise();
   }
    getTasks(){

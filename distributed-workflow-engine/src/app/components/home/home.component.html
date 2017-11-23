@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <!-- <p>Your recently executed projects.</p> --> 
-      <a mat-raised-button color="primary" (click)="executeWorkflow()" [routerLink]="['/executeworkflow']">
+      <a mat-raised-button color="primary" [routerLink]="['/workflows']">
         <span class="mat-button-wrapper" id="workflow">
           <mat-icon>done_all</mat-icon> <span>Execute CI-CD Workflow</span>
         </span>
@@ -14,4 +14,18 @@
       </a>
     </mat-card-content>
   </mat-card>
+  <ngx-charts-bar-horizontal-stacked *ngIf="this.tasks.length"
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="tasks"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+  </ngx-charts-bar-horizontal-stacked>
 </div>

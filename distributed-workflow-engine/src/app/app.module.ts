@@ -30,6 +30,7 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 
 import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
+import { ReportService } from './services/report/report.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { Ng4JsonEditorModule } from 'angular4-jsoneditor';
     TagInputModule,
     Ng4JsonEditorModule
   ],
-  providers: [AuthenticationService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService ],
+  providers: [AuthenticationService, ReportService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService ],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog,JsonEditor,SettingsDialog]
 })

@@ -2,30 +2,34 @@ import { SocketService } from './../socket/socket.service';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationService {
 
   private access_token : String = '';
   private refresh_token : String = '';
-
-  public getAccessToken(){
-    return this.access_token;
-  }
-  public setAccessToken(){
+ 
+  public logout(){
     this.access_token = '';
     localStorage.clear();
     localStorage.removeItem("Email");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("loginData");
   }
   constructor(private http: Http, private socket:SocketService,
-    private snackBar:MatSnackBar) { }
+    private snackBar:MatSnackBar,
+    private router: Router) { }
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
   isLoggedIn(){
     // return true;
-    // console.log("Logged in status: ", !(localStorage.getItem('access_token') == null));
-    return !(localStorage.getItem('access_token') == null);
+    // console.log("Logged in status: ", localStorage.getItem('access_token'), " ", !(localStorage.getItem('access_token') == null));
+    // this.socket.disconnect();
+    // this.socket.connect(); 
+    return !(localStorage['loginData'] == null);
   }
 
   signup(firstName, lastName, email, userName, password){
@@ -52,12 +56,11 @@ export class AuthenticationService {
     console.log("Logging in using the credentials..",username,password);
     return this.http.post('http://172.23.238.176:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
       // response = response.json();
-      localStorage.setItem('access_token',response.json().access_token);
-      localStorage.setItem('refresh_token',response.json().refresh_token);
-      localStorage.setItem('Email', username);
-      console.log('USER',localStorage.getItem('Email'));
-      this.socket.subscribe();
-      console.log("Access token from service",localStorage.getItem('access_token'), localStorage.getItem('refresh_token'));
+      localStorage.setItem('loginData',JSON.stringify({"access_token":response.json().access_token,"refresh_token":response.json().refresh_token,"Email":username}));
+      this.socket.connect();
+      localStorage.setItem('Email',username);
+      this.router.navigate(['/home']);
+      console.log("Access token from service",localStorage.getItem('loginData'), localStorage.getItem('refresh_token'));
     }).catch(() => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;

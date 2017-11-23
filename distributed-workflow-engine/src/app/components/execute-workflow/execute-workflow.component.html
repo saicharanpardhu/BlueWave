@@ -2,36 +2,29 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      CI-CD Workflow
+      Workflow Execution: 
     </mat-card-header>
     <mat-card-content>
       <br>
         <ul *ngIf="displayStepper" style="list-style: none; ">
           <li *ngFor="let name of tasks" style="display: inline-block">
-            <mat-card class="cards" (click)="loadConsole(name);cardDisplay = !cardDisplay;">  {{name}}</mat-card>
+            <mat-card class="cards" (click)="loadConsole(name)">  {{name}}</mat-card>
           </li> 
         </ul>
-        <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" [color]="color" [value]="value"></mat-progress-bar>
         <br><br> 
 
          <!-- <mat-form-field [hideRequiredMarker]="true">
           <input #messageBox matInput placeholder="Message" [type]="'text'" >  
         </mat-form-field> 
         <button mat-raised-button (click)="sendMessage(messageBox.value)" color="primary">Submit</button>
-        <br><br> -->
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Reports
-              </mat-panel-title> 
-            </mat-expansion-panel-header>  
-        </mat-expansion-panel>
+        <br><br> --> 
         <mat-card class="console" *ngIf="cardDisplay">
           <mat-card-title>Console output</mat-card-title>
-          <mat-card-content>  
-            <div (window:resize)="onResize($event)" #gridElement class="consolecontainer" *ngFor="let output of consoleOutput">
+          <mat-card-content class="consolecontainer">  
+            <div   *ngFor="let output of consoleOutput">
               <code>
-                {{output}} <br />
+                {{output}}
               </code>
             </div> 
           </mat-card-content>

@@ -12,8 +12,8 @@ import chartGroups from './models/chartTypes';
 import { id } from './models/id';
 import {Task} from "./models/task";
 import {Workflow} from "./models/workflow";
-import { FormBuilder, FormGroup } from '@angular/forms';
-import {MatChipInputEvent} from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MatChipInputEvent, MatSnackBarConfig} from '@angular/material';
 import 'rxjs/add/operator/filter'; 
 import 'rxjs/add/operator/map';
 import { TagInputModule } from 'ngx-chips';
@@ -33,7 +33,7 @@ import { OnDestroy } from '@angular/core';
 })
 export class CreateWorkflowComponent implements OnInit, OnDestroy{
   //Task Library 
-  public tasks: Array<String> = ["git-clone","mvn-package"];
+  public tasks: Array<String> = ["clone","upperCase","Build","Run","deploy","test2"];
   //Tasks of the workflow
   map = new TSMap<String,Task>();
   //Dummy workflow
@@ -42,7 +42,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
   //wORKFLOW Name
   Wname  :String;
   taskName :String;
-  taskType : String;
+  type : String;
   dependsOn : any;
   depends_on : any;
   input :String;
@@ -54,6 +54,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
   deleteMode : boolean = false;
   deleteModeButton ="DELETE TASKS";
 
+  loadWorkflow = false;
 
   //Chart properties
   version = "APP_VERSION";
@@ -132,10 +133,13 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy{
       this.applyDimensions();
     }
     if (this.workflowService.displayWorkflow!=null){
+      this.loadWorkflow = true;
+      console.log(this.loadWorkflow);
       console.log(this.workflowService.displayWorkflow.tasks);
           this.map.fromJSON( this.workflowService.displayWorkflow.tasks);
           this.wTaskAliases = this.map.keys();
           this.workflowToGraph(this.map);
+          this.workflow.workFlowName = this.workflowService.displayWorkflow.workFlowName;
       console.log(this.map);    
     }
     else{
@@ -309,29 +313,29 @@ for(let i=0;i<len;i++){
   }
   toggleExpand(node) {
     console.log('toggle expand', node);
-  }
-
+  } 
   //Dialog to add a task
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogOverviewDialog, {
       width: '500px',
-      data: { taskName: this.taskName, taskType:this.taskType ,dependsOn:this.dependsOn,input:this.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks}
+      data: { taskName: this.taskName, type:this.type ,dependsOn:this.dependsOn,input:this.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks}
     });
     dialogRef.afterClosed().subscribe(result => {
       
       let task : Task ={};
       this.taskName = result.taskName;
-      task.taskType = result.taskType;
+      task.type = result.type;
       this.depends_on = result.dependsOn;
       task.input = [];
+      task.status = "ready";
        task.input.push(result.input);
       this.wTaskAliases.push(result.taskName);
       
-      task.depends_on =[];
-     
+      task.depends_on =null;
+
       this.updateNodes(this.taskName);
       if(this.depends_on!=undefined){
-        
+        task.depends_on =[];  
        let len2 = this.depends_on.length;
        for(let i=0;i<len2;i++){
          if(JSON.parse(JSON.stringify(result.dependsOn[i])).value!=null)
@@ -353,15 +357,38 @@ for(let i=0;i<len;i++){
       console.log(this.map);
        });
   }
-
+  executeWorkflow(){
+    this.updateWorkflow().then(() => this.persistence.triggerEngine(this.workflow.workFlowName));
+  }
 //Save workflow to DB
-  saveWorkflow(): void {
-      
-      //owner is hardcoded
+  saveWorkflow() { 
       this.workflow.owner = localStorage.getItem('Email');
-      this.persistence.sendWorkFlow2(this.workflow.workFlowName,
-                                      this.workflow.owner,this.status,this.map);
-                                      console.log(this.map);    
+      let config = new MatSnackBarConfig();
+      config.duration = 500;
+      console.log("From component: ", this.workflow.workFlowName);
+      return this.persistence.sendWorkFlow2(this.workflow.workFlowName,
+                                      this.workflow.owner,this.status,this.map).then(() => 
+      {
+        this.snackBar.open("Workflow saved successfully.",'Close',{
+        duration: 2000,
+      });
+      console.log(this.map); 
+      });
+         
+    }
+
+    updateWorkflow(){ 
+      this.workflow.owner = localStorage.getItem('Email');
+      let config = new MatSnackBarConfig();
+      config.duration = 500;
+      console.log("From component: ", this.workflow.workFlowName);
+      return this.persistence.updateWorkFlow(this.workflow.workFlowName,
+                                      this.workflow.owner,this.status,this.map).then(() => {
+      console.log("Should have opened snackbar");
+      this.snackBar.open("Workflow saved successfully.",'Close',{
+        duration: 2000,
+      })
+      });   
     }
 
 // Dialog for the workflow name
@@ -424,15 +451,16 @@ for(let i=0;i<len;i++){
 })
 export class DialogOverviewDialog {
   
-  
+   
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { } 
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private snackBar:MatSnackBar) { } 
     
   onNoClick(): void { 
-   if (this.data.taskName == null||this.data.taskType == null)
-       alert("Please give task name and type");
-   if (this.data.taskName != null&&this.data.taskType != null)  
+   if (this.data.taskName == null||this.data.type == null)
+   this.snackBar.open("Please give a name to the workflow",'');
+   if (this.data.taskName != null&&this.data.type != null)  
     this.dialogRef.close(this.data);
   }
  onCancelClick(): void{
@@ -441,21 +469,25 @@ export class DialogOverviewDialog {
 }
 @Component({
   selector: 'wname-overview-dialog',
-  templateUrl: 'wname-overview-dialog.html',
-  styleUrls : ['wname-overview-dialog.css']
+  templateUrl: 'wname-overview-dialog.html'
 })
 export class WnameOverviewDialog {
   
   constructor(
     public dialogRef: MatDialogRef<WnameOverviewDialog >,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  private snackBar:MatSnackBar) { }
    
   onNoClick(): void { 
     if (this.data.Wname == null)
-       alert("Please give a name to the workflow");
+       this.snackBar.open("Please give a name to the workflow",'');
     if (this.data.Wname != null)
       this.dialogRef.close(this.data.Wname);
   }
+
+ onCancelClick(): void{
+  this.dialogRef.close();
+}
   workflowNameValidator = new FormControl('', [Validators.required]); 
   getworkflowNameErrorMessage() { 
     return this.workflowNameValidator.hasError('required') ? 'Workflow name required' : '';

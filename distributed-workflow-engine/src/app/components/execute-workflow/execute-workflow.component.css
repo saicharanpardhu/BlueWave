@@ -10,19 +10,16 @@
 
  .console{
    margin-top: 20px;
- }
-
- .console mat-card-content{
+ } 
+.consolecontainer{ 
   height:400px;
   text-align: left;
   font-size: 13px;
   background-color: black;
   font-family: 'Inconsolata', monospace;
   color: white;
-}
-.consolecontainer{
-  width: 100%;
   padding :10px;
+  overflow: auto;
 }
 pre {
   white-space: pre-wrap;       /* Since CSS 2.1 */

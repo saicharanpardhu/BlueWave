@@ -3,10 +3,11 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { SocketService } from './services/socket/socket.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { trigger,query, stagger, keyframes, transition,style, animate, state } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: './app.component.html', 
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
@@ -18,16 +19,25 @@ export class AppComponent implements OnInit {
             private authService : AuthenticationService,
           private workflowService: WorkflowDetailsService){}
   notifications = [];        
-  ngOnInit(){ 
-    localStorage.clear();
+  ngOnInit(){  
     this.socketService.socketMessages.subscribe( data => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;
-      this.snackBar.open(data.toString(),'');
+      this.snackBar.open(data.toString(),'Close');
       console.log(data);
       this.notifications.push(data);
   });
   } 
+
+  logout(){
+    this.authService.logout();
+  }
+
+  clearNotifications(){
+    this.notifications = [];
+  }
+
+
   sideNavopened(){
     this.notif = !this.notif;
   }

@@ -1,4 +1,4 @@
-.fill-remaining-space{
+.fill-remaining-space, .fill-notif-space{
     flex:1 1 auto;
 }
 .leftsidenavBox{

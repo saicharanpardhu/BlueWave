@@ -7,6 +7,9 @@ export class PerisitenceService {
   constructor(private http: Http) { }
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
+
+
+  
   triggerEngine(workFlowName){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -39,13 +42,23 @@ export class PerisitenceService {
     // console.log("w "+workflowName+" O "+owner+" status "+status);
     // console.log(JSON.stringify(tasks));
     // tasks = JSON.stringify(tasks);
+    console.log("From service: " , workflowName);
     let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
-    this.http.post("http://172.23.238.147:8080/v1.0/persistence/workflow",
-     JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response));
+    return this.http.post("http://172.23.238.147:8099/v1.0/persistence/workflow",
+     JSON.stringify(workflow), {headers:this.headers}).toPromise();
+  }
+
+  updateWorkFlow(workflowName, owner, status, tasks){
+    // console.log("w "+workflowName+" O "+owner+" status "+status);
+    // console.log(JSON.stringify(tasks));
+    // tasks = JSON.stringify(tasks);
+    console.log("From service: " , workflowName);
+    let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
+    return this.http.put("http://172.23.238.147:8099/v1.0/persistence/workflow",
+     JSON.stringify(workflow), {headers:this.headers}).toPromise();
   }
 
   deleteWorkFlow(workFlowName){
-    this.http.delete('http://172.23.238.147:8080/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res =>
-    console.log(res.json()));
+    return this.http.delete('http://172.23.238.147:8099/v1.0/persistence/workflow/'+workFlowName).toPromise();
   }
 }

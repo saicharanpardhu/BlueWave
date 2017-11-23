@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../authentication/authentication.service';
 import { Http } from '@angular/http'; 
 import { Injectable, OnInit } from '@angular/core'; 
 import { StompService } from 'ng2-stomp-service'; 
@@ -12,31 +13,41 @@ export class SocketService implements OnInit{
   public username: String;
 
   stompClient:any;
-  socketMessageSource = new Subject<String>();
+  
   socketUrl = 'http://localhost:9000/gs-guide-websocket'; 
   socket: any;
+
+  
   messageSubscription:any;
-  socketMessage: String = "Default";
-  socketMessages = this.socketMessageSource.asObservable();
-  numberSubscription:any; 
-  socketNumber:number;
   nameSubscription : any; 
-  taskNames : Array<String> = [];
+  numberSubscription:any; 
+  socketConsoleSubscription : any; 
+  jobIdSubscription : any;
+
+  socketMessageSource = new Subject<String>();
+  socketMessages = this.socketMessageSource.asObservable();
+  
+  socketNumber:number;
+  
+  taskNames : Array<String>;
+  
   socketNameSource = new Subject<String>();
   socketNames = this.socketNameSource.asObservable();
 
-  socketConsoleSubscription : any; 
   
-  socketConsoleMap : Map<String,Array<String>> = new Map();
-  
+  socketConsoleMap : Map<String,Array<String>>;
+
   ngOnInit(){
     // console.log(this.username);
+    this.taskNames = [];
+    this.socketConsoleMap = new Map();
   }
  constructor(
     private http:Http,
-    private stomp: StompService,) {   
-      
-    this.connect();
+    private stomp: StompService) {   
+      this.taskNames = [];
+      this.socketConsoleMap = new Map();
+      this.connect();
   } 
 connect(){
   this.stomp.configure({
@@ -46,12 +57,13 @@ connect(){
   });
   this.stomp.startConnect().then(() => {
     this.stomp.done('init');  
-    if(localStorage.getItem('Email')) this.subscribe();
+    
+    if(localStorage['loginData']) this.subscribe();
   });
 }
 subscribe(){
 
-  this.username= localStorage.getItem("Email");
+  this.username= JSON.parse(localStorage['loginData'])["Email"];
   if(this.messageSubscription != null){
         this.messageSubscription.unsubscribe();
         console.log("message unsubscribed");
@@ -65,7 +77,12 @@ subscribe(){
       }); 
       if(this.numberSubscription != null)
       this.numberSubscription.unsubscribe();
-  
+  if(this.jobIdSubscription != null) this.jobIdSubscription.unsubscribe();
+
+  this.jobIdSubscription = this.stomp.subscribe('/jobid/'+this.username, (response)=> {
+    localStorage.setItem('workFlowName', response.workFlowName);
+    console.log(response);
+  });
    this.numberSubscription = this.stomp.subscribe('/number',(response) => {
       let temp : String = response;
       this.socketNumber = response;
@@ -105,8 +122,7 @@ subscribe(){
     console.log(message);
     this.stomp.send('/app/topic/messages',{"message":message}); 
   }
- disconnect(){
-    this.stomp.send('/app/topic/messages',{"message":"logout notification"});
+ disconnect(){ 
     this.stomp.disconnect().then(() => {
       console.log( 'Connection closed' )
     });

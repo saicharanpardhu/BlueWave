@@ -51,7 +51,7 @@ export class LoginHomeComponent implements OnInit {
     return this.passwordValidator.hasError('required') ? 'Password is required.':'';
   }
   login(email,password){
-    this.authenticationService.login(email,password).then(() => this.router.navigate(['/home']));
+    this.authenticationService.login(email,password);
     // if(email){
     //   email = JSON.stringify(email);
     // } 
@@ -60,8 +60,7 @@ export class LoginHomeComponent implements OnInit {
   
   signup(firstName, lastName, userName, email, password){
     this.authenticationService.signup(firstName, lastName, userName, email, password).then(()=>{
-      this.login(email,password);
-      this.router.navigate(['/home']);
+      this.login(email,password); 
     });
   }
   hide = true;
