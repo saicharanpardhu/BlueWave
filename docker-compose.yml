@@ -8,6 +8,14 @@ services:
     ports:
       - 8090:8090
 
+  config:
+     image: config
+     restart: always
+     build: ./Config-server
+     container_name: config
+     ports:
+       - 8888:8888
+
   api-gateway:
     environment:
       REGISTRY_URL: eureka
@@ -18,6 +26,7 @@ services:
       - 8020:8020
     depends_on:
       - eureka
+      - config
 
   kafka:
     environment:
@@ -46,25 +55,27 @@ services:
       - kafka
       - mongodb
       - eureka
+      - config
 
 
-  cassandra_reporting:
+  cassandra_db1:
     image: cassandra
     container_name: cassandra_reporting
     restart: always
     ports:
      - 9042:9042
 
-  Reporting-Service:
+  reporting-service:
     build: ./ReportingService
-    container_name: Reporting-Service
-    image: Reporting-Service
+    container_name: reporting-service
+    image: reporting-service
     ports:
       - 8040:8040
     depends_on:
       - kafka
-      - cassandra_reporting
+      - cassandra_db1
       - eureka
+      - config
 
   auth_sql:
     environment:
@@ -84,7 +95,7 @@ services:
       - 8088:8088
     depends_on:
       - eureka
-      - auth_sql
+      - config
 
   auth-service:
     build: ./Authentication_server
@@ -93,8 +104,8 @@ services:
     ports:
       - 8087:8087
     depends_on:
-      - auth_sql
       - eureka
+      - config
 
   job-manager:
     build: ./JobManager
@@ -105,6 +116,7 @@ services:
     depends_on:
       - eureka
       - kafka
+      - config
 
   job-scheduler: 
     build: ./Engine_dw-job-scheduler
@@ -113,10 +125,7 @@ services:
       - kafka
       - eureka
       - redis
-    environment: 
-      KAFKA_URL: kafka
-      REDIS_URL: redis
-      REGISTRY_URL: eureka
+      - config
     image: job-scheduler
     ports: 
       - "8060:8060"
@@ -135,12 +144,9 @@ services:
       - kafka
       - redis
       - eureka
-    environment: 
-      KAFKA_URL: kafka
-      REDIS_URL: redis
-      REGISTRY_URL: eureka
+      - config
     image: results-processor
-    ports: 
+    ports:
       - "8065:8065"
     restart: always
 
@@ -151,10 +157,7 @@ services:
       - kafka
       - eureka
       - redis
-    environment: 
-      KAFKA_URL: kafka
-      REDIS_URL: redis
-      REGISTRY_URL: eureka
+      - config
     image: state-initializer
     ports: 
       - "8078:8078"
@@ -166,11 +169,17 @@ services:
     depends_on: 
       - kafka
       - eureka
-    environment: 
-      KAFKA_URL: kafka
-      REGISTRY_URL: eureka
+      - config
     image: task-scheduler
     ports: 
       - "7687:7687"
 
-
+  socket-service:
+    build: ./SocketService
+    container_name: socket-service
+    depends_on:
+      - eureka
+      - kafka
+    image: socket-service
+    ports:
+      - "8029:8029"
