@@ -56,7 +56,13 @@ public class PersistenceControllerTest extends TestCase {
     	  workflow=new Workflow("demo","stackroute",canViewUser,canExecuteUser,"done",taskMap);
     	  }
       
-      TaskLibrary tasklibrary;
+      
+      String taskName = "package";
+  	  String inputType= "null";
+  	  String outputType= "null";
+   	  String taskCommand= "mvn-package";
+   	  TaskLibrary tasklibrary= new TaskLibrary(taskName,inputType, outputType,taskCommand);
+      
       
       
       private String createURLWithPort(String uri) {
@@ -161,7 +167,7 @@ public class PersistenceControllerTest extends TestCase {
      public void testdeleteTaskLibrary() throws Exception {
          HttpEntity<TaskLibrary> entity = new HttpEntity<TaskLibrary>(tasklibrary, headers);
          ResponseEntity<String> response = restTemplate.exchange(
-                 createURLWithPort("/v1.0/persistence/task/clone"),
+                 createURLWithPort("/v1.0/persistence/task/package"),
                  HttpMethod.DELETE, entity, String.class);
          assertNotNull(response);
          String actual = response.getBody();
