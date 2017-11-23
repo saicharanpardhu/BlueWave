@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProjectManagementComponent } from './components/project-management/project-management.component';
 import { WorkflowComponent } from './components/workflow/workflow.component';
 import { WorkflowExecutionComponent } from './components/workflow-execution/workflow-execution.component';
-import { ReportsComponent } from './components/reports/reports.component';
+import { ExpansionSteps, GetReportComponent } from './components/reports/reports.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -30,6 +30,7 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 
 import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
+import { ReportService } from './services/report/report.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,6 @@ import { Ng4JsonEditorModule } from 'angular4-jsoneditor';
     ProjectManagementComponent,
     WorkflowComponent,
     WorkflowExecutionComponent,
-    ReportsComponent,
     FooterComponent,
     NavbarComponent,
     ProfileComponent,
@@ -48,7 +48,7 @@ import { Ng4JsonEditorModule } from 'angular4-jsoneditor';
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
     WorkflowDetailsComponent,
-    JsonEditor,SettingsDialog
+    JsonEditor,SettingsDialog,GetReportComponent, ExpansionSteps
   ],
   imports: [
     BrowserModule, 
@@ -62,7 +62,7 @@ import { Ng4JsonEditorModule } from 'angular4-jsoneditor';
     TagInputModule,
     Ng4JsonEditorModule
   ],
-  providers: [AuthenticationService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService ],
+  providers: [AuthenticationService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService, ReportService ],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog,JsonEditor,SettingsDialog]
 })

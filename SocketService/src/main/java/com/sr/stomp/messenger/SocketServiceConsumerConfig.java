@@ -22,8 +22,10 @@ public class SocketServiceConsumerConfig {
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
-          ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.158:9092");
+//          ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
+//          "172.23.238.158:9092");
+        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
+        "kafka:9092");
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");

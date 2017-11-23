@@ -3,8 +3,8 @@ import { WorkflowDetailsService } from './../../services/workflow-details/workfl
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication/authentication.service';
  import {Component, OnInit, Inject,ViewEncapsulation,ViewChild} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 import * as shape from 'd3-shape';
 import { colorSets } from './models/color-sets';
 import { countries, generateHierarchialGraph, getTurbineData } from './models/data';

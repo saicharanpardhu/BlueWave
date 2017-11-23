@@ -1,0 +1,176 @@
+version: '2'
+services:
+  eureka:
+    image: eureka
+    restart: always
+    build: ./eureka-server
+    container_name: eureka
+    ports:
+      - 8090:8090
+
+  api-gateway:
+    environment:
+      REGISTRY_URL: eureka
+    build: ./Api-Gateway
+    container_name: api-gateway
+    image: api
+    ports:
+      - 8020:8020
+    depends_on:
+      - eureka
+
+  kafka:
+    environment:
+     ADVERTISED_PORT: 9092
+    image: spotify/kafka
+    container_name: kafka
+    restart: always
+    ports: 
+     - 2181:2181
+     - 9092:9092
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+     - 27018:27017
+
+  persistence:
+    build: ./persistence-manager
+    container_name: persistence
+    image: persistence
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka
+      - mongodb
+      - eureka
+
+
+  cassandra_reporting:
+    image: cassandra
+    container_name: cassandra_reporting
+    restart: always
+    ports:
+     - 9042:9042
+
+  Reporting-Service:
+    build: ./ReportingService
+    container_name: Reporting-Service
+    image: Reporting-Service
+    ports:
+      - 8040:8040
+    depends_on:
+      - kafka
+      - cassandra_reporting
+      - eureka
+
+  auth_sql:
+    environment:
+      MYSQL_ROOT_USERNAME: news123
+      MYSQL_ROOT_PASSWORD: 9396344037
+      MYSQL_DATABASE: user
+    image: mysql
+    restart: always
+    ports:
+      - 3308:3306
+
+  user-persistence:
+    build: ./user-persistence
+    container_name: user-persistence
+    image: user_persistence
+    ports:
+      - 8088:8088
+    depends_on:
+      - eureka
+      - auth_sql
+
+  auth-service:
+    build: ./Authentication_server
+    container_name: auth-service
+    image: auth-service
+    ports:
+      - 8087:8087
+    depends_on:
+      - auth_sql
+      - eureka
+
+  job-manager:
+    build: ./JobManager
+    container_name: job-manager
+    image: job-manager
+    ports:
+      - 8021:8021
+    depends_on:
+      - eureka
+      - kafka
+
+  job-scheduler: 
+    build: ./Engine_dw-job-scheduler
+    container_name: job-scheduler
+    depends_on: 
+      - kafka
+      - eureka
+      - redis
+    environment: 
+      KAFKA_URL: kafka
+      REDIS_URL: redis
+      REGISTRY_URL: eureka
+    image: job-scheduler
+    ports: 
+      - "8060:8060"
+    restart: always
+
+  redis: 
+    container_name: redis
+    image: redis
+    ports: 
+      - "6379:6379"
+
+  results-processor: 
+    build: ./Engine_dw-results-processor
+    container_name: results-processor
+    depends_on: 
+      - kafka
+      - redis
+      - eureka
+    environment: 
+      KAFKA_URL: kafka
+      REDIS_URL: redis
+      REGISTRY_URL: eureka
+    image: results-processor
+    ports: 
+      - "8065:8065"
+    restart: always
+
+  state-initializer: 
+    build: ./Engine_dw-state-initializer
+    container_name: state-initializer
+    depends_on: 
+      - kafka
+      - eureka
+      - redis
+    environment: 
+      KAFKA_URL: kafka
+      REDIS_URL: redis
+      REGISTRY_URL: eureka
+    image: state-initializer
+    ports: 
+      - "8078:8078"
+    restart: always
+
+  task-scheduler: 
+    build: ./Engine_dw-task-scheduler
+    container_name: task-scheduler
+    depends_on: 
+      - kafka
+      - eureka
+    environment: 
+      KAFKA_URL: kafka
+      REGISTRY_URL: eureka
+    image: task-scheduler
+    ports: 
+      - "7687:7687"
+
+

@@ -1,4 +1,5 @@
 FROM java:8-jre
-ADD target/Reports_Cassandra-0.0.1-SNAPSHOT.jar Reporting-Service.jar
-ENTRYPOINT ["java","-Xmx200m", "-jar", "/ Reporting-Service.jar"]
-EXPOSE 8028
+ADD ./target/Reports_Cassandra-0.0.1-SNAPSHOT.jar reporting.jar
+ENTRYPOINT ["java", "-jar", "/reporting.jar"]
+EXPOSE 8040
+
