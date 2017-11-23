@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.distributedpipeline.Config_server.App</config>
+		<config>java:com.distributedpipeline.configserver.App</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
