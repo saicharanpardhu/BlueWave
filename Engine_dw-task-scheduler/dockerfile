@@ -1,5 +1,5 @@
 FROM java:8-jre
-ADD target/dw-task-scheduler-1.0-SNAPSHOT.jar task-scheduler.jar
+ADD target/dw-task-scheduler-1.0.0-SNAPSHOT.jar task-scheduler.jar
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/task-scheduler.jar"]
 EXPOSE 7687
 
