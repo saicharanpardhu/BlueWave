@@ -9,3 +9,9 @@
 li{
   list-style: none;
 }
+
+.app-fab--absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+} 

@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../../services/authentication/authentication.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core'; 
-import { FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Component, OnInit,Inject } from '@angular/core'; 
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { SocketService } from './../../services/socket/socket.service';
  
 @Component({
@@ -10,29 +10,47 @@ import { SocketService } from './../../services/socket/socket.service';
   styleUrls: ['./login-home.component.css']
 })
 export class LoginHomeComponent implements OnInit {
-  constructor(private router: Router, 
-    private fb: FormBuilder,
+
+  loginForm : FormGroup;
+  constructor(private router: Router,  
     private authenticationService: AuthenticationService,
-    private socket: SocketService
-  ) { }
+    private socket: SocketService 
+  ) { 
+   }
+
   public user:any;
-  ngOnInit() {
-    // console.log("Logged in: ", !(this.authenticationService.getAccessToken() === ''));
-    // if(!(this.authenticationService.getAccessToken() === '')){
-    //   this.router.navigate(['/home']);
-    // }
-    // this.socket.showUsername();
+  hide = true;
+  signUphide = true;
+
+  ngOnInit() { 
     
   }
-  emailLoginValidator = new FormControl('', [Validators.required]); 
-  getEmailLoginErrorMessage() {
-    
-    return this.emailLoginValidator.hasError('required') ? 'Username required' :'';
+
+  loginSubmit = false;
+  signupSubmit = false;
+  checkLoginValidation(){
+    this.loginSubmit =  ((this.getEmailLoginErrorMessage() == '') && (this.getPasswordLoginErrorMessage() == ''));
   }
-  usernameValidator = new FormControl('', [Validators.required]); 
+
+  checkSubmitValidation(){
+    this.signupSubmit = ((this.getUsernameErrorMessage() == '') && (this.getEmailSignupErrorMessage() == '') && (this.getNameErrorMessage() == '') && (this.getPasswordErrorMessage() == ''));
+
+  }
+  emailLoginValidator = new FormControl('', [Validators.required, Validators.minLength(6)]); 
+  getEmailLoginErrorMessage() { 
+    return this.emailLoginValidator.hasError('required') ? 'Username required' :
+    this.emailLoginValidator.hasError('minlength') ? 'Minimum username length is 6' : 
+    this.authenticationService.checkUsername(;
+  }
+
+  usernameValidator = new FormControl('', [Validators.required, Validators.minLength(6)]); 
   getUsernameErrorMessage() { 
-    return this.usernameValidator.hasError('required') ? 'Username required' : '';
+    return this.usernameValidator.hasError('required') ? 'Username required' :
+    this.usernameValidator.hasError('minlength') ? 'Minimum username length is 6' : '';
   } 
+
+  checkValidation
+
   emailSignupValidator = new FormControl('', [Validators.required, Validators.email]); 
   getEmailSignupErrorMessage() {
     
@@ -40,22 +58,26 @@ export class LoginHomeComponent implements OnInit {
         this.emailSignupValidator.hasError('email') ? 'Not a valid email' :
             '';
   }
-  nameValidator = new FormControl('', [Validators.required]);
-  getNameErrorMessage() {
-    
-    return this.nameValidator.hasError('required') ? 'You must enter both first and last name.':'';
+
+  nameValidator = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  getNameErrorMessage() { 
+    return this.nameValidator.hasError('required') ? 'You must enter both first and last name.':
+    this.nameValidator.hasError('minlength') ? 'Minimum name length is 4' : '';
   }
-  passwordValidator = new FormControl('', [Validators.required]);
-  getPasswordErrorMessage() {
-    
-    return this.passwordValidator.hasError('required') ? 'Password is required.':'';
+  passwordValidator = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  getPasswordErrorMessage() { 
+    return this.passwordValidator.hasError('required') ? 'Password is required.':
+    this.passwordValidator.hasError('minlength') ? 'Minimum password length is 6' : '';
   }
+
+  passwordLoginValidator = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  getPasswordLoginErrorMessage() { 
+    return this.passwordLoginValidator.hasError('required') ? 'Password is required.':
+    this.passwordLoginValidator.hasError('minlength') ? 'Minimum password length is 6' : '';
+  }
+
   login(email,password){
     this.authenticationService.login(email,password);
-    // if(email){
-    //   email = JSON.stringify(email);
-    // } 
-    // console.log("Authenticated from login", this.authenticationService.getAccessToken());  
   }
   
   signup(firstName, lastName, userName, email, password){
@@ -63,6 +85,5 @@ export class LoginHomeComponent implements OnInit {
       this.login(email,password); 
     });
   }
-  hide = true;
-  signUphide = true;
+
 }

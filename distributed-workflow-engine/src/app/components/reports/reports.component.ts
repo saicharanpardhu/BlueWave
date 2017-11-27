@@ -22,6 +22,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/switchMap';
 import { Timestamp } from 'rxjs';
 import {Task} from './task';
+import { WorkflowDetailsService } from '../../services/workflow-details/workflow-details.service';
 
 @Component({
   selector: 'app-reports',
@@ -40,8 +41,10 @@ export class GetReportComponent implements OnInit {
     jobEndTime:any;
     jobStartTime: any;
     jobStatus :any;
-    constructor(private _service:ReportService) { }
-  
+    constructor(private _service:ReportService, private workflowService:WorkflowDetailsService) { }
+    viewmodeexit():void{
+      this.workflowService.displayWorkflow=null; 
+    }
     ngOnInit() {
 
 console.log("ngonit reports component ");

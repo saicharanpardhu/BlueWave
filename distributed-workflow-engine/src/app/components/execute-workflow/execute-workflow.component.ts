@@ -5,8 +5,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { Router } from '@angular/router'; 
 import { MatSnackBarConfig } from '@angular/material';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ReportService } from '../../services/report/report.service';
+import { NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser'; 
 @Component({
   selector: 'app-execute-workflow',
   templateUrl: './execute-workflow.component.html',
@@ -17,43 +19,68 @@ export class ExecuteWorkflowComponent implements OnInit {
   constructor(private _formBuilder : FormBuilder,
   private persistenceService: PerisitenceService,
   private authentication : AuthenticationService,
-  private router: Router, private socketService: SocketService
-  ) { 
-    
+  private router: Router, private socketService: SocketService,
+  private reportService: ReportService
+  ) {  
   }
   response: any;
+  onSelect(event) {
+    console.log(event);
+  }
+  viewCharts : boolean;
   value = 0;
   tasksComplete = 0;
   consoleOutput : Array<String>;
-  tasks : Array<String>;
+  taskList : Array<String>;
   displayStepper = false;
   cardDisplay = false;
   notLoaded = false;
   color = "primary";
+  displayWaterfall = false;
+  viewWaterfall = false; 
+  tasks : any[];
+  single: any[];
+  multi: any[];
+
+  view: any[] = [500, 100];
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = 'Tasks';
+  yAxisLabel = 'Timeline';
+
+  colorScheme = {
+    domain: ['#fafafa', '#663ab7', '#C7B42C', '#AAAAAA']
+  };
+
   ngOnInit() {    
     this.value = 0;
     this.tasksComplete = 0;
     this.consoleOutput = [];
-    this.tasks  = [];
+    this.taskList  = [];
     this.displayStepper = false;
     this.cardDisplay = false
-
-    // this.tasks = this.socketService.taskNames;
+    this.viewCharts = false;
+ 
     this.socketService.socketMessages.subscribe( data => {
  
       this.tasksComplete += 1;
       console.log("Completed" + this.tasksComplete + " of " + this.socketService.socketNumber);
-      // this.tasksComplete += 1;
       console.log(data.indexOf("failed"));
       if(data.indexOf("failed") !== -1) this.color="warn";
       else this.value = (this.tasksComplete/this.socketService.socketNumber)*100; 
       console.log(this.value); 
+      if(this.value == 100) this.displayWaterfall = true;
     }); 
 
     this.socketService.socketNames.subscribe( data => { 
-            this.tasks.push(data);
-            console.log('LENGTH',this.tasks.length);  
-            if(this.tasks.length == this.socketService.socketNumber) this.displayStepper = true;
+            this.taskList.push(data);
+            console.log('LENGTH',this.taskList.length);  
+            if(this.taskList.length == this.socketService.socketNumber) this.displayStepper = true;
     });
   
   }
@@ -75,12 +102,44 @@ export class ExecuteWorkflowComponent implements OnInit {
     }
     
   }
+  viewWaterFall(){
+    this.viewCharts = true; 
+    this.reportService.getReport(this.socketService.jobId).toPromise().then( res => {
+      this.loadChart(res.json() as any[]);
+    });  
+  }
+
+  loadChart(res){
+    console.log("RES",res); 
+    this.tasks = [];
+    for( var i = 0; i <res.length ; i ++){ 
+      console.log("not running: ", res[i]["taskStartTime"] - res[i]["jobStartTime"]);
+      console.log("runtime", res[i]["taskStartTime"] - res[i]["taskEndTime"]);
+      let taskWater = {
+        "name": res[i]["taskAlias"],
+        "series": [
+          {
+            "name": "Not started",
+            "value": res[i]["taskStartTime"] - res[i]["jobStartTime"] as number
+          },
+          {
+            "name": "Runtime",
+            "value": res[i]["taskStartTime"] - res[i]["taskEndTime"] as number
+          }
+        ]
+      };
+      console.log(taskWater);
+      this.tasks.push(taskWater);
+      console.log("Iteration ",i, " ", this.tasks);
+    }
+    console.log(this.tasks);
+  }
 
   ngOnDestroy(){ 
     this.value = 0;
     this.tasksComplete = 0;
     this.consoleOutput = null;
-    this.tasks  = [];
+    this.taskList  = [];
     this.displayStepper = false;
     this.cardDisplay = false
   }

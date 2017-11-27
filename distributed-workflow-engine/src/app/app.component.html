@@ -10,8 +10,8 @@
 		<mat-toolbar color="primary">Menu</mat-toolbar>
 		<div class="leftsidenav">
 
-
-			<a _ngcontent-c1="" aria-label="My Workflows" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+			<ul >
+			<li _ngcontent-c1="" aria-label="My Workflows" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
 			 aria-disabled="false" (click)="sidenav.close()" [routerLink]="['/workflows']">
 				<span class="mat-button-wrapper">
 					<mat-icon>work</mat-icon>
@@ -19,9 +19,9 @@
 				</span>
 				<div class="mat-button-ripple mat-ripple" matripple=""></div>
 				<div class="mat-button-focus-overlay"></div>
-			</a>
+			</li>
 
-			<a _ngcontent-c1="" aria-label="Reports" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+			<li _ngcontent-c1="" aria-label="Reports" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
 			 aria-disabled="false" (click)="sidenav.close()" [routerLink]="['/reports']">
 				<span class="mat-button-wrapper">
 					<mat-icon>description</mat-icon>
@@ -29,10 +29,10 @@
 				</span>
 				<div class="mat-button-ripple mat-ripple" matripple=""></div>
 				<div class="mat-button-focus-overlay"></div>
-			</a>
+			</li>
 
 
-			<a _ngcontent-c1="" aria-label="Profile" (click)="sidenav.close()" [routerLink]="['/profile']" mat-button="" class="docs-navbar-hide-small docs-button mat-button"
+			<li _ngcontent-c1="" aria-label="Profile" (click)="sidenav.close()" [routerLink]="['/profile']" mat-button="" class="docs-navbar-hide-small docs-button mat-button"
 			 tabindex="0" aria-disabled="false">
 				<span class="mat-button-wrapper" id="profile">
 					<mat-icon>account_circle</mat-icon>
@@ -40,7 +40,8 @@
 				</span>
 				<div class="mat-button-ripple mat-ripple" matripple=""></div>
 				<div class="mat-button-focus-overlay"></div>
-			</a>
+			</li>
+		</ul>
 		</div>
 	</mat-sidenav>
 	<mat-sidenav #rightsidenav mode="push" position="end" class="rightsidenavBox" openedChange="sideNavopened()">
@@ -77,11 +78,7 @@
 		<button mat-button (click)="rightsidenav.open();" aria-label="Notifications" mat-icon-button class="docs-navbar-hide-small docs-button mat-button"
 		 tabindex="0" aria-disabled="false">
 			<mat-icon>notifications</mat-icon>
-		</button>
-		<button mat-icon-button aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']" class="docs-navbar-hide-small docs-button mat-button">
-			<mat-icon>add_circle</mat-icon>
-		</button>
-
+		</button> 
 
 		<button mat-icon-button aria-label="Logout" (click)="logout()" [routerLink]="['/index']" class="docs-navbar-hide-small docs-button mat-button">
 			<mat-icon>power_settings_new</mat-icon>
@@ -91,12 +88,7 @@
 	</mat-toolbar>
 
 	<!-- <app-navbar *ngIf="this.authService.isLoggedIn()"></app-navbar> -->
-
-
-
-
-
-
+ 
 	<router-outlet>
 
 	</router-outlet>

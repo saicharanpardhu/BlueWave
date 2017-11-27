@@ -6,16 +6,10 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthenticationService {
-
-  private access_token : String = '';
-  private refresh_token : String = '';
  
-  public logout(){
-    this.access_token = '';
+  public logout(){ 
     localStorage.clear();
-    localStorage.removeItem("Email");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("Email"); 
     localStorage.removeItem("loginData");
   }
   constructor(private http: Http, private socket:SocketService,
@@ -24,12 +18,9 @@ export class AuthenticationService {
   private headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json',
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
-  isLoggedIn(){
-    // return true;
-    // console.log("Logged in status: ", localStorage.getItem('access_token'), " ", !(localStorage.getItem('access_token') == null));
-    // this.socket.disconnect();
-    // this.socket.connect(); 
-    return !(localStorage['loginData'] == null);
+  isLoggedIn(){ 
+    return true;
+    // return !(localStorage['loginData'] == null);
   }
 
   signup(firstName, lastName, email, userName, password){
@@ -41,7 +32,7 @@ export class AuthenticationService {
       password:password
     });
     console.log(json);
-    return this.http.post('http://172.23.238.176:8088/v0.1/userinfo/user', json, {headers: this.headers}).toPromise().then((response)=> console.log(response)) ;
+    return this.http.post('http://172.23.238.181:8088/v0.1/userinfo/user', json, {headers: this.headers}).toPromise().then((response)=> console.log(response)) ;
   }
 
   login(username,password){
@@ -50,17 +41,14 @@ export class AuthenticationService {
     body.set('username','akshay');
     body.set('password','akshay');
     body.set('grant_type','password');
-    let headers = new Headers();
-    //headers.append('Content-Type', 'application/X-www-form-urlencoded');
-    headers.append('Authorization','Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=');
-    console.log("Logging in using the credentials..",username,password);
-    return this.http.post('http://172.23.238.176:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
-      // response = response.json();
+    let headers = new Headers(); 
+    headers.append('Authorization','Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ='); 
+    return this.http.post('http://172.23.238.181:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
       localStorage.setItem('loginData',JSON.stringify({"access_token":response.json().access_token,"refresh_token":response.json().refresh_token,"Email":username}));
       this.socket.connect();
       localStorage.setItem('Email',username);
       this.router.navigate(['/home']);
-      console.log("Access token from service",localStorage.getItem('loginData'), localStorage.getItem('refresh_token'));
+      console.log(localStorage.getItem('loginData'));
     }).catch(() => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;

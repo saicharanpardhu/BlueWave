@@ -39,6 +39,7 @@
     "typescript-map": "0.0.5",
     "zone.js": "^0.8.14"
   },
+  
   "devDependencies": {
     "@angular/cli": "^1.5.0",
     "@angular/compiler-cli": "^4.2.4",

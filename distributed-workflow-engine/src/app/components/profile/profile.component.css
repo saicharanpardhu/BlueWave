@@ -19,3 +19,8 @@
     position: absolute; 
     width: 60%;
   }
+  .app-fab--absolute {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+  }

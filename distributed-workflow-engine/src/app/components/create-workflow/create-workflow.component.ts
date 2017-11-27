@@ -33,7 +33,7 @@ import { OnDestroy } from '@angular/core';
 })
 export class CreateWorkflowComponent implements OnInit, OnDestroy{
   //Task Library 
-  public tasks: Array<String> = ["clone","upperCase","Build","Run","deploy","test2"];
+  public tasks: Array<String> = ["Clone","upperCase","Build","Run","deploy","test2","clean"];
   //Tasks of the workflow
   map = new TSMap<String,Task>();
   //Dummy workflow

@@ -16,7 +16,7 @@ export class WorkflowDetailsService {
     console.log("service running");
   }
   getAllWorkflows(){ 
-      return this._http.get('http://172.23.238.147:8099/v1.0/persistence/workflow').toPromise().then(res=> res.json());  
+      return this._http.get("172.23.238.158:8080/v1.0/persistence/workflow/users/"+localStorage.getItem('Email')).toPromise().then(res=> res.json());  
     
   }
 

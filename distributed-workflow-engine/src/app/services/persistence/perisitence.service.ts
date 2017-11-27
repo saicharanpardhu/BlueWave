@@ -13,8 +13,8 @@ export class PerisitenceService {
   triggerEngine(workFlowName){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    console.log("http://172.23.238.186:8021/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName);
-    return this.http.get("http://172.23.238.186:8021/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName, {headers:headers}).toPromise().then((response) => response.json());
+    console.log("http://172.23.238.186:8082/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName);
+    return this.http.get("http://172.23.238.186:8082/v1.0/workflowname/"+localStorage.getItem('Email')+"/"+workFlowName, {headers:headers}).toPromise().then((response) => response.json());
   }
   strMapToObj(strMap) {
     let obj = Object.create(null);
@@ -35,7 +35,7 @@ export class PerisitenceService {
      console.log(JSON.stringify(map));
     let workflow = new WorkFlow("Maven","Akshay", ["Vaibhav"], ["Harsh"], "ready", map);
     console.log("hey"+JSON.stringify(workflow));
-    // this.http.post("http://172.23.238.147:8080/v1.0/persistence/workflow", JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response.json()));
+    // this.http.post("http://172.23.238.147:8099/v1.0/persistence/workflow", JSON.stringify(workflow), {headers:this.headers}).toPromise().then(response => console.log(response.json()));
   }
   //triggered when save clicked in UI for a workflow
   sendWorkFlow2(workflowName, owner, status, tasks){
@@ -44,7 +44,7 @@ export class PerisitenceService {
     // tasks = JSON.stringify(tasks);
     console.log("From service: " , workflowName);
     let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
-    return this.http.post("http://172.23.238.147:8099/v1.0/persistence/workflow",
+    return this.http.post("172.23.238.158:8080/v1.0/persistence/workflow/"+localStorage.getItem('Email'),
      JSON.stringify(workflow), {headers:this.headers}).toPromise();
   }
 
@@ -54,11 +54,11 @@ export class PerisitenceService {
     // tasks = JSON.stringify(tasks);
     console.log("From service: " , workflowName);
     let workflow = new WorkFlow(workflowName,owner, ["Vaibhav"], ["Harsh"], status, tasks);
-    return this.http.put("http://172.23.238.147:8099/v1.0/persistence/workflow",
+    return this.http.put("172.23.238.158:8080/v1.0/persistence/workflow/"+localStorage.getItem('Email'),
      JSON.stringify(workflow), {headers:this.headers}).toPromise();
   }
 
   deleteWorkFlow(workFlowName){
-    return this.http.delete('http://172.23.238.147:8099/v1.0/persistence/workflow/'+workFlowName).toPromise();
+    return this.http.delete("172.23.238.158:8080/v1.0/persistence/workflow/"+localStorage.getItem('Email')).toPromise();
   }
 }

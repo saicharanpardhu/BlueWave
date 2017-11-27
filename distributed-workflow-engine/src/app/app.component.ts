@@ -11,8 +11,7 @@ import { trigger,query, stagger, keyframes, transition,style, animate, state } f
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app'; 
-
+  title = 'app';  
   notif = true;
   constructor(private snackBar:MatSnackBar,
               private socketService: SocketService,
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit {
     this.socketService.socketMessages.subscribe( data => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;
-      this.snackBar.open(data.toString(),'Close');
+      this.snackBar.open(this.socketService.workFlowName + " update: " + data.toString(),'Close');
       console.log(data);
       this.notifications.push(data);
   });

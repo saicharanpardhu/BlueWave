@@ -56,4 +56,7 @@ export class WorkflowComponent implements OnInit {
       this.load_workflows();
     });
     }
+    viewmodeexit():void{
+      this.workflow_service.displayWorkflow=null; 
+    }
 }

@@ -23,13 +23,15 @@ import {MatCardModule ,
   MatStepperModule,  
   MatMenuModule,
   MatCheckboxModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatTooltipModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
 @NgModule({
   imports: [
     MatButtonModule, 
+    MatTooltipModule,
     BrowserAnimationsModule,  
     MatAutocompleteModule,
     MatToolbarModule,
@@ -54,6 +56,7 @@ import { Validators } from '@angular/forms';
   ],
   exports: [
     MatButtonModule, 
+    MatTooltipModule,
     MatSidenavModule,
     BrowserAnimationsModule, 
     MatToolbarModule,
