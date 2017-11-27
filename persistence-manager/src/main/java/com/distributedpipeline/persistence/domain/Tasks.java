@@ -82,20 +82,4 @@ public class Tasks {
 		this.output = output;
 		this.input = input;
 	}
-
-	public String[] getCommands() {
-		return commands;
-	}
-
-	public void setCommands(String[] commands) {
-		this.commands = commands;
-	}
-
-	public String getFolderPath() {
-		return folderPath;
-	}
-
-	public void setFolderPath(String folderPath) {
-		this.folderPath = folderPath;
-	}
 }

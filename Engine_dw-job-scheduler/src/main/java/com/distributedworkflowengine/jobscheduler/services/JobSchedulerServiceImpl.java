@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import com.google.gson.Gson;
 
 @Service
 public class JobSchedulerServiceImpl implements JobSchedulerService{
+	private static Logger logger=LogManager.getLogger("JobSchedulerServiceImpl.class");
 
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
@@ -69,7 +72,7 @@ public class JobSchedulerServiceImpl implements JobSchedulerService{
 				else if(dependency!=null)  {
 
 					String[] dependsOn=jobInfo.getTasks().get(key).getDepends_on();
-					System.out.println("HI" + dependsOn[0]+ " length:" + dependsOn.length);
+					logger.info("HI" + dependsOn[0]+ " length:" + dependsOn.length);
 
 					{
 						int flag=0;
@@ -142,7 +145,7 @@ public class JobSchedulerServiceImpl implements JobSchedulerService{
 			{
 				reportModel.setTaskAlias(key);
 				reportModel.setJobStatus("completed");
-				producer.sendToPersistence("+1");
+//				producer.sendToPersistence(jobInfo.getOwner(), reportModel.getJobEndTime());
 				producer.sendToReport(reportModel);
 
 			}

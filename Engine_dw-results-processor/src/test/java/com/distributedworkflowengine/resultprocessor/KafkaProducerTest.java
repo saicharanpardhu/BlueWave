@@ -1,4 +1,4 @@
-package com.distributedworkflowengine.stateinit;
+package com.distributedworkflowengine.resultprocessor;
 
 
 
@@ -26,9 +26,10 @@ import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.distributedworkflowengine.resultprocessor.domain.UserJob;
+import com.distributedworkflowengine.resultprocessor.messaging.ResultProcessorProducer;
 
-import com.distributedworkflowengine.stateinit.domain.User;
-import com.distributedworkflowengine.stateinit.messenger.StateInitializerProducer;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,16 +38,16 @@ public class KafkaProducerTest {
 //  private static final Logger LOGGER = LoggerFactory.getLogger(SpringKafkaSenderTest.class);
   private static String SENDER_TOPIC = "sender.t";
   @Autowired
-  StateInitializerProducer sender;
+  ResultProcessorProducer sender;
   
-  @Autowired
-  User user;
+  @Autowired 
+  UserJob userJob;
   
   private KafkaMessageListenerContainer<String, String> container;
   private BlockingQueue<ConsumerRecord<String, String>> records;
   
   @Autowired
-  private KafkaTemplate<String, User> kafkaTemplate;
+  private KafkaTemplate<String, String> kafkaTemplate;
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, SENDER_TOPIC);
   @Before
@@ -89,17 +90,20 @@ public class KafkaProducerTest {
    
       // AssertJ Condition to check the key
 //    assertThat(received).has(key(null));
-    User user=new User("jobId","username");
-      sender.sendMessage(user);
-//      sender.sendMessage(SENDER_TOPIC, user);
+//   Model model=new Model("jobId","userName","stage","taskName","type",null,null,0,"stderr");
+//	  userJob.setJobId(model.getJobId());
+//	  userJob.setUserName(model.getUserName());
+//	  
+//	  User user=new User("output","userName");
+      sender.sendMessageApi();
 //     check that the message was received
     ConsumerRecord<String, String> received = records.poll(10, TimeUnit.SECONDS);
 //     Hamcrest Matchers to check the value
-  assertThat(received, hasValue(user));
+  assertThat(received, hasValue("task-completed"));
   
   }
   
-  private void assertThat(ConsumerRecord<String, String> received, Matcher<ConsumerRecord<?,User>> hasValue) {
+  private void assertThat(ConsumerRecord<String, String> received, Matcher<ConsumerRecord<?,String>> hasValue) {
       
   }
   

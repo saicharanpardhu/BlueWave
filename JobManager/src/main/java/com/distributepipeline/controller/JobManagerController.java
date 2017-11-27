@@ -42,7 +42,7 @@ public class JobManagerController{
 		System.out.println("sending...");
 		System.out.println(workFlowName);
 		this.userName=userName;
-		producer.jobIdDetailsToPersistence(userName, workFlowName);
+//		producer.jobIdDetailsToPersistence(userName, workFlowName);
 		jobManagerProducer.sendWorkFlowName(workFlowName); 
 		return new ResponseEntity<String>(workFlowName, HttpStatus.OK); 
 	}  

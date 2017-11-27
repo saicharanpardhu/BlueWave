@@ -13,8 +13,8 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  *  
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
-//@EnableZuulProxy
+@EnableDiscoveryClient
+@EnableZuulProxy
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
 public class PersistenceManagerApplication {
 

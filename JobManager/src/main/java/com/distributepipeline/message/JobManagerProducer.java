@@ -14,6 +14,7 @@ import com.distributepipeline.domain.JobIdDetails;
 import com.distributepipeline.domain.ModelToSocket;
 import com.distributepipeline.domain.Trigger;
 import com.distributepipeline.domain.WorkFlow;
+
 @Service
 public class JobManagerProducer {
 

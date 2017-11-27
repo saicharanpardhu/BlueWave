@@ -1,5 +1,7 @@
 package com.distributedworkflowengine.taskscheduler.messaging;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -18,7 +20,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 @Service
 public class TaskSchedulerConsumer {
 	
-	
+	private static Logger logger=LogManager.getLogger("TaskSchedulerConsumer.class");
+
 	@Autowired
 	TaskSchedulerProducer taskSchedulerProducer;
 	@Autowired
@@ -64,8 +67,8 @@ public class TaskSchedulerConsumer {
 			
 			for (Map.Entry<String,Task> entry : model1.getListOfTasks().entrySet()) 
 			{
-				System.out.println(model1.getListOfTasks());
-				System.out.println(model1.getUserName());
+				logger.info(model1.getListOfTasks());
+				logger.info(model1.getUserName());
 				agent.setJobId(model1.getJobId());
 				agent.setTaskname(entry.getKey());
 				agent.setUserName(model1.getUserName());
@@ -74,9 +77,9 @@ public class TaskSchedulerConsumer {
 	           
 				ObjectMapper mapperObj2 = new ObjectMapper();
 				agent.setType(entry.getValue().getType());
-				System.out.println(mapperObj2.writeValueAsString(agent));
+				logger.info(mapperObj2.writeValueAsString(agent));
 				
-				System.out.println("DAta"+entry.getKey());
+				logger.info("DAta"+entry.getKey());
 				agent.setWorkFlowName(model1.getWorkFlowName());
 				if(model1.getListOfTasks().get(entry.getKey()).getCommands()!=null)
 					agent.setCommands(model1.getListOfTasks().get(entry.getValue()).getCommands());

@@ -1,5 +1,7 @@
 package com.distributedworkflowengine.resultprocessor.messaging;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 @Service
 public class ResultProcessorProducer {
-	
+	private static Logger logger=LogManager.getLogger("ResultProcessorProducer.class");
+
 	@Autowired
 	ResultProcessorConsumer consumer;
 	
@@ -34,7 +37,7 @@ public class ResultProcessorProducer {
 	private String resultToJob;
 	public void sendMessage(Model model) {
 		
-		System.out.println("sending to job");
+		logger.info("sending to job");
 		userJob.setJobId(model.getJobId());
 		userJob.setUserName(model.getUserName());
 		kafkaTemplate3.send(resultToJob, userJob);
@@ -46,7 +49,7 @@ public class ResultProcessorProducer {
 	private String messageToApi;
 	public void sendMessageApi() {
 		
-		System.out.println("response to gateway");
+		logger.info("response to gateway");
 		kafkaTemplate.send(messageToApi, "task-completed");
 		
 	}
@@ -56,7 +59,7 @@ public class ResultProcessorProducer {
 	private String messageToSocket;
 	public void sendMessageSocket(User user) {
 		
-		System.out.println("sending to socket");
+		logger.info("sending to socket");
 		kafkaTemplate2.send(messageToSocket,user);
 		
 	}
