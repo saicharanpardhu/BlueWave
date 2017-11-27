@@ -1,17 +1,13 @@
 package com.distributedpipeline.persistence;
 
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -26,6 +22,7 @@ import com.distributedpipeline.persistence.PersistenceManagerApplication;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
 import com.distributedpipeline.persistence.domain.Workflow;
+import com.distributedpipeline.persistence.service.PersistenceService;
 
 import junit.framework.TestCase; 
 
@@ -33,6 +30,8 @@ import junit.framework.TestCase;
 @SpringBootTest(classes = PersistenceManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PersistenceControllerTest extends TestCase {
 	
+	@Mock
+	private PersistenceService persistenceservice;
 	
 	@LocalServerPort
 	private int port;
@@ -170,7 +169,8 @@ public class PersistenceControllerTest extends TestCase {
                  createURLWithPort("/v1.0/persistence/task/package"),
                  HttpMethod.DELETE, entity, String.class);
          assertNotNull(response);
-         
+         String actual = response.getBody();
+         assertEquals("Deleted succesfully",actual);
    }
 	 
 	 

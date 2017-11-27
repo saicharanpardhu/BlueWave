@@ -11,6 +11,8 @@ public class Tasks {
 	private String[] depends_on;
 	private String[] output;
 	private String[] input;
+	private String[] commands;
+	private String folderPath;
 	
 	
 	/*------------------------ Getters and Setters for the fields-----------------------------*/
@@ -49,6 +51,22 @@ public class Tasks {
 	}
 	public void setInput(String[] input) {
 		this.input = input;
+	}
+	
+	public String[] getCommands() {
+		return commands;
+	}
+
+	public void setCommands(String[] commands) {
+		this.commands = commands;
+	}
+
+	public String getFolderPath() {
+		return folderPath;
+	}
+
+	public void setFolderPath(String folderPath) {
+		this.folderPath = folderPath;
 	}
 	
     /*------------------------------- Constructors -----------------------------------------*/

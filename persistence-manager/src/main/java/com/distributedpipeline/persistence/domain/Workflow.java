@@ -1,5 +1,6 @@
 package com.distributedpipeline.persistence.domain;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="Workflow")
 public class Workflow {	
 	
-	@Id
 	@NotNull
 	private String workFlowName;
 	private String owner;
+	private Date timeStamp;
+	private String description;
     private String[] canViewUser;
     private String[] canExecuteUser;
     private String[] canEditUser;
@@ -32,6 +34,26 @@ public class Workflow {
 
 	public String getWorkFlowName() {
 		return workFlowName;
+	}
+
+
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+
+
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 

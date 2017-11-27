@@ -1,5 +1,6 @@
 package com.distributedpipeline.persistence.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -77,7 +78,34 @@ public class PersistenceServiceImpl implements PersistenceService {
 	public Workflow getWorkflowByName(String workFlowName) throws WorkflowNotFoundException {
 	       return persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
        }
+	
+	/*----------------------- Method to get workflow by owner -----------------------------*/
+	@Override
+	public List<Workflow> getAllWorkflowOfOwner(String userName) {
+		Iterable<Workflow> workFlowList = persistenceWorkflowRepo.findAll();
+		List<Workflow> listWorkflow = new ArrayList<Workflow>();
+		for(Workflow workFlow : workFlowList) {
+			if(userName.equals(workFlow.getOwner())) {
+				listWorkflow.add(workFlow);
+			}
+		}
+		return listWorkflow;
 		
+	}	
+	
+	/*----------------------- Method to get workflow by name and owner -----------------------------*/
+	@Override
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
+	      
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
+				return workFlow;
+			}
+		}
+		return null;	       
+       }
 	
 	
 	/*------------------------- Method to get all workflows -----------------------------*/
@@ -89,8 +117,20 @@ public class PersistenceServiceImpl implements PersistenceService {
 	/*--------------------- Method to save workflow to repository -----------------------*/	
 	@Override
 	public String addWorkflow(Workflow workflow) {
+		int count = 0;
 		String workFlowName = workflow.getWorkFlowName();
-		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName)==null) {
+		String owner = workflow.getOwner();		
+		
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
+				count++;
+			}
+		}
+		
+		if(count ==0) {
+			workflow.setTimeStamp(new Timestamp(System.currentTimeMillis()));
 			persistenceWorkflowRepo.save(workflow);
 			return "Workflow saved";
 		}

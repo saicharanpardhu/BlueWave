@@ -29,10 +29,24 @@ public class PersistenceConsumer {
 	
 	@KafkaListener(topics = "${kafka.topic.workflownametopersis}", 
 			  containerFactory = "kafkaListenerContainerFactory")
-			public void reportlistener(String workflow) throws WorkflowNotFoundException {
-			    producer.sendMessage(service.getWorkflowByName(workflow));
-			    latch.countDown();
-			}
+	public void reportlistener(String UserWorkflow) throws WorkflowNotFoundException {
+		
+		String str[]=UserWorkflow.split("-");
+		String userName=str[0];
+		String workflowName=str[1];
+		logger.info(workflowName);
+		Workflow workflow = service.getWorkflowByNameAndUserName(workflowName, userName);
+		if(workflow!=null) {
+		    producer.sendMessage(workflow);
+		    logger.info(workflow.getOwner());
+	    	latch.countDown();
+		}
+			else logger.info("workflow doesn't exist");
+//		public void reportlistener(String workflow) throws WorkflowNotFoundException {
+//		    logger.info(workflow);
+//		    producer.sendMessage(service.getWorkflowByName(workflow));
+//		    latch.countDown();
+	}
 	
 	@KafkaListener(topics = "${kafka.topic.detailstopersistence}",
             containerFactory = "kafkaJobDetailsContainerFactory")

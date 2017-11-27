@@ -25,7 +25,13 @@ public interface PersistenceService {
 	/*----------------------Delete a workflow--------------------------------------------*/
     public boolean deleteWorkflow(String workFlowName) throws WorkflowNotFoundException;
     
-    /*-------------------------- Method to authenticate a user ----------------------------*/
+    /*----------------------- Method to get workflow by owner -----------------------------*/
+	public List<Workflow> getAllWorkflowOfOwner(String userName);
+	
+	/*----------------------- Method to get workflow by name and owner -----------------------------*/
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException;
+    
+	/*-------------------------- Method to authenticate a user ----------------------------*/
     public String userPermissions(String workFlowName, String userName);	
     
     /*-------------------------- Method to get tasks inside workflow -----------------------------*/
