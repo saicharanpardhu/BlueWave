@@ -9,6 +9,7 @@ import {
   ViewEncapsulation,
   ViewChild
 } from "@angular/core";
+require('aws-sdk/dist/aws-sdk');
 import {
   MatDialog,
   MatDialogRef,
@@ -90,7 +91,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   //DEletion Mode
   deleteMode: boolean = false;
   deleteModeButton = "DELETE TASKS";
-
+  uploadSh = true;
   loadWorkflow = false;
 
   //Chart properties
@@ -207,6 +208,21 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     } else {
       this.openWnameDialog();
     }
+  }
+
+  fileEvent(fileInput:any){
+    let AWSService=(<any>window).AWS;
+    console.log(AWSService);
+    console.log("FIle",fileInput);
+    let file=fileInput.target.files[0];
+    AWSService.config.accessKeyId='AKIAJRKODMZKMVXQ2CZQ';
+    AWSService.config.secretAccessKey='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';
+    let bucket=new AWSService.S3({params:{Bucket:'harsh-jj'}});
+    let params={Key: file.name,Body: file};
+    bucket.upload(params,function(error,res){
+      console.log('error1234',error);
+      console.log('response',res);
+    })
   }
 
   //DEstroy the workflow that the user viewed

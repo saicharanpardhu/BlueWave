@@ -25,6 +25,7 @@ import { WorkflowDetailsService } from './services/workflow-details/workflow-det
 import { PerisitenceService } from './services/persistence/perisitence.service';
 import { StompService } from 'ng2-stomp-service';
 import { ReportService } from './services/report/report.service';
+import { AppConfig } from './app.config';
 
 describe('AppComponent', () => {
 
@@ -74,6 +75,7 @@ describe('AppComponent', () => {
       ],
       providers:    [ 
         SocketService, 
+        AppConfig,
         WorkflowDetailsService, 
         PerisitenceService, 
         AuthGuardService, 

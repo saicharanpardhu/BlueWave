@@ -29,11 +29,14 @@ import { StompService } from "ng2-stomp-service";
 import { ReportService } from "../../services/report/report.service";
 import { AuthGuardService } from "../../services/authentication/auth-guard.service";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { AppConfig } from "../../app.config";
 
 describe("ProfileComponent", () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
-
+  class SocketServiceStub extends SocketService{
+    
+  }
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -65,12 +68,11 @@ describe("ProfileComponent", () => {
           Ng4JsonEditorModule
         ],
         providers: [
-          SocketService,
+          {provide: SocketService, useValue: SocketServiceStub },
+          AppConfig,
           WorkflowDetailsService,
           PerisitenceService,
-          AuthGuardService,
-          SocketService,
-          StompService,
+          AuthGuardService, 
           ReportService,
           AuthenticationService,
           { provide: APP_BASE_HREF, useValue: "/" }
