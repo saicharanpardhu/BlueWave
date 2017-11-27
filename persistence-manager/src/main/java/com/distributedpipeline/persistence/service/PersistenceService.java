@@ -13,8 +13,15 @@ import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
 public interface PersistenceService {
 	/*---------------------Retrieve workflow by workflowname---------------------------- */
 	public Workflow getWorkflowByName(String workFlowName) throws WorkflowNotFoundException;
+	
+	/*---------------------Retrieve workflow by workflowname---------------------------- */
+	public Workflow getWorkflowByNameAndUserName(String workFlowName, String owner) throws WorkflowNotFoundException;
+	
 	/*---------------------Retrieve all workflows----------------------------------------*/ 
 	public Iterable<Workflow> getWorkflow() throws WorkflowNotFoundException;
+	
+	/*----------------------- Method to get workflow by owner -----------------------------*/
+	public List<Workflow> getAllWorkflowOfOwner(String userName);
 	
 	/*----------------------Add a new workflow-------------------------------------------*/
 	public String addWorkflow(Workflow workflow); 

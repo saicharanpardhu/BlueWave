@@ -55,6 +55,7 @@ public class JsConsumer {
 		if(!map.isEmpty()) {
 			taskToScheduler.setJobId(user.getJobId());
 			taskToScheduler.setListOfTasks(map);
+			taskToScheduler.setWorkFlowName(jobInfo.getWorkFlowName());
 			System.out.println(user.getUserName());
 			taskToScheduler.setUserName(user.getUserName());
 			producer.sendToTaskSche(taskToScheduler);

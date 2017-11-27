@@ -90,6 +90,24 @@ public class PersistenceServiceImpl implements PersistenceService {
 			}
 		}
 		return listWorkflow;
+
+		
+	}
+	
+	/*----------------------- Method to get workflow by name and owner -----------------------------*/
+	@Override
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
+	      
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
+				return workFlow;
+			}
+		}
+		return null;	       
+       }
+
 		
 	}	
 	

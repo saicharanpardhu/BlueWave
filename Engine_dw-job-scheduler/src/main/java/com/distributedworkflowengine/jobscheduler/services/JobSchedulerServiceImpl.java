@@ -141,6 +141,7 @@ public class JobSchedulerServiceImpl implements JobSchedulerService{
 			for(String key:keys)
 			{
 				reportModel.setTaskAlias(key);
+				reportModel.setJobStatus("completed");
 				producer.sendToReport(reportModel);
 
 			}

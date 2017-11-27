@@ -1,5 +1,6 @@
 package com.distributedpipeline.persistence.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,17 @@ public class PersistenceController {
     final static Logger logger = Logger.getLogger(PersistenceController.class);
 		
 	@Autowired
+
 	private PersistenceService persistenceservice;
+
+	PersistenceProducer persistenceProducer;
+	
+	@Autowired
+	PersistenceJobRepos persistenceJobRepos;
+	
+	@Autowired
+	private PersistenceServiceImpl persistenceservice;
+
 		
 	/*----------------------------------Get workflow ------------------------------------ */
 	@LogExecutionTime
@@ -59,6 +70,13 @@ public class PersistenceController {
 	public ResponseEntity<Workflow> getWorkFlow(@PathVariable("userName") String owner, @PathVariable("workFlowName") String name) throws WorkflowNotFoundException, NotNullException {
 		return new ResponseEntity<Workflow>(persistenceservice.getWorkflowByNameAndUserName(name,owner), HttpStatus.OK);
 	}
+	
+	/* ------------------------------ get workflow for a owner ------------------------------- */
+	@RequestMapping(value = "/workflow/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Workflow>> getWorkFlowOfUser(@PathVariable("userName") String owner) throws WorkflowNotFoundException, NotNullException {
+		return new ResponseEntity<Iterable<Workflow>>(persistenceservice.getAllWorkflowOfOwner(owner), HttpStatus.OK);
+	}
+
 		
 	/*---------------------------------add workflow -------------------------------------- */
 	@RequestMapping(value="/workflow", method=RequestMethod.POST, consumes="application/json")
@@ -66,6 +84,7 @@ public class PersistenceController {
 		String result = "";
 		try {
 			if(workflow.getWorkFlowName()!=null) {
+				workflow.setTimeStamp(new Timestamp(System.currentTimeMillis()));
 				result = persistenceservice.addWorkflow(workflow);
 			}
 			else {

@@ -11,7 +11,21 @@ public class Agent {
 	private String[] input;
 	private String userName;
 	private String type;
-	
+	private String workFlowName;
+	public String[] getCommands() {
+		return commands;
+	}
+	public void setCommands(String[] commands) {
+		this.commands = commands;
+	}
+	public String getFolderPath() {
+		return folderPath;
+	}
+	public void setFolderPath(String folderPath) {
+		this.folderPath = folderPath;
+	}
+	private String[] commands;
+	private String folderPath;
 	
 	public String getType() {
 		return type;
@@ -58,5 +72,11 @@ public class Agent {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getWorkFlowName() {
+		return workFlowName;
+	}
+	public void setWorkFlowName(String workFlowName) {
+		this.workFlowName = workFlowName;
 	}
 }
