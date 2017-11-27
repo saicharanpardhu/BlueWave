@@ -2,6 +2,8 @@ package com.distributedworkflowengine.taskscheduler.messaging;
 
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 @Service
 public class TaskSchedulerProducer {
+	private static Logger logger=LogManager.getLogger("TaskSchedulerConsumer.class");
+
 	@Autowired
 	TaskSchedulerConsumer consumer;
 	@Autowired

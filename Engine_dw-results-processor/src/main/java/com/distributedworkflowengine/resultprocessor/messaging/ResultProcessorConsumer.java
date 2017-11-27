@@ -1,5 +1,7 @@
 package com.distributedworkflowengine.resultprocessor.messaging;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -20,7 +22,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 @Service
 public class ResultProcessorConsumer {
-	
+	private static Logger logger=LogManager.getLogger("JsConsumer.class");
+
 	@Autowired
 	ResultProcessorProducer producer;
 	  private CountDownLatch latch = new CountDownLatch(1);
@@ -68,17 +71,17 @@ public class ResultProcessorConsumer {
 			containerFactory = "engineKafkaListenerContainerFactory")
 	public void reportlistener(Model model) throws IOException {
 		
-		System.out.println(model);
+		logger.info(model);
 		if(model.getOutput()!=null)
 		user.setOutput(model.getOutput()[0]);
 		user.setUserName(model.getUserName());
-		System.out.println(user.getUserName());
+		logger.info(user.getUserName());
 		producer.sendMessageSocket(user);
 		if(model.getErrcode()==200)
 			resultService.updateRedis(model);
 		else {
 			String str=redisTemplate.opsForValue().get(model.getJobId());
-			System.out.println(str);
+			logger.info(str);
 			Gson gson = new Gson();
 			WorkFlow jobInfo = gson.fromJson(str, WorkFlow.class);
 			jobInfo.getTasks().get(model.getTaskName()).setStatus("failed");
