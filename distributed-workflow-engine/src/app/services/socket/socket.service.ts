@@ -8,21 +8,21 @@ import { Subject } from "rxjs/Subject";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/toPromise";
+import { AppConfig } from "../../app.config";
 
 @Injectable()
 export class SocketService implements OnInit {
-
   public username: String;
 
   stompClient: any;
-  socketUrl = "http://localhost:9000/gs-guide-websocket";
+  socketUrl = this.config.socket;
   socket: any;
 
   messageSubscription: any;
   nameSubscription: any;
   numberSubscription: any;
-  socketConsoleSubscription: any; 
-  jobSubscription : any;
+  socketConsoleSubscription: any;
+  jobSubscription: any;
 
   socketMessageSource = new Subject<String>();
   socketMessages = this.socketMessageSource.asObservable();
@@ -45,8 +45,12 @@ export class SocketService implements OnInit {
     this.socketConsoleMap = new Map();
     this.mode = 0;
   }
-  mode : number;
-  constructor(private http: Http, private stomp: StompService) {
+  mode: number;
+  constructor(
+    private http: Http,
+    private stomp: StompService,
+    private config: AppConfig
+  ) {
     this.taskNames = [];
     this.socketConsoleMap = new Map();
     this.connect();
@@ -59,7 +63,7 @@ export class SocketService implements OnInit {
       queue: { init: false }
     });
     this.stomp.startConnect().then(() => {
-      this.stomp.done("init"); 
+      this.stomp.done("init");
       if (localStorage["loginData"]) this.subscribe();
     });
   }
@@ -79,32 +83,30 @@ export class SocketService implements OnInit {
         this.socketMessageSource.next(temp);
         console.log(temp);
       }
-    ); 
+    );
 
     if (this.jobSubscription != null) this.jobSubscription.unsubscribe();
-    
-        this.jobSubscription = this.stomp.subscribe(
-          "/workflow/" + this.username,
-          response => { 
-            console.log("JOBID", response);
-            this.jobId =  response.jobId;
-            this.workFlowName = response.workFlowName;  
-          }
-        );
 
-
-    if (this.numberSubscription != null) this.numberSubscription.unsubscribe();
-      this.mode = 0;
-    this.numberSubscription = this.stomp.subscribe(
-      "/number/" + this.username,
-      response => { 
-          let temp: String = response;
-          this.socketNumber = response;
-          console.log("TOTAL NUMBER OF TASKS ", response);  
+    this.jobSubscription = this.stomp.subscribe(
+      "/workflow/" + this.username,
+      response => {
+        console.log("JOBID", response);
+        this.jobId = response.jobId;
+        this.workFlowName = response.workFlowName;
       }
     );
 
-    
+    if (this.numberSubscription != null) this.numberSubscription.unsubscribe();
+    this.mode = 0;
+    this.numberSubscription = this.stomp.subscribe(
+      "/number/" + this.username,
+      response => {
+        let temp: String = response;
+        this.socketNumber = response;
+        console.log("TOTAL NUMBER OF TASKS ", response);
+      }
+    );
+
     if (this.nameSubscription != null) {
       this.nameSubscription.unsubscribe();
       console.log("Name subscription unsubscribed");
@@ -123,7 +125,7 @@ export class SocketService implements OnInit {
       this.socketConsoleSubscription.unsubscribe();
       console.log("Console subscription unsubscribed");
     }
-     
+
     this.socketConsoleSubscription = this.stomp.subscribe(
       "/console/" + this.username,
       response => {
