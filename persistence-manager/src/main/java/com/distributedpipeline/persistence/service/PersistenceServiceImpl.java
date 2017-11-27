@@ -113,7 +113,7 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	/*----------------------- Method to get workflow by name and owner -----------------------------*/
 	@Override
-	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
+	public Workflow getWorkflowByNameAndUserName1(String workFlowName,String owner) throws WorkflowNotFoundException {
 	      
 		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
 		for(Workflow workFlow : workFlowList)
