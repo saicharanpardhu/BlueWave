@@ -1,25 +1,28 @@
 package com.sr.stomp.domain;
  
-
 public class Message {
 
-    private String message;
-
-    public Message() {
-    }
-
-	public String getMessage() {
-		return message;
+    private String output;
+    private String userName;
+	public String getOutput() {
+		return output;
 	}
-
-	public void setMessage(String message) {
-		this.message = message;
+	public void setOutput(String output) {
+		this.output = output;
 	}
-
-	public Message(String message) {
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+    
+    public Message() {}
+	public Message(String output, String userName) {
 		super();
-		this.message = message;
+		this.output = output;
+		this.userName = userName;
 	}
-
+    
      
 }
