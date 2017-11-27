@@ -29,8 +29,17 @@ services:
       - config
       
 
+  redis: 
+    container_name: redis
+    image: redis
+    expose:
+      - 6379
+    ports: 
+      - "6379:6379"
+      
   kafka:
     environment:
+     ADVERTISED_HOST: 10.20.1.196
      ADVERTISED_PORT: 9092
     image: spotify/kafka
     container_name: kafka
@@ -38,13 +47,17 @@ services:
     ports: 
      - 2181:2181
      - 9092:9092
+    expose:
+     - 9092
 
   mongodb:
     image: mongo
     container_name: mongodb
     restart: always
+    expose:
+     - 27017
     ports:
-     - 27018:27017
+     - 27017:27017
 
   persistence:
     build: ./persistence-manager
@@ -94,23 +107,26 @@ services:
     ports:
       - 3308:3306
 
+  auth-service:
+    build: ./Authentication_server
+    container_name: auth-service
+    image: auth-service
+    expose:
+      - 8087
+    ports:
+      - 8087:8087
+    depends_on:
+      - eureka
+      - config
+
   user-persistence:
     build: ./user-persistence
     container_name: user-persistence
     image: user_persistence
     ports:
       - 8088:8088
-    depends_on:
-      - eureka
-      - config
-      
-
-  auth-service:
-    build: ./Authentication_server
-    container_name: auth-service
-    image: auth-service
-    ports:
-      - 8087:8087
+    expose:
+      - 8088
     depends_on:
       - eureka
       - config
@@ -136,16 +152,12 @@ services:
       - eureka
       - redis
       - config
+    links:
+      - redis
     image: job-scheduler
     ports: 
       - "8060:8060"
     restart: always
-
-  redis: 
-    container_name: redis
-    image: redis
-    ports: 
-      - "6379:6379"
 
   results-processor: 
     build: ./Engine_dw-results-processor
@@ -155,6 +167,8 @@ services:
       - redis
       - eureka
       - config
+    links:
+      - redis
     image: results-processor
     ports:
       - "8065:8065"
@@ -168,6 +182,8 @@ services:
       - eureka
       - redis
       - config
+    links:
+      - redis
     image: state-initializer
     ports: 
       - "8078:8078"
@@ -190,6 +206,7 @@ services:
     depends_on:
       - eureka
       - kafka
+      - config
     image: socket-service
     ports:
-      - "8029:8029"
+      - "9000:9000"
