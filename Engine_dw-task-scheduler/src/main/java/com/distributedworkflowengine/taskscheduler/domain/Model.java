@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class Model {
 	private String jobId;
 	private String userName;
+	private String workFlowName;
 	private Map<String,Task> listOfTasks;
 	public Model(String jobId, String userName, Map<String, Task> listOfTasks) {
 		super();
@@ -39,6 +40,20 @@ public class Model {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+
+
+
+	public String getWorkFlowName() {
+		return workFlowName;
+	}
+
+
+
+
+	public void setWorkFlowName(String workFlowName) {
+		this.workFlowName = workFlowName;
 	}
 	
 	

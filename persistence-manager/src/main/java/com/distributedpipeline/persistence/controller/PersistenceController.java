@@ -1,5 +1,6 @@
 package com.distributedpipeline.persistence.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -22,24 +23,29 @@ import com.distributedpipeline.persistence.exceptions.NotNullException;
 import com.distributedpipeline.persistence.exceptions.TaskLibraryNotFoundException;
 import com.distributedpipeline.persistence.exceptions.WorkflowAlreadyExistsException;
 import com.distributedpipeline.persistence.exceptions.WorkflowNotFoundException;
-import com.distributedpipeline.persistence.message.PersistenceProducer;
 import com.distributedpipeline.persistence.repo.PersistenceJobRepos;
-import com.distributedpipeline.persistence.service.PersistenceServiceImpl;
+import com.distributedpipeline.persistence.service.PersistenceService;
 import com.distributedpipeline.persistence.utility.LogExecutionTime;
 
 @Controller
 @RequestMapping("/v1.0/persistence")
 @CrossOrigin(origins="*")
 public class PersistenceController {
-      //final static Logger logger = Logger.getLogger(PersistenceController.class);
 	
+    final static Logger logger = Logger.getLogger(PersistenceController.class);
+		
 	@Autowired
+
+	private PersistenceService persistenceservice;
+
 	PersistenceProducer persistenceProducer;
 	
 	@Autowired
 	PersistenceJobRepos persistenceJobRepos;
+	
 	@Autowired
 	private PersistenceServiceImpl persistenceservice;
+
 		
 	/*----------------------------------Get workflow ------------------------------------ */
 	@LogExecutionTime
@@ -52,12 +58,25 @@ public class PersistenceController {
 		}
 		return new ResponseEntity<Iterable<Workflow>>(persistenceservice.getWorkflow(),HttpStatus.OK);
 	}
-
-   /* ------------------------------ get workflow by name ------------------------------- */
-	@RequestMapping(value = "/workflow/{workFlowName}", method = RequestMethod.GET)
-	public ResponseEntity<Workflow> getWorkFlow(@PathVariable("workFlowName") String name) throws WorkflowNotFoundException, NotNullException {
-		return new ResponseEntity<Workflow>(persistenceservice.getWorkflowByName(name), HttpStatus.OK);
+	
+	/* ------------------------------ get all workflows for a owner ------------------------------- */
+	@RequestMapping(value = "/workflow/users/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<List<Workflow>> getWorkFlowOfUser(@PathVariable("userName") String owner) throws WorkflowNotFoundException, NotNullException {
+		return new ResponseEntity<List<Workflow>>(persistenceservice.getAllWorkflowOfOwner(owner), HttpStatus.OK);
 	}
+
+   /* ------------------------------ get a workflow of an owner by workflow name ------------------------------- */
+	@RequestMapping(value = "/workflows/workflow/{userName}/{workFlowName}", method = RequestMethod.GET)
+	public ResponseEntity<Workflow> getWorkFlow(@PathVariable("userName") String owner, @PathVariable("workFlowName") String name) throws WorkflowNotFoundException, NotNullException {
+		return new ResponseEntity<Workflow>(persistenceservice.getWorkflowByNameAndUserName(name,owner), HttpStatus.OK);
+	}
+	
+	/* ------------------------------ get workflow for a owner ------------------------------- */
+	@RequestMapping(value = "/workflow/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Workflow>> getWorkFlowOfUser(@PathVariable("userName") String owner) throws WorkflowNotFoundException, NotNullException {
+		return new ResponseEntity<Iterable<Workflow>>(persistenceservice.getAllWorkflowOfOwner(owner), HttpStatus.OK);
+	}
+
 		
 	/*---------------------------------add workflow -------------------------------------- */
 	@RequestMapping(value="/workflow", method=RequestMethod.POST, consumes="application/json")
@@ -65,6 +84,7 @@ public class PersistenceController {
 		String result = "";
 		try {
 			if(workflow.getWorkFlowName()!=null) {
+				workflow.setTimeStamp(new Timestamp(System.currentTimeMillis()));
 				result = persistenceservice.addWorkflow(workflow);
 			}
 			else {
@@ -89,7 +109,7 @@ public class PersistenceController {
 
 	/*-------------------------------- delete workflow ----------------------------------- */
 	@RequestMapping(method=RequestMethod.DELETE, value="/workflow/{name}")
-    public ResponseEntity<String> deleteWorkflow(@PathVariable(value="name") String name){
+    public ResponseEntity<String> deleteWorkflow(@PathVariable(value="name") String name) throws WorkflowNotFoundException{
 		persistenceservice.deleteWorkflow(name);
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
     }
@@ -140,7 +160,7 @@ public class PersistenceController {
         
 	/*--------------------------------- delete tasklibrary --------------------------- */
 	@RequestMapping(method=RequestMethod.DELETE, value="/task/{name}", consumes="application/json")
-    public ResponseEntity<String> deleteTaskLibrary(@PathVariable(value="name") String taskName){
+    public ResponseEntity<String> deleteTaskLibrary(@PathVariable(value="name") String taskName) throws TaskLibraryNotFoundException{
 		persistenceservice.deleteTaskLibrary(taskName);
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
@@ -178,7 +198,7 @@ public class PersistenceController {
 	/* ------------------------------ get job details by job id ------------------------------- */
 	@RequestMapping(value = "/jobdetails/jobId/{jobId}", method = RequestMethod.GET)
 	public ResponseEntity<JobIdDetails> getJobDetailsByJobId(@PathVariable("jobId") String jobId) {
-		return new ResponseEntity<JobIdDetails>(persistenceJobRepos.getJobIdDetailsByJobId(jobId), HttpStatus.OK);
+		return new ResponseEntity<JobIdDetails>(persistenceservice.getJobDetailsByJobId(jobId), HttpStatus.OK);
 	}
 	
 	/*----------------------------------add Job Details ------------------------------ */
