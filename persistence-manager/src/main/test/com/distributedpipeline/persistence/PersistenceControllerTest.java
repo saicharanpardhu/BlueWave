@@ -170,8 +170,7 @@ public class PersistenceControllerTest extends TestCase {
                  createURLWithPort("/v1.0/persistence/task/package"),
                  HttpMethod.DELETE, entity, String.class);
          assertNotNull(response);
-         String actual = response.getBody();
-         assertEquals("Deleted succesfully",actual);
+         
    }
 	 
 	 

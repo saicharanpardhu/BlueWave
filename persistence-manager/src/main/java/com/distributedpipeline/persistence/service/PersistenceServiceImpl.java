@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.distributedpipeline.persistence.domain.JobIdDetails;
@@ -255,5 +258,11 @@ public class PersistenceServiceImpl implements PersistenceService {
 	/*----------------------- Method to get all Job details -----------------------------*/
 	public Iterable<JobIdDetails> getAllJobDetails() {
 		return persistenceJobRepos.findAll();
+	}
+	
+	/*----------------------- Method to get Top Ten Job details by user name -----------------------------*/
+	public List<JobIdDetails> getTopJobDetails(String userName) {
+		Pageable topTen = new PageRequest(0, 10,Direction.ASC,"jobId");
+		return persistenceJobRepos.findLast10ByUserName(userName,topTen);
 	}
 }

@@ -31,14 +31,13 @@ import com.distributedpipeline.persistence.utility.LogExecutionTime;
 @RequestMapping("/v1.0/persistence")
 @CrossOrigin(origins="*")
 public class PersistenceController {
-     final static Logger logger = Logger.getLogger(PersistenceController.class);
+      //final static Logger logger = Logger.getLogger(PersistenceController.class);
 	
 	@Autowired
 	PersistenceProducer persistenceProducer;
 	
 	@Autowired
 	PersistenceJobRepos persistenceJobRepos;
-	
 	@Autowired
 	private PersistenceServiceImpl persistenceservice;
 		
@@ -134,9 +133,9 @@ public class PersistenceController {
     {
 		TaskLibrary tasklibrary1= persistenceservice.updateTaskLibrary(taskLibrary);
         if(tasklibrary1==taskLibrary) {
-        	return new ResponseEntity<String>("TaskLibrary updated", HttpStatus.OK);
+        	return new ResponseEntity<String>("workflow updated", HttpStatus.OK);
         }
-        throw new WorkflowAlreadyExistsException("TaskLibrary already exists");
+        throw new WorkflowAlreadyExistsException("workflow already exists");
     }
         
 	/*--------------------------------- delete tasklibrary --------------------------- */
@@ -170,13 +169,6 @@ public class PersistenceController {
 		return new ResponseEntity<>(persistenceservice.getDetailsOfTask(workFlowName, task_name),HttpStatus.OK);
 	}
 	
-	
-	/*------------------------                    ----------------------------------------
-                                 Method For Job Manager   
-     --------------------------                    --------------------------------------*/
-	
-	
-	
 	/* ------------------------------ get job details by user name ------------------------------- */
 	@RequestMapping(value = "/jobdetails/userName/{userName}", method = RequestMethod.GET)
 	public ResponseEntity<Iterable<JobIdDetails>> getJobDetailsByUserName(@PathVariable("userName") String userName) {
@@ -204,6 +196,12 @@ public class PersistenceController {
 	@RequestMapping(value = "/jobdetails", method = RequestMethod.GET)
 	public ResponseEntity<?> getJobDetails() {
 		return new ResponseEntity<Iterable<JobIdDetails>>(persistenceservice.getAllJobDetails(), HttpStatus.OK);
+	}
+	
+	/*----------------------------------get top ten Job Details by user name ------------------------------ */
+	@RequestMapping(value = "/jobdetails/userName/latest/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<JobIdDetails>> getTopJobDetailsByUserName(@PathVariable("userName") String userName) {
+		return new ResponseEntity<Iterable<JobIdDetails>>(persistenceservice.getTopJobDetails(userName), HttpStatus.OK);
 	}
 	
 }

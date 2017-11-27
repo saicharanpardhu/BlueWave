@@ -62,5 +62,8 @@ public interface PersistenceService {
 	
 	/*----------------------- Method to get all Job details -----------------------------*/
 	public Iterable<JobIdDetails> getAllJobDetails();
+	
+	/*----------------------- Method to get Top Ten Job details by user name -----------------------------*/
+	public List<JobIdDetails> getTopJobDetails(String userName);
     
 }

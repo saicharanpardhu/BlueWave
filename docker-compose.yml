@@ -27,6 +27,7 @@ services:
     depends_on:
       - eureka
       - config
+      
 
   kafka:
     environment:
@@ -56,26 +57,32 @@ services:
       - mongodb
       - eureka
       - config
+      
 
-
-  cassandra_db1:
+  cassandra_db1: 
+    container_name: cassandra_db1
     image: cassandra
-    container_name: cassandra_reporting
     restart: always
-    ports:
-     - 9042:9042
+    expose:
+      - "9042"
+    ports: 
+      - "9042:9042"  
 
-  reporting-service:
+  reporting-service:     
     build: ./ReportingService
     container_name: reporting-service
     image: reporting-service
-    ports:
-      - 8040:8040
-    depends_on:
+    depends_on: 
       - kafka
-      - cassandra_db1
       - eureka
+      - cassandra_db1
       - config
+    links:
+      - cassandra_db1
+    ports: 
+      - "8040:8040"
+    environment:
+      CASSANDRA_HOST: cassandra_db1
 
   auth_sql:
     environment:
@@ -96,6 +103,7 @@ services:
     depends_on:
       - eureka
       - config
+      
 
   auth-service:
     build: ./Authentication_server
@@ -106,6 +114,7 @@ services:
     depends_on:
       - eureka
       - config
+      
 
   job-manager:
     build: ./JobManager
@@ -117,6 +126,7 @@ services:
       - eureka
       - kafka
       - config
+      
 
   job-scheduler: 
     build: ./Engine_dw-job-scheduler
