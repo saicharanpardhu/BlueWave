@@ -24,7 +24,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 //<!----Consumer: consumes String and Report -->
 @Service
 public class StateInitializerConsumer {
-	
+	private static Logger logger=LogManager.getLogger("StateInitializerConsumer.class");
+
 	@Autowired
 	StateInitializerProducer engine;
 	@Autowired
@@ -42,19 +43,16 @@ public class StateInitializerConsumer {
 
 	  public CountDownLatch getLatch() {
 	    return latch;
-	  }
-	
-	  private static Logger logger = LogManager.getLogger("MethodLogger.class");
-	
+	  }	
 	  //<!-- method to get jobid and workflow object from job manager -->
 	  
 	@KafkaListener(topics = "${kafka.topic.triggerengine}", 
 			  containerFactory = "triggerKafkaListenerContainerFactory")
 		public void triggerlistener(Trigger trigger) throws JsonProcessingException {
 		
-		System.out.println(trigger.getJobId());
-		System.out.println(trigger.getWorkFlow());
-		System.out.println("sending to save");
+		logger.info(trigger.getJobId());
+		logger.info(trigger.getWorkFlow());
+		logger.info("sending to save");
 		
 		redisoprImpl.saveRedis(trigger);
 		user.setJobId(trigger.getJobId());
