@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.distributedpipeline.persistence.domain.HeatMapModel;
 import com.distributedpipeline.persistence.domain.JobIdDetails;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
@@ -38,6 +39,9 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	@Autowired
 	private PersistenceJobRepos persistenceJobRepos;
+	
+	@Autowired
+	private PersistenceServiceImpl service;
 	
 	
 	/*---------------------- getters and setters for repos-----------------------------*/
@@ -90,30 +94,12 @@ public class PersistenceServiceImpl implements PersistenceService {
 			}
 		}
 		return listWorkflow;
-
-		
-	}
-	
-	/*----------------------- Method to get workflow by name and owner -----------------------------*/
-	@Override
-	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
-	      
-		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
-		for(Workflow workFlow : workFlowList)
-		{
-			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
-				return workFlow;
-			}
-		}
-		return null;	       
-       }
-
 		
 	}	
 	
 	/*----------------------- Method to get workflow by name and owner -----------------------------*/
 	@Override
-	public Workflow getWorkflowByNameAndUserName1(String workFlowName,String owner) throws WorkflowNotFoundException {
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
 	      
 		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
 		for(Workflow workFlow : workFlowList)
@@ -157,25 +143,36 @@ public class PersistenceServiceImpl implements PersistenceService {
 		}
 	}
 	
-	/*-------------------------- Method to update a workflow ----------------------------*/
-	@Override
-	public Workflow updateWorkflow(Workflow workFlow) {
-		String workflowName = workFlow.getWorkFlowName();
-		persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
-		return persistenceWorkflowRepo.save(workFlow);
-	}
-
 	/*--------------------------- Method to delete workflow ----------------------------*/
 	@Override
-	public boolean deleteWorkflow(String workflowName) {
-		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workflowName) != null) {
-			persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
-			return true;
-		}
-		else {
-			return false;
+	public void deleteWorkflow(String workflowName, String owner) throws WorkflowNotFoundException {
+	
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
+				String workflowId = workFlow.getId();
+				persistenceWorkflowRepo.delete(workflowId);
+			}
 		}
 	}
+	
+//	/*--------------------------- Method to update workflow ----------------------------*/
+//	@Override
+//	public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException {
+//		
+//		String owner = workflow.getOwner();
+//		String workflowName = workflow.getWorkFlowName();
+//		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+//		for(Workflow workFlow : workFlowList)
+//		{
+//			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
+//				String workflowId = workFlow.getId();
+//				persistenceWorkflowRepo.delete(workflowId);
+//				persistenceWorkflowRepo.save(workflow);
+//			}
+//		}
+//	}
 	
     /*------------------------                    ----------------------------------------
 	                            Method For TaskLibrary    
@@ -230,24 +227,24 @@ public class PersistenceServiceImpl implements PersistenceService {
 	}   
 	
 	
-	/*-------------------------- Method to authenticate a user ----------------------------*/
-	@Override
-	public String userPermissions(String workFlowName, String userName) {
-		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
-		
-		if(workflow!=null && Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
-			return "user can edit workflow";
-		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
-			return "user can execute workflow";
-		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
-			return "user can view workflow";
-		}
-		else {
-			return "user not authorised to access workflow";
-		}
-	}
+//	/*-------------------------- Method to authenticate a user ----------------------------*/
+//	@Override
+//	public String userPermissions(String workFlowName, String userName) {
+//		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
+//		
+//		if(workflow!=null && Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
+//			return "user can edit workflow";
+//		}
+//		else if(workflow!=null && Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
+//			return "user can execute workflow";
+//		}
+//		else if(workflow!=null && Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
+//			return "user can view workflow";
+//		}
+//		else {
+//			return "user not authorised to access workflow";
+//		}
+//	}
 	
 	/*-------------------------- Method to get tasks inside workflow -----------------------------*/
 	
@@ -323,4 +320,10 @@ public class PersistenceServiceImpl implements PersistenceService {
 		Pageable topTen = new PageRequest(0, 10,Direction.ASC,"jobId");
 		return persistenceJobRepos.findLast10ByUserName(userName,topTen);
 	}
+	
+	/*---------------------------------- Passing workflow details to construct heatmap ------------------------------ */
+//	@Override
+//	public HeatMapModel getWorkflowData(String userName) {
+//				
+//	}
 }
