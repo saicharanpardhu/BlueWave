@@ -10,10 +10,16 @@ import com.distributedworkflowengine.jobscheduler.domain.*;
 import org.springframework.kafka.core.KafkaTemplate;
 @Service
 public class JsProducer {
+	
+	@Autowired
+	TaskToScheduler tasktosche;
 		    
 	 @Autowired
 	    private KafkaTemplate<String, TaskToScheduler> kafkaTemplate;
-	    
+	
+	 @Autowired
+		private KafkaTemplate<String, String> kafkaTemplate1;
+	 
 	 @Autowired
 	    private KafkaTemplate<String, User> kafkaTemplate2;
 	 
@@ -42,6 +48,13 @@ public class JsProducer {
 	    public void sendToReport(ReportModel model)
 	    {
 	    	kafkaTemplate3.send(Status,model);
+	    }
+	 
+	    @Value("${kafka.topic.countStatus}")
+			 private String countStatus;
+	    public void sendToPersistence(String count)
+	    {
+	    	kafkaTemplate1.send(countStatus,tasktosche.getUserName()+"&"+tasktosche.getWorkFlowName()+"&"+count);
 	    }
 	    
 

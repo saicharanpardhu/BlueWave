@@ -77,6 +77,11 @@ public class TaskSchedulerConsumer {
 				System.out.println(mapperObj2.writeValueAsString(agent));
 				
 				System.out.println("DAta"+entry.getKey());
+				agent.setWorkFlowName(model1.getWorkFlowName());
+				if(model1.getListOfTasks().get(entry.getKey()).getCommands()!=null)
+					agent.setCommands(model1.getListOfTasks().get(entry.getValue()).getCommands());
+				if(model1.getListOfTasks().get(entry.getKey()).getFolderPath()!=null)
+					agent.setFolderPath(model1.getListOfTasks().get(entry.getValue()).getFolderPath());
 				kafkaTemplate.send(entry.getValue().getType(),agent);
 			
 		}
