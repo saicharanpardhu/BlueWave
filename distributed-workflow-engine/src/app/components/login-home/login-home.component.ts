@@ -39,8 +39,8 @@ export class LoginHomeComponent implements OnInit {
   emailLoginValidator = new FormControl('', [Validators.required, Validators.minLength(6)]); 
   getEmailLoginErrorMessage() { 
     return this.emailLoginValidator.hasError('required') ? 'Username required' :
-    this.emailLoginValidator.hasError('minlength') ? 'Minimum username length is 6' : 
-    this.authenticationService.checkUsername(;
+    this.emailLoginValidator.hasError('minlength') ? 'Minimum username length is 6' : '';
+    
   }
 
   usernameValidator = new FormControl('', [Validators.required, Validators.minLength(6)]); 

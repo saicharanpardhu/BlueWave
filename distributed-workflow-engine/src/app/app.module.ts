@@ -6,7 +6,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core'; 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProjectManagementComponent } from './components/project-management/project-management.component';
 import { WorkflowComponent } from './components/workflow/workflow.component';
 import { WorkflowExecutionComponent } from './components/workflow-execution/workflow-execution.component';
 import { GetReportComponent } from './components/reports/reports.component';
@@ -28,15 +27,14 @@ import { NgxChartsDagModule } from '@swimlane/ngx-charts-dag';
 import { TagInputModule } from 'ngx-chips';
 import { WorkflowDetailsComponent } from './components/workflow-details/workflow-details.component';
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
-
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
 import { ReportService } from './services/report/report.service';
-
+import { HttperrorService } from './services/httperror/httperror.service';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent, 
-    ProjectManagementComponent,
+    HomeComponent,  
     WorkflowComponent,
     WorkflowExecutionComponent,
     FooterComponent,
@@ -62,7 +60,11 @@ import { ReportService } from './services/report/report.service';
     TagInputModule,
     Ng4JsonEditorModule
   ],
-  providers: [AuthenticationService, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService, ReportService ],
+  providers: [AuthenticationService, HttperrorService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttperrorService,
+    multi: true,
+  }, WorkflowDetailsService, PerisitenceService, AuthGuardService, SocketService, StompService, ReportService],
   bootstrap: [AppComponent],
   entryComponents:[DialogOverviewDialog,WnameOverviewDialog,JsonEditor,SettingsDialog]
 })

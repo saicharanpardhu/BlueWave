@@ -59,8 +59,7 @@ export class SocketService implements OnInit {
       queue: { init: false }
     });
     this.stomp.startConnect().then(() => {
-      this.stomp.done("init");
-
+      this.stomp.done("init"); 
       if (localStorage["loginData"]) this.subscribe();
     });
   }

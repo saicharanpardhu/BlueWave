@@ -32,7 +32,7 @@
                   <mat-error *ngIf="emailSignupValidator.invalid">{{getEmailSignupErrorMessage()}}</mat-error>
               </mat-form-field>  
               <mat-form-field [hideRequiredMarker]="true">
-                    <input #userName matInput placeholder="Username" (keyup)="checkSubmitValidation()"  [formControl]="usernameValidator" required>
+                    <input #userName matInput placeholder="Username" (keyup)="checkSubmitValidation();checkUsername(userName.value)"  [formControl]="usernameValidator" required>
                     <mat-error *ngIf="usernameValidator.invalid">{{getUsernameErrorMessage()}}</mat-error>
                     <mat-hint  align="end"> 
                         <div *ngIf="userName.value?.length  < 6">Please add atleast {{6-(userName.value?.length || 0)}} more characters.</div>

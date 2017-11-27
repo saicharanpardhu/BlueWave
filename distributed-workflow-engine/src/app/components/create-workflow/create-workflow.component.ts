@@ -33,7 +33,19 @@ import { OnDestroy } from '@angular/core';
 })
 export class CreateWorkflowComponent implements OnInit, OnDestroy{
   //Task Library 
-  public tasks: Array<String> = ["Clone","upperCase","Build","Run","deploy","test2","clean"];
+  public tasks = [{
+    "name": "Clone",
+    "value": "Clone"
+  },{
+    "name": "Uppercase",
+    "value": "Uppercase"
+  },{
+    "name": "Build",
+    "value": "Build"
+  },{
+    "name": "run",
+    "value": "Run"
+  }];
   //Tasks of the workflow
   map = new TSMap<String,Task>();
   //Dummy workflow
@@ -233,7 +245,7 @@ updateNodes(taskname:String) {
         this.deleteMode = true;
         let config = new MatSnackBarConfig();
         config.duration = 3000;
-        this.snackBar.open("You are in deletion mode.Click on the nodes to delete them",'',config);
+        this.snackBar.open("You are in deletion mode.Click on the nodes to delete them",'Close',config);
         
      this.deleteModeButton = "EXIT MODE";
   }
@@ -241,7 +253,7 @@ updateNodes(taskname:String) {
           this.deleteMode = false;
           let config = new MatSnackBarConfig();
           config.duration = 3000;
-          this.snackBar.open("You are out of deletion mode",'',config); 
+          this.snackBar.open("You are out of deletion mode",'Close',config); 
            this.deleteModeButton = "DELETE TASKS";
            }
   }
@@ -485,13 +497,16 @@ export class DialogOverviewDialog {
      let close:boolean;
      close = true;
 
-   if (this.data.taskName == null||this.data.type == null)
-   this.snackBar.open("Please give taskName and taskType");
-
-   if(this.data.type=="clone"||this.data.type=="Build"||this.data.type=="Run"||this.data.type=="test2")
+   if (this.data.taskName == null||this.data.type == null){
+    
+    let config = new MatSnackBarConfig();
+    config.duration = 3000;
+    this.snackBar.open("Please give taskName and taskType",'Close',config);
+   }
+   if(this.data.type=="Clone"||this.data.type=="Build"||this.data.type=="Run"||this.data.type=="test2")
    {
       
-     if(this.data.type=="clone"||this.data.type=="Build"||this.data.type=="Run")
+     if(this.data.type=="Clone"||this.data.type=="Build"||this.data.type=="Run")
      {
 
        if(this.data.input.match("(\\w+://)(.+@)*([\\w\\d\\.]+)(:[\\d]+){0,1}/*(.*)")&&this.data.input.match( "(.+@)*([\\w\\d\\.]+):(.*)"))
@@ -509,6 +524,19 @@ export class DialogOverviewDialog {
 
 
    }
+   let len = this.data.taskAliases.length;
+   
+     for(let i=0;i<len;i++){
+   
+       if(this.data.taskName==this.data.taskAliases[i])
+        {
+          close =false;
+
+        let config = new MatSnackBarConfig();
+        config.duration = 3000;
+            this.snackBar.open("Task name already exists",'Close',config);
+        }
+      }
    if (this.data.taskName != null&&this.data.type != null&&close)  
     this.dialogRef.close(this.data);
 
@@ -530,8 +558,12 @@ export class WnameOverviewDialog {
   private snackBar:MatSnackBar) { }
    
   onNoClick(): void { 
-    if (this.data.Wname == null)
-       this.snackBar.open("Please give a name to the workflow",'');
+    if (this.data.Wname == null){
+
+      let config = new MatSnackBarConfig();
+      config.duration = 3000;
+       this.snackBar.open("Please give a name to the workflow",'Close',config);
+    }
     if (this.data.Wname != null)
       this.dialogRef.close(this.data.Wname);
   }
@@ -567,7 +599,10 @@ export class JsonEditor {
       console.log(this.editor.get())
       this.dialogRef.close(this.editor.get());
   }
-  
+  onCancelClick(): void { 
+    
+    this.dialogRef.close(this.data.json);
+}
 }
 @Component({
   selector: 'settings-overview-dialog',

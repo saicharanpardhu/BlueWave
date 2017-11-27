@@ -16,7 +16,7 @@ export class WorkflowDetailsService {
     console.log("service running");
   }
   getAllWorkflows(){ 
-      return this._http.get("172.23.238.158:8080/v1.0/persistence/workflow/users/"+localStorage.getItem('Email')).toPromise().then(res=> res.json());  
+      return this._http.get("http://172.23.238.151:8080/v1.0/persistence/workflow/users/"+localStorage.getItem('Email')).toPromise().then(res=> res.json());  
     
   }
 
@@ -29,19 +29,19 @@ export class WorkflowDetailsService {
     // return this._http.post();
   }
   getWorkflow(workFlowName){ 
-    return this._http.get('http://172.23.238.147:8099/v1.0/persistence/workflow/'+workFlowName).toPromise().then(res=>{
+    return this._http.get('http://172.23.238.151:8080/v1.0/persistence/workflows/workflow/'+localStorage['Email']+"/"+workFlowName).toPromise().then(res=>{
       this.displayWorkflow = res.json();
     });  
   
-}
+  }
   getTasksOfWorkflow(workFlowName : String){
-    return this._http.get("http://172.23.238.147:8099/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
+    return this._http.get("http://172.23.238.151:8080/v1.0/persistence/tasks/"+workFlowName).toPromise().then((res) => {
       this.tasks = res.json();
       console.log(this.tasks);
     });
    }
   getTaskDetailsOfWorkflow(workFlowName : String, taskName : String) {
-    return this._http.get("http://172.23.238.147:8099/v1.0/persistence/tasks/"+workFlowName+"/"+taskName).
+    return this._http.get("http://172.23.238.151:8080/v1.0/persistence/tasks/"+workFlowName+"/"+taskName).
           toPromise();
   }
    getTasks(){

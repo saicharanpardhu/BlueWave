@@ -18,7 +18,7 @@ export class ReportService {
   getJobID(id) {
     return this._http
       .get(
-        "http://172.23.238.181:8080/v1.0/persistence/jobdetails/userName/latest/" +
+        "http://172.23.238.151:8080/v1.0/persistence/jobdetails/userName/latest/" +
           id,
         { headers: this.headers }
       )
