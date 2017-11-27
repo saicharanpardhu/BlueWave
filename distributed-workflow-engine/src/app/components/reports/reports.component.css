@@ -1,70 +1,71 @@
 @import url(http://weloveiconfonts.com/api/?family=entypo);
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700); 
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+.container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
 
- .container{ 
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
-  }
-  .app-fab--absolute {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-  } 
-  
-  .mat-table {
-    overflow: auto;
-    max-height: 500px;
-  }
-  
-  [class*="entypo-"]:before {
-    font-family: 'entypo', sans-serif;
-  }
+.app-fab--absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
 
-  form {
-      float: left;
-      width: 100%;
-      height: 50px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .search {
-      flex: 1 1 auto;
-      order: 2;
-      outline: none;
-      border: none;
-      border-radius: 0;
-      background: #fff;
-      padding: 10px;
-      font-family: 'Roboto', sans-serif;
-      height: 70px;
-      transition: all 0.05s ease-in-out;
-      -webkit-appearance: none;
-    }
-     .go {
-      height: 80px;
-      margin-right: -15px;
-      max-width: 80px;
-      color: blue;
-      flex: 1 1 auto;
-      order: 3;
-      max-width: 50px;
-      display: inline-block;
-      border: none;
-      background: #fff;
-      color: #ccc;
-      height: 50px;
-      transition: all 0.05s ease-in-out;
-      font-size: 20px;
-      outline: none;
-    }
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
 
-.jobId .mat-expansion-panel-header-title, 
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+form {
+  float: left;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  flex: 1 1 auto;
+  order: 2;
+  outline: none;
+  border: none;
+  border-radius: 0;
+  background: #fff;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  height: 70px;
+  transition: all 0.05s ease-in-out;
+  -webkit-appearance: none;
+}
+
+.go {
+  height: 80px;
+  margin-right: -15px;
+  max-width: 80px;
+  color: blue;
+  flex: 1 1 auto;
+  order: 3;
+  max-width: 50px;
+  display: inline-block;
+  border: none;
+  background: #fff;
+  color: #ccc;
+  height: 50px;
+  transition: all 0.05s ease-in-out;
+  font-size: 20px;
+  outline: none;
+}
+
+.jobId .mat-expansion-panel-header-title,
 .jobId .mat-expansion-panel-header-description {
   flex-basis: 0;
 }
@@ -82,17 +83,20 @@
   padding: 16px;
 }
 
-.main{
+.main {
   width: 1000px;
 }
 
-.mat-card{
+.mat-card {
   padding: 16px;
 }
+
+
 /* .mat-tab-body-content {
   text-align: left;
 } */
-.logsreport{
+
+.logsreport {
   text-align: left;
   padding-left: 10px;
 }

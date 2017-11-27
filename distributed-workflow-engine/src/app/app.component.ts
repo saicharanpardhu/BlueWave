@@ -4,6 +4,7 @@ import { SocketService } from './services/socket/socket.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { trigger,query, stagger, keyframes, transition,style, animate, state } from '@angular/animations';
+import { HttperrorService } from './services/httperror/httperror.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private snackBar:MatSnackBar,
               private socketService: SocketService,
             private authService : AuthenticationService,
-          private workflowService: WorkflowDetailsService){}
+          private workflowService: WorkflowDetailsService, private httpError: HttperrorService){}
   notifications = [];        
   ngOnInit(){  
     this.socketService.socketMessages.subscribe( data => {

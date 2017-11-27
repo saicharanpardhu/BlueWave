@@ -19,8 +19,8 @@ export class AuthenticationService {
   'Access-Control-Allow-Origin' : 'http://localhost:4200', 'Access-Control-Allow-Credentials': 'true'});
   
   isLoggedIn(){ 
-    return true;
-    // return !(localStorage['loginData'] == null);
+    // return true;
+    return !(localStorage['loginData'] == null);
   }
 
   signup(firstName, lastName, email, userName, password){
@@ -32,7 +32,7 @@ export class AuthenticationService {
       password:password
     });
     console.log(json);
-    return this.http.post('http://172.23.238.181:8088/v0.1/userinfo/user', json, {headers: this.headers}).toPromise().then((response)=> console.log(response)) ;
+    return this.http.post('http://172.23.238.176:8088/v0.1/userinfo/user', json, {headers: this.headers}).toPromise().then((response)=> console.log(response)) ;
   }
 
   login(username,password){
@@ -43,7 +43,7 @@ export class AuthenticationService {
     body.set('grant_type','password');
     let headers = new Headers(); 
     headers.append('Authorization','Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ='); 
-    return this.http.post('http://172.23.238.181:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
+    return this.http.post('http://172.23.238.176:8087/oauth/token?grant_type=password&username=' + username + '&password=' + password, json, {headers: headers}).toPromise().then((response)=> {
       localStorage.setItem('loginData',JSON.stringify({"access_token":response.json().access_token,"refresh_token":response.json().refresh_token,"Email":username}));
       this.socket.connect();
       localStorage.setItem('Email',username);
@@ -54,5 +54,9 @@ export class AuthenticationService {
       config.duration = 1000;
       this.snackBar.open("Wrong username/password.", '', config) ;
     }) ;
+  }
+
+  checkUsername(username){
+    return this.http.get('http://172.23.238.176:8088/v0.1/userinfo/user');
   }
 }

@@ -4,7 +4,6 @@ import { GetReportComponent } from './../components/reports/reports.component';
 import { ProfileComponent } from './../components/profile/profile.component';
 import { LoginHomeComponent } from './../components/login-home/login-home.component';
 import { HomeComponent } from './../components/home/home.component';
-import { ProjectManagementComponent } from './../components/project-management/project-management.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -15,7 +14,6 @@ import { WorkflowDetailsComponent } from '../components/workflow-details/workflo
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path : 'projects', component: ProjectManagementComponent, canActivate: [AuthGuardService]},
   {
     path : 'home', 
     component: HomeComponent, canActivate: [AuthGuardService]

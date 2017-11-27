@@ -39,7 +39,7 @@ export class WorkflowComponent implements OnInit {
         this.router.navigate(['/workflows/workflowdetails'])
       );
       
-    }
+    } 
     getWorkflow(workFlowName){
       this.workflow_service.getWorkflow(workFlowName).then(()=> {
         this.router.navigate(['/viewworkflow']); 
