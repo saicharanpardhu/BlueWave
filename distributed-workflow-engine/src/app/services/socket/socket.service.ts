@@ -133,15 +133,15 @@ export class SocketService implements OnInit {
         console.log("RECEIEVED Console TASKNAME: ", temp);
         if (this.socketConsoleMap.get(response.taskName)) {
           this.socketConsoleMap.get(response.taskName).push(response.console);
-          console.log(
-            "consolemap: ",
-            this.socketConsoleMap.get(response.taskName)
-          );
+          // console.log(
+          //   "consolemap: ",
+          //   this.socketConsoleMap.get(response.taskName)
+          // );
         } else {
           this.socketConsoleMap.set(response.taskName, []);
           this.socketConsoleMap.get(response.taskName).push(response.console);
         }
-        console.log("console output: ", this.socketConsoleMap);
+        // console.log("console output: ", this.socketConsoleMap);
       }
     );
   }

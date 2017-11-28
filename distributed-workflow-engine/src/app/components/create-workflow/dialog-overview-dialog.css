@@ -9,7 +9,8 @@
  }
 
  #dialog-content {
-   overflow: hidden;
+   overflow: auto;
+  
  }
 
  tag-input tag-input-dropdown /deep/ ng2-dropdown {

@@ -21,21 +21,135 @@ export class HomeComponent implements OnInit {
 
   single: any[];
   multi: any[];
-  view: any[] = [1000, 200];
+  public workflows: any;
+
+  workflowList: any[];
+  taskWater :any;
+  view: any[] = [1000, 250];
   // options
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   // showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = "Workflow";
+  xAxisLabel = 'Workflow';
   showYAxisLabel = true;
-  yAxisLabel = "Time";
-  colorScheme = {
-    domain: ["#fafafa", "#663ab7"]
-  };
+  yAxisLabel = 'Time';
+  colorScheme = { 
+    domain: [ '#ffffff', '#5590BF']    
+  }; 
+  ngOnInit() {    
+  console.log(navigator.onLine); 
+  console.log("****************************************************************");
+  this.load_workflows();
+  console.log("****************************************************************");
 
-  ngOnInit() {}
+}
+
+load_workflows() {
+  return this.workflowService.getAllWorkflows().then(workflows => {
+    this.workflows = workflows;
+    console.log("W");
+    console.log(this.workflows);
+    this.loadHeatmap(workflows as any[]);
+  });
+}
+
+showHeatMap = false;
+loadHeatmap(res){
+  console.log("RES",res); 
+  this.workflowList = [];
+  console.log(res.length);
+  for( var i = 0; i <res.length ; i ++){ 
+    console.log(res[i]["workFlowName"]);
+    this.taskWater = {
+      "name": res[i]["workFlowName"],
+      "series": [
+        {
+          "name":"Jan",
+          "value": 0
+        },
+        {
+          "name":"Feb",
+          "value": 0
+        },
+        {
+          "name":"Mar",
+          "value": 0
+        },
+        {
+          "name":"Apr",
+          "value": 0
+        },
+        {
+          "name":"May",
+          "value": 0
+        },
+        {
+          "name":"Jun",
+          "value": 0
+        },
+        {
+          "name":"Jul",
+          "value": 0
+        },
+        {
+          "name":"Aug",
+          "value": 0
+        },
+        {
+          "name":"Sep",
+          "value": 0
+        },
+        {
+          "name":"Oct",
+          "value": 0
+        },
+        {
+          "name":"Nov",
+          "value": 0
+        },
+        {
+          "name":"Dec",
+          "value": 0
+        }
+      ]
+    };
+    
+    var Map = { 1: "Jan", 2: "Feb", 3: "Mar", 4:"Apr", 5:"May", 6: "Jun", 
+    7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12:"Dec"}
+
+    if(res[i]["executionTime"] != null){
+      for(var j=0; j<res[i]["executionTime"].length; j++)
+      {
+        console.log("Task execution time: " , res[i]["executionTime"][j]);
+        let mod = new Date(res[i]["executionTime"][j]).getMonth()+1;
+        console.log("Task execution month: ", mod);
+        console.log("Task execution date: ", new Date(res[i]["executionTime"][j]));
+        for(let task of this.taskWater.series){ 
+          if(task.name == Map[mod]){
+            task.value++;
+            console.log(mod,task.value);
+          }
+        }
+        console.log(res[i]["executionTime"][j]);
+
+
+      }
+      console.log("?");
+      
+    }
+
+    this.workflowList.push(this.taskWater);
+  
+  }
+
+  console.log(this.workflowList);
+  this.showHeatMap = true;
+    
+
+}
+ 
 
   viewmodeexit(): void {
     this.workflowService.displayWorkflow = null;

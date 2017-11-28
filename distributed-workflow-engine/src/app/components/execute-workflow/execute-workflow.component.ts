@@ -37,7 +37,7 @@ export class ExecuteWorkflowComponent implements OnInit {
   tasks: any[];
   single: any[];
   multi: any[];
-  view: any[] = [1000, 100];
+  view: any[] = [1000, 150];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -100,7 +100,7 @@ export class ExecuteWorkflowComponent implements OnInit {
       this.notLoaded = false;
       for (var i = 0; i <= taskOutput.length; i++)
         this.consoleOutput.push(taskOutput[i]);
-      console.log("Console output: ", this.consoleOutput);
+      // console.log("Console output: ", this.consoleOutput);
     } catch (e) {
       this.notLoaded = true;
     }
@@ -121,7 +121,7 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.tasks = [];
     for (var i = 0; i < res.length; i++) {
       console.log(
-        "not running: ",
+        "not running: ", res[i]["taskAlias"], " ",  
         res[i]["taskStartTime"] - res[i]["jobStartTime"]
       );
       console.log("runtime", res[i]["taskStartTime"] - res[i]["taskEndTime"]);
@@ -130,11 +130,11 @@ export class ExecuteWorkflowComponent implements OnInit {
         series: [
           {
             name: "Not started",
-            value: (res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number
+            value: Math.abs((res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number)
           },
           {
             name: "Runtime",
-            value: (res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number
+            value: Math.abs((res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number)
           }
         ]
       };

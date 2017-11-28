@@ -3,6 +3,7 @@
   "project": {
     "name": "distributed-workflow-engine"
   },
+
   "apps": [
     {
       "root": "src",

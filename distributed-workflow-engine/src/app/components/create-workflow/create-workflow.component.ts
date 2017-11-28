@@ -9,7 +9,6 @@ import {
   ViewEncapsulation,
   ViewChild
 } from "@angular/core";
-require('aws-sdk/dist/aws-sdk');
 import {
   MatDialog,
   MatDialogRef,
@@ -41,6 +40,7 @@ import {
   JsonEditorOptions
 } from "angular4-jsoneditor/jsoneditor/jsoneditor.component";
 import { TSMap } from "typescript-map";
+
 import { OnDestroy } from "@angular/core";
 /**
  * @title Dialog Overview
@@ -61,15 +61,15 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     },
     {
       name: "Uppercase",
-      value: "Uppercase"
+      value: "upperCase"
     },
     {
       name: "Build",
-      value: "Build"
+      value: "Build1"
     },
     {
-      name: "run",
-      value: "Run"
+      name: "Run",
+      value: "run"
     }
   ];
   //Tasks of the workflow
@@ -78,20 +78,25 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   workflow: Workflow = {};
   task: Task = {};
   //wORKFLOW Name
-  Wname: String;
-  taskName: String;
-  type: String;
-  dependsOn: any;
-  depends_on: any;
-  input: String;
+
+  Wname  :String="";
+  taskName :String;
+  type : String;
+  dependsOn : any;
+  depends_on : any;
+  input :String;
+
   //workFlow Status
   status = "created";
   //List of all aliases in a workflow
   wTaskAliases: String[] = [];
   //DEletion Mode
-  deleteMode: boolean = false;
-  deleteModeButton = "DELETE TASKS";
-  uploadSh = true;
+
+  deleteMode : boolean = false;
+  deleteModeButton ="DELETE TASKS";
+  inputType = 'None';
+
+
   loadWorkflow = false;
 
   //Chart properties
@@ -168,23 +173,31 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   colorScheme: any;
   schemeType: string = "ordinal";
   selectedColorScheme: string;
-  constructor(
-    public dialog: MatDialog,
-    private authentication: AuthenticationService,
+
+
+  
+
+  public constructor(
+    public dialog: MatDialog, 
+    private authentication : AuthenticationService,
+
     private persistence: PerisitenceService,
     private router: Router,
     private workflowService: WorkflowDetailsService,
     private snackBar: MatSnackBar
   ) {
-    Object.assign(this, {
+    
+   
+   Object.assign(this, {
       countries,
       colorSets,
       chartGroups,
-      hierarchialGraph: getTurbineData()
-    });
 
-    this.setColorScheme("picnic");
-    this.setInterpolationType("Bundle");
+      hierarchialGraph: getTurbineData(),
+    })
+    this.setColorScheme('picnic')    
+    this.setInterpolationType('Bundle')
+
   }
 
   //Display a worflow if user comes to view
@@ -200,29 +213,17 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       this.loadWorkflow = true;
       console.log(this.loadWorkflow);
       console.log(this.workflowService.displayWorkflow.tasks);
-      this.map.fromJSON(this.workflowService.displayWorkflow.tasks);
-      this.wTaskAliases = this.map.keys();
-      this.workflowToGraph(this.map);
-      this.workflow.workFlowName = this.workflowService.displayWorkflow.workFlowName;
-      console.log(this.map);
-    } else {
-      this.openWnameDialog();
-    }
-  }
 
-  fileEvent(fileInput:any){
-    let AWSService=(<any>window).AWS;
-    console.log(AWSService);
-    console.log("FIle",fileInput);
-    let file=fileInput.target.files[0];
-    AWSService.config.accessKeyId='AKIAJRKODMZKMVXQ2CZQ';
-    AWSService.config.secretAccessKey='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';
-    let bucket=new AWSService.S3({params:{Bucket:'harsh-jj'}});
-    let params={Key: file.name,Body: file};
-    bucket.upload(params,function(error,res){
-      console.log('error1234',error);
-      console.log('response',res);
-    })
+          this.map.fromJSON( this.workflowService.displayWorkflow.tasks);
+          this.wTaskAliases = this.map.keys();
+          this.workflowToGraph(this.map);
+          this.workflow.workFlowName = this.workflowService.displayWorkflow.workFlowName;
+      console.log(this.map);    
+    }
+    else{
+      this.openWnameDialog(false);
+
+    }
   }
 
   //DEstroy the workflow that the user viewed
@@ -320,7 +321,71 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     if (this.deleteMode) {
       this.deleteTask(data.label);
     }
+    else{
+        let task = this.map.get(data.label);
+        if(task.input[0] == null)
+        this.openTaskEditDialog(data.label,task,"None")  ; 
+        if(task.input[0] != null)
+        this.openTaskEditDialog(data.label,task,"Custom")  ; 
+    }
   }
+
+
+  openTaskEditDialog(taskName:String,task:any,inputType:String):void{
+    
+        let dialogRef = this.dialog.open(DialogOverviewDialog, {
+          width: '500px',
+          data: { taskName: taskName, type:task.type ,dependsOn:task.depends_on,input:task.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks,inputType:inputType,editing:true,cancel:false,taskNameOld:taskName}
+    
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          
+          if(result!=undefined){
+          this.deleteTask(taskName);
+          let task: Task = {};
+          this.taskName = result.taskName;
+          task.type = result.type;
+          this.depends_on = result.dependsOn;
+          task.input = [];
+          task.status = "ready";
+          task.input.push(result.input);
+          this.wTaskAliases.push(result.taskName);
+    
+          task.depends_on = null;
+    
+          this.updateNodes(this.taskName);
+          if (this.depends_on != undefined) {
+            task.depends_on = [];
+            let len2 = this.depends_on.length;
+            for (let i = 0; i < len2; i++) {
+              if (JSON.parse(JSON.stringify(result.dependsOn[i])).value != null) {
+                task.depends_on.push(
+                  JSON.parse(JSON.stringify(result.dependsOn[i])).value
+                );
+              } else {
+                task.depends_on.push(
+                  JSON.stringify(result.dependsOn[i]).replace(/\"/g, "")
+                );
+              }
+            }
+    
+            this.updateLinks(task.depends_on, this.taskName);
+          } else {
+            let start_depends = [];
+            start_depends.push("Start");
+            this.updateLinks(start_depends, this.taskName);
+          }
+    
+          console.log(this.taskName);
+          this.map.set(this.taskName, task);
+          this.workflow.tasks = this.map;
+          console.log(this.map);
+        }
+        });
+    
+    
+     }         
+
   //Delete a task and it's links
   deleteTask(label: String) {
     console.log(label);
@@ -406,18 +471,19 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   toggleExpand(node) {
     console.log("toggle expand", node);
   }
+
+ 
+
+
+
+
+
   //Dialog to add a task
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogOverviewDialog, {
-      width: "500px",
-      data: {
-        taskName: this.taskName,
-        type: this.type,
-        dependsOn: this.dependsOn,
-        input: this.input,
-        taskAliases: this.wTaskAliases,
-        taskTypes: this.tasks
-      }
+      width: '500px',
+      data: { taskName: this.taskName, type:this.type ,dependsOn:this.dependsOn,input:this.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks,inputType:this.inputType}
+
     });
     dialogRef.afterClosed().subscribe(result => {
       let task: Task = {};
@@ -506,16 +572,22 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Dialog for the workflow name
-  openWnameDialog(): void {
+
+// Dialog for the workflow name
+    openWnameDialog(boolean:Boolean): void {
     let dialogRef = this.dialog.open(WnameOverviewDialog, {
-      width: "300px",
-      data: { Wname: this.Wname },
-      disableClose: true
+      width: '300px',
+      data: { Wname: this.Wname ,editing:boolean},
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.workflow.workFlowName = result;
-      console.log(this.workflow.workFlowName, "The dialog was closed");
+      
+      this.workflow.workFlowName=result;
+      this.Wname = result;
+      console.log(this.workflow.workFlowName,'The dialog was closed');
+      
+      
+
     });
   }
 
@@ -565,15 +637,24 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   styleUrls: ["dialog-overview-dialog.css"]
 })
 export class DialogOverviewDialog {
+
+  
+   myForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar:MatSnackBar,
+    private fb: FormBuilder) { } 
+    
+  onNoClick(): void { 
 
-  onNoClick(): void {
-    let close: boolean;
-    close = true;
+     let close:boolean;
+     close = true;
+     
+     this.myForm = this.fb.group({
+    options: ['1']
+  })
+
 
     if (this.data.taskName == null || this.data.type == null) {
       let config = new MatSnackBarConfig();
@@ -591,6 +672,10 @@ export class DialogOverviewDialog {
         this.data.type == "Build" ||
         this.data.type == "Run"
       ) {
+        let config = new MatSnackBarConfig();
+        config.duration = 3000;
+        if(this.data.input==undefined)
+        this.snackBar.open("Please give task input", "Close", config);
         if (
           this.data.input.match(
             "(\\w+://)(.+@)*([\\w\\d\\.]+)(:[\\d]+){0,1}/*(.*)"
@@ -607,6 +692,13 @@ export class DialogOverviewDialog {
         }
       }
     }
+
+    if(this.data.editing)
+      
+      this.data.taskAliases =this.data.taskAliases.filter(item => item!=this.data.taskNmaeOld);
+      
+              
+            
     let len = this.data.taskAliases.length;
 
     for (let i = 0; i < len; i++) {
@@ -630,12 +722,26 @@ export class DialogOverviewDialog {
   selector: "wname-overview-dialog",
   templateUrl: "wname-overview-dialog.html"
 })
-export class WnameOverviewDialog {
+
+export class WnameOverviewDialog implements OnInit{
+  
+   allWorkflowNames :any;
+   workflowNameexists :boolean = false;
+   wname :String ="";
+
   constructor(
     public dialogRef: MatDialogRef<WnameOverviewDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackBar: MatSnackBar
-  ) {}
+    private persistence: PerisitenceService,
+  private snackBar:MatSnackBar,
+  private router: Router) { }
+   ngOnInit(){
+    
+    this.wname=this.data.Wname;  
+
+   }
+  
+
 
   onNoClick(): void {
     if (this.data.Wname == null) {
@@ -643,19 +749,74 @@ export class WnameOverviewDialog {
       config.duration = 3000;
       this.snackBar.open("Please give a name to the workflow", "Close", config);
     }
-    if (this.data.Wname != null) this.dialogRef.close(this.data.Wname);
+
+    if (this.data.Wname != null&&!this.workflowNameexists)
+      this.dialogRef.close(this.data.Wname);
   }
 
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-  workflowNameValidator = new FormControl("", [Validators.required]);
-  getworkflowNameErrorMessage() {
-    return this.workflowNameValidator.hasError("required")
-      ? "Workflow name required"
-      : "";
-  }
+ onCancelClick(): void{
+   if(this.data.editing)
+      this.data.Wname = this.wname;
+      this.dialogRef.close(this.data.Wname);
+   if(!this.data.editing) 
+   {
+     this.dialogRef.close();
+     let link = ['/home'];
+    this.router.navigate(link);
+   }
 }
+  workflowNameValidator = new FormControl('', [Validators.required]); 
+  getworkflowNameErrorMessage() { 
+    return this.workflowNameValidator.hasError('required') ? 'Workflow name required' : '';
+  } 
+
+  
+
+    searchWorkflowName(wname:String){
+       
+           this.workflowNameexists=false;
+
+        console.log(wname);
+        if(this.allWorkflowNames!=undefined){
+             
+               let len = this.allWorkflowNames.length;
+               for(let i=0;i<len;i++){
+                    console.log(this.allWorkflowNames[i]["workFlowName"]);
+                    if(wname==this.allWorkflowNames[i]["workFlowName"])
+                        {
+                          this.workflowNameexists = true;
+                          
+                        }
+                   
+
+
+               }
+               console.log(this.workflowNameexists);
+           
+        }
+        else{
+              this.allWorkflowNames =[];
+               let username = localStorage.getItem("Email");
+               this.persistence.getWorkflowNames(username).subscribe(
+                result =>{
+                  this.allWorkflowNames=result.json();
+                  
+                } );
+
+
+               let len = this.allWorkflowNames.length;
+               for(let i=0;i<len;i++){
+
+                    if(wname=this.allWorkflowNames[i]["workFlowName"])
+                        this.workflowNameexists = true
+
+               }
+        }
+
+
+
+}}
+
 @Component({
   selector: "jsoneditor-overview-dialog",
   templateUrl: "jsoneditor-overview-dialog.html",
@@ -691,14 +852,18 @@ export class JsonEditor {
       ]
     };
   }
+
   onNoClick(): void {
     console.log(this.editor.get());
     this.dialogRef.close(this.editor.get());
   }
+
   onCancelClick(): void {
     this.dialogRef.close(this.data.json);
   }
 }
+
+
 @Component({
   selector: "settings-overview-dialog",
   templateUrl: "settings-overview-dialog.html",

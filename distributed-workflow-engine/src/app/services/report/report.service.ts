@@ -17,6 +17,7 @@ export class ReportService {
   });
 
   getJobID(id) {
+    console.log(this.config.reportGetJobId + id);
     return this._http
       .get(this.config.reportGetJobId + id, { headers: this.headers })
       .map((responseid: Response) => responseid.json() as any[]);

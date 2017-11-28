@@ -3,7 +3,7 @@
 .container {
   width: 80%;
   margin: 0 auto;
-  text-align: center;
+  /* text-align: center; */
   margin-top: 50px;
   display: flex;
   flex-direction: column;

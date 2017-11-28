@@ -1,123 +1,70 @@
 <div class="container">
-  <mat-card class="main">
-    <mat-card-header>
-      <mat-card-title>
-        Reports
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Choose the job for which you wish to see the report!</p>
-      <div *ngFor="let name of jobIdnames; let i = index">
-        <div *ngIf="name.jobId">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header (click)=g etJobReports(name.jobId)>
+  <div class="main"> 
+        Reports 
+      <p>Choose the job for which you wish to see the report!</p>        
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let name of jobIdnames; let i = index"> 
+            <mat-expansion-panel-header (click)="getJobReports(name.jobId)">
               <mat-panel-title>
-                Job-ID
+                JobId
               </mat-panel-title>
               <mat-panel-description>
                 {{name.jobId}}
               </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-card-content>
+            </mat-expansion-panel-header>  
+              <p> Workflow Name: {{name.workFlowName}}</p> 
+              <p>Job Start Time: {{jobStartTime | date: 'short'}} </p>
+              <p>Job End Time: {{jobEndTime  | date: 'short'}} </p>
+              <p>Job Status: {{jobStatus}}</p>
 
-              <!--<mat-accordion>-->
-              <!-- Workflow Name-->
-              <mat-card class="attributes">
-                <mat-card-header>
-                  <!--<mat-card-avatar>
-                          <mat-icon>person</mat-icon>
-                        </mat-card-avatar>-->
-                  <mat-card-title>Workflow Name</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <p> {{name.workFlowName}}</p>
-                </mat-card-content>
-              </mat-card>
-
-              <!-- Job 1 Start Time -->
-              <mat-card class="attributes">
-                <mat-card-header>
-                  <!--<mat-card-avatar>
-                            <mat-icon>person</mat-icon>
-                          </mat-card-avatar>-->
-                  <mat-card-title>Job Start Time</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <!-- {{reports1[0].jobStartTime}}  -->
-                  {{jobStartTime}}
-                </mat-card-content>
-              </mat-card>
-
-              <!-- Job 1 End Time -->
-              <mat-card class="attributes">
-                <mat-card-header>
-                  <!--<mat-card-avatar>
-                        <mat-icon>person</mat-icon>
-                      </mat-card-avatar>-->
-                  <mat-card-title>Job End Time</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <!-- <p> {{reports.jobEndTime}}</p> -->
-                  {{jobEndTime}}
-                </mat-card-content>
-              </mat-card>
-
-              <!-- Job 1 Status-->
-              <mat-card class="attributes">
-                <mat-card-header>
-                  <!--<mat-card-avatar>
-                        <mat-icon>person</mat-icon>
-                      </mat-card-avatar>-->
-                  <mat-card-title>Job Status</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  {{jobStatus}}
-                </mat-card-content>
-              </mat-card>
-
-              <!-- Task Reports-->
-              <div *ngFor="let task of tasks">
-                <mat-card class="attributes">
-                  <mat-expansion-panel>
+                  <!-- <mat-accordion>
+                  <mat-expansion-panel *ngFor="let task of tasks">
                     <mat-expansion-panel-header>
                       <mat-panel-title>
                         {{task.taskAlias}}
                       </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <!-- Tabs for Task 1 Reports -->
-                    <mat-tab-group class="taskReports">
-                      <mat-tab label="taskAlias">
-                        <div class="content">
-                          <p>{{task.taskAlias}}</p>
-                        </div>
-                      </mat-tab>
-                      <mat-tab label="taskStartTime">
-                        <div class="content">
-                          {{task.taskStartTime}}
-                        </div>
-                      </mat-tab>
-                      <mat-tab label="taskEndTime">
-                        <div class="content">
-                          {{task.taskEndTime}}
-                        </div>
-                      </mat-tab>
-                      <mat-tab label="taskLogs">
-                        <div class="logs-list" *ngIf="this.task.taskLogs!=null">
+                    </mat-expansion-panel-header>  
+                          <p>TaskAlias: {{task.taskAlias}} </p> 
+                          <p> TaskStartTime: {{task.taskStartTime | date: 'short'}}</p> 
+                          <p> TaskEndTime: {{task.taskEndTime | date: 'short'}}</p> 
+                          <button mat-button color="primary" (click)="openlogs">View Logs</button>
+                        <mat-expansion-panel class="logs-list" *ngIf="this.task.taskLogs!=null">
+                        <mat-expansion-panel-header>
+                        <mat-panel-title>View Logs</mat-panel-title>
+                          </mat-expansion-panel-header>
                           <div class="logsreport" *ngFor="let line of this.task.taskLogs.split('\n')">
-                            <div>{{line}}</div>
+                            {{line}}
                           </div>
-                        </div>
-                      </mat-tab>
-                    </mat-tab-group>
+                        </mat-expansion-panel>  
+                      
                   </mat-expansion-panel>
-                </mat-card>
-              </div>
-            </mat-card-content>
+                </mat-accordion>  -->
+
+                <div *ngIf="showWaterFall">
+                    <ngx-charts-bar-horizontal-stacked 
+                    [view]="view" 
+                    [scheme]="colorScheme" 
+                    [results]="tasks" 
+                    [gradient]="gradient" 
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis" 
+                    [legend]="showLegend" 
+                    [showXAxisLabel]="showXAxisLabel" 
+                    [showYAxisLabel]="showYAxisLabel" 
+                    [xAxisLabel]="xAxisLabel"
+                    [yAxisLabel]="yAxisLabel" 
+                    (select)="onSelect($event)">
+                    </ngx-charts-bar-horizontal-stacked>
+                  </div> 
           </mat-expansion-panel>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        </mat-accordion> 
+        <mat-paginator 
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          (page)="pageEvent = $event">
+        </mat-paginator>
+  <br><br><br>
   <div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
     <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
       <i class="material-icons">add_circle</i>

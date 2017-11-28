@@ -64,4 +64,12 @@ export class PerisitenceService {
       )
       .toPromise();
   }
+
+  getWorkflowNames(username:String){
+    
+    return this.http.get(this.config.persistence + "users/"+localStorage.getItem('Email'), {headers:this.headers});    
+
+  }
+
+
 }
