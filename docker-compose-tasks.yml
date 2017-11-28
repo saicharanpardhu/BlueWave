@@ -1,0 +1,42 @@
+version: '2'
+services:
+  
+  build:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Build
+    container_name: build
+    image: build
+    ports:
+      - 8099:8099
+
+  clone:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Clone
+    container_name: clone
+    image: clone
+    ports:
+      - 8098:8098
+
+  run:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Run
+    container_name: run
+    image: run
+    ports:
+      - 8097:8097
+
+  uppercase:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./UpperCase
+    container_name: uppercase
+    image: uppercase
+    ports:
+      - 8096:8096

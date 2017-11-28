@@ -1,0 +1,16 @@
+
+server:
+    port: 9000
+---
+
+spring:
+    profiles: proddb
+server:
+    port: 9001
+
+---
+
+spring:
+    profiles: prodmq
+server:
+    port: 9002
