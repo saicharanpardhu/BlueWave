@@ -15,8 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
-import com.distributedpipeline.persistence.domain.HeatMapModel;
 import com.distributedpipeline.persistence.domain.JobIdDetails;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
@@ -157,22 +155,22 @@ public class PersistenceServiceImpl implements PersistenceService {
 		}
 	}
 	
-//	/*--------------------------- Method to update workflow ----------------------------*/
-//	@Override
-//	public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException {
-//		
-//		String owner = workflow.getOwner();
-//		String workflowName = workflow.getWorkFlowName();
-//		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
-//		for(Workflow workFlow : workFlowList)
-//		{
-//			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
-//				String workflowId = workFlow.getId();
-//				persistenceWorkflowRepo.delete(workflowId);
-//				persistenceWorkflowRepo.save(workflow);
-//			}
-//		}
-//	}
+	/*--------------------------- Method to update workflow ----------------------------*/
+	@Override
+	public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException {
+		
+		String owner = workflow.getOwner();
+		String workflowName = workflow.getWorkFlowName();
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
+				String workflowId = workFlow.getId();
+				persistenceWorkflowRepo.delete(workflowId);
+				persistenceWorkflowRepo.save(workflow);
+			}
+		}
+	}
 	
     /*------------------------                    ----------------------------------------
 	                            Method For TaskLibrary    
@@ -320,10 +318,4 @@ public class PersistenceServiceImpl implements PersistenceService {
 		Pageable topTen = new PageRequest(0, 10,Direction.ASC,"jobId");
 		return persistenceJobRepos.findLast10ByUserName(userName,topTen);
 	}
-	
-	/*---------------------------------- Passing workflow details to construct heatmap ------------------------------ */
-//	@Override
-//	public HeatMapModel getWorkflowData(String userName) {
-//				
-//	}
 }

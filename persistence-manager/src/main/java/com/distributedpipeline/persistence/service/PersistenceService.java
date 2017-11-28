@@ -2,8 +2,6 @@ package com.distributedpipeline.persistence.service;
 
 import java.util.List;
 import java.util.Map;
-
-import com.distributedpipeline.persistence.domain.HeatMapModel;
 import com.distributedpipeline.persistence.domain.JobIdDetails;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
@@ -23,8 +21,8 @@ public interface PersistenceService {
 	/*----------------------Delete a workflow--------------------------------------------*/
     public void deleteWorkflow(String workFlowName, String workflowOwner) throws WorkflowNotFoundException;
     
-//    /*----------------------Update a workflow--------------------------------------------*/
-//    public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException;
+    /*----------------------Update a workflow--------------------------------------------*/
+    public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException;
     
     /*----------------------- Method to get workflow by owner -----------------------------*/
 	public List<Workflow> getAllWorkflowOfOwner(String userName);
@@ -69,10 +67,6 @@ public interface PersistenceService {
 	
 	/*----------------------- Method to get Top Ten Job details by user name -----------------------------*/
 	public List<JobIdDetails> getTopJobDetails(String userName);
-	
-//	/*---------------------------------- Passing workflow details to construct heatmap ------------------------------ */
-//	public HeatMapModel getWorkflowData(String userName); 
-	
-	
+		
     
 }

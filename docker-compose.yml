@@ -64,7 +64,7 @@ services:
     container_name: persistence
     image: persistence
     ports:
-      - 8080:8080
+      - 8055:8055
     depends_on:
       - kafka
       - mongodb
