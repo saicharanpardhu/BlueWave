@@ -7,7 +7,7 @@ import { AppConfig } from "../../app.config";
 @Injectable()
 export class ReportService {
   public displayReport;
-
+  public taskNumber;
   constructor(private _http: Http, private config: AppConfig) {}
   private headers = new Headers({
     "Content-Type": "application/json",
@@ -16,10 +16,10 @@ export class ReportService {
     "Access-Control-Allow-Credentials": "true"
   });
 
-  getJobID(id) {
-    console.log(this.config.reportGetJobId + id);
+  getJobID(id, pageindex, pagesize) {
+    console.log(this.config.reportGetJobId + id + "/" + pageindex + "/" + pagesize);
     return this._http
-      .get(this.config.reportGetJobId + id, { headers: this.headers })
+      .get(this.config.reportGetJobId + id+ "/" + pagesize + "/" + pageindex, { headers: this.headers })
       .map((responseid: Response) => responseid.json() as any[]);
   }
 
@@ -28,5 +28,9 @@ export class ReportService {
     return this._http.get(this.config.getReport + jobid, {
       headers: this.headers
     });
+  }
+
+  getTaskNumber(){
+    return this._http.get(this.config.getTaskNumber+localStorage.getItem('Email')).toPromise();
   }
 }

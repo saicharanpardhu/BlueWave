@@ -7,9 +7,7 @@ import { AuthenticationService } from "../../services/authentication/authenticat
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { ReportService } from "./../../services/report/report.service";
 import { Http } from "@angular/http";
-import { MatPaginator, MatSort, PageEvent } from "@angular/material";
-import { MatTableModule } from "@angular/material";
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { PageEvent } from "@angular/material"; 
 import { DataSource } from "@angular/cdk/collections";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/merge";
@@ -21,7 +19,6 @@ import "rxjs/add/operator/switchMap";
 import { Timestamp } from "rxjs";
 import { Task } from "./task";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
-import {PageEvent} from '@angular/material';
 @Component({
   selector: "app-reports",
   templateUrl: "./reports.component.html",
@@ -59,12 +56,14 @@ export class GetReportComponent implements OnInit {
   };
   showWaterFall = false;
 
-  //paginator variables
-  length = 100;
-  pageSize = 10;
+  //paginator variables 
+  length ;
+  pageSize;
   pageSizeOptions = [5, 10, 25, 100];
   pageEvent: PageEvent;
-  
+  pageIndex ;
+
+
   constructor(
     private _service: ReportService,
     private workflowService: WorkflowDetailsService
@@ -74,15 +73,23 @@ export class GetReportComponent implements OnInit {
   }
   ngOnInit() {
     console.log("ngonit reports component ");
-    this._service
-      .getJobID(localStorage.getItem("Email"))
-      .subscribe(resData1 => {
-        this.jobIdnames = resData1;
-        console.log("jobidnames", this.jobIdnames); 
-        this.jobId = this.jobIdnames[0].jobId; 
-      }); 
-    console.log("USER", localStorage.getItem("Email")); 
+    this._service.getTaskNumber().then( res => this.length = res.json()); 
+    this.pageSize = 10;
+    this.pageIndex = 0;
+    console.log(this.length);
+    this.getAllJobReports();
   } 
+
+  getAllJobReports(){
+    this._service
+    .getJobID(localStorage.getItem("Email"),this.pageIndex,this.pageSize)
+    .subscribe(resData1 => {
+      this.jobIdnames = resData1;
+      console.log("jobidnames", this.jobIdnames); 
+      this.jobId = this.jobIdnames[0].jobId; 
+    }); 
+  console.log("USER", localStorage.getItem("Email")); 
+  }
 
   getJobReports(jobId: String) {
     this.reports1 = [];
@@ -120,5 +127,11 @@ export class GetReportComponent implements OnInit {
       this.showWaterFall = true;
     });
   } 
+
+  updatePage(){
+    this.pageIndex = this.pageEvent.pageIndex;
+    this.pageSize = this.pageEvent.pageSize;
+    this.getAllJobReports();
+  }
 }
  
