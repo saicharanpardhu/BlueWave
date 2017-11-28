@@ -11,6 +11,7 @@
 //   public readonly getAllWorkflows = "http://172.23.238.151:8080/v1.0/persistence/workflow/users/";
 //   public readonly getWorkflow = "http://172.23.238.151:8080/v1.0/persistence/workflows/workflow/";
 //   public readonly getTasksOfWorkflow = "http://172.23.238.151:8080/v1.0/persistence/tasks/";
+ // public readonly getTaskNumber = "http://172.23.238.151:8080/v1.0/persistence/count/jobdetails/";
 //}
 
 export class AppConfig {
@@ -26,4 +27,5 @@ export class AppConfig {
   public readonly getAllWorkflows = "http://api-gateway:8020/persistence-manager/v1.0/persistence/workflow/users/";
   public readonly getWorkflow = "http://api-gateway:8020/persistence-manager/v1.0/persistence/workflows/workflow/";
   public readonly getTasksOfWorkflow = "http://api-gateway:8020/persistence-manager/v1.0/persistence/tasks/";
+  public readonly getTaskNumber = "http://api-gateway:8020/persistence-manager/v1.0/persistence/count/jobdetails/";
 }
