@@ -37,6 +37,10 @@
 
         <module>JobManager</module>
         <module>ReportingService</module>
+        <module>Run</module>
+        <module>Build</module>
+        <module>Clone</module>
+        <module>UpperCase</module>
   </modules>
 
 
