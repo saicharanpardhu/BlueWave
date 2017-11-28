@@ -1,0 +1,69 @@
+version: '2'
+services:
+  eureka:
+    image: eureka
+    restart: always
+    build: ./eureka-server
+    container_name: eureka
+    ports:
+      - 8090:8090
+
+  config:
+     image: config
+     restart: always
+     build: ./Config-server
+     container_name: config
+     ports:
+       - 8888:8888
+
+  api-gateway:
+    environment:
+      EUREKA_URL: eureka
+    build: ./Api-Gateway
+    container_name: api-gateway
+    image: api
+    ports:
+      - 8020:8020
+    
+  redis: 
+    container_name: redis
+    image: redis
+    expose:
+      - 6379
+    ports: 
+      - "6379:6379"
+      
+  kafka:
+    environment:
+     #ADVERTISED_HOST: 172.23.238.181
+     ADVERTISED_HOST: 10.20.1.196
+     ADVERTISED_PORT: 9092
+    image: spotify/kafka
+    container_name: kafka
+    restart: always
+    ports: 
+     - 2181:2181
+     - 9092:9092
+    expose:
+     - 9092
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+     - 27017:27017
+
+  cassandra_db1: 
+    container_name: cassandra_db1
+    image: cassandra
+    restart: always
+    expose:
+      - "9042"
+    ports: 
+      - "9042:9042"  
+
+  
+
+
+  

@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableCaching
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class StateInitializer {
 
 	public static void main(String[] args) {

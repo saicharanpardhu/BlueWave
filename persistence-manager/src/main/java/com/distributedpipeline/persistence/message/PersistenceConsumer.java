@@ -1,6 +1,12 @@
 package com.distributedpipeline.persistence.message;
 
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.stereotype.Service;
 import com.distributedpipeline.persistence.domain.*;
@@ -58,15 +64,37 @@ public class PersistenceConsumer {
 	
 	// Heat Map Generation Data //
 	
-//	@KafkaListener(topics = "${kafka.topic.countStatus}",
-//            containerFactory = "kafkaJobDetailsContainerFactory")
-//          public void kafkalistener(String heatMapData) {
-//			String userName = heatMapData.split("&")[0];
-//			String workFlowName = heatMapData.split("&")[1];
-//			
-//              latch.countDown();
-//              logger.info("listening");
-//          }
+	@KafkaListener(topics = "${kafka.topic.countStatus}",
+            containerFactory = "kafkaListenerContainerFactory")
+          public void kafkalistener(String heatMapData) throws WorkflowNotFoundException, ParseException {
+			String[] data = heatMapData.split("&");
+		
+			if(data.length > 0) {
+				String userName = data[0];
+				String workFlowName = data[1];
+				logger.info(userName);
+				logger.info(workFlowName);
+				logger.info(data[2]);
+				Timestamp executionTime = Timestamp.valueOf(data[2]);
+				logger.info(executionTime);
+				Workflow workflow = service.getWorkflowByNameAndUserName(workFlowName,userName);
+			    Integer freq= workflow.getFrequency();
+			    if(freq==null) {
+			    	freq=1;
+			    }
+			    else freq=freq+1;
+			    workflow.setFrequency(freq);
+				List<Date> date1 = new ArrayList<Date>();
+				date1.add(executionTime);				
+				workflow.setExecutionTime(date1);
+				logger.info(executionTime);
+				logger.info(date1);
+				service.updateWorkflow(workflow);
+				
+	              latch.countDown();
+	              logger.info("listening");
+				}
+			}
 
 
 }

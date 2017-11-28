@@ -23,21 +23,22 @@ public class Workflow {
     private String[] canExecuteUser;
     private String[] canEditUser;
 	private String workFlowStatus;
+	private List<Date> executionTime;
+	private Integer frequency;
     private Map<String,Tasks> tasks;
 	
 	
 	/*--------------------- Getters and Setters for the fields -----------------------------*/
 	
 
-    public String getId() {
+	public String getId() {
 		return id;
 	}
 
-    public String[] getCanEditUser() {
+	public String[] getCanEditUser() {
 		return canEditUser;
 	}
-
-
+	
 	public String getWorkFlowName() {
 		return workFlowName;
 	}
@@ -121,6 +122,22 @@ public class Workflow {
 		this.tasks = tasks;
 	}
 
+	public Integer getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Integer frequency) {
+		this.frequency = frequency;
+	}
+	
+	public List<Date> getExecutionTime() {
+		return executionTime;
+	}
+
+	public void setExecutionTime(List<Date> executionTime) {
+		this.executionTime = executionTime;
+	}
+
  /*------------------------------- Constructors -----------------------------------------*/
 	public Workflow(String workFlowName, String owner, String[] canViewUser, String[] canExecuteUser,
 			String workFlowStatus, Map<String, Tasks> tasks) {
@@ -132,8 +149,7 @@ public class Workflow {
 		this.workFlowStatus = workFlowStatus;
 		this.tasks = tasks;
 	}
-
-
+	
 	public Workflow() {
 		super();
 	}

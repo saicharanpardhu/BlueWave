@@ -84,6 +84,14 @@ public class PersistenceController {
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
     }
 	
+	/*-------------------------------- update workflow ----------------------------------- */
+	@RequestMapping(method=RequestMethod.PUT, value="/workflow/update/{userName}/{workflowName}")
+    public ResponseEntity<String> updateWorkflow(@PathVariable(value="workflowName") String name, @PathVariable(value="userName") String user) throws WorkflowNotFoundException {
+		Workflow workflow = persistenceservice.getWorkflowByNameAndUserName(name, user);
+		persistenceservice.updateWorkflow(workflow);
+		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+    }
+	
 	/*------------------------                    ----------------------------------------
                                Method For TaskLibrary    
     --------------------------                    --------------------------------------*/
