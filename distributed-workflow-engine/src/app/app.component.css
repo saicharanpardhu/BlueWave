@@ -3,12 +3,7 @@
   flex: 1 1 auto;
 }
 
-<<<<<<< HEAD
-.mat-sidenav-container{
-    background:url("https://www.planwallpaper.com/static/images/colorful-triangles-background_yB0qTG6.jpg"); /*making the image a bit darker*/
 
-}
-=======
 .leftsidenavBox mat-toolbar {
   align-items: center;
   justify-content: center;
@@ -57,4 +52,3 @@
   min-width: 9vw;
 }
 
->>>>>>> 00ea98173f452d14270b28c9c15e81dc18bde39f

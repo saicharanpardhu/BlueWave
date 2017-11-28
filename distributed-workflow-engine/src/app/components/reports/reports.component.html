@@ -1,7 +1,14 @@
 <div class="container">
   <div class="main"> 
         Reports 
-      <p>Choose the job for which you wish to see the report!</p>        
+        <div *ngIf="(statuscode == 0)">
+          <h1>Sorry!</h1>
+          <p>Cannot fetch data from backend</p>
+          <hr>
+          </div>
+         <div *ngIf="!(statuscode == 0)">
+      <p>Choose the job for which you wish to see the report!</p>   
+    </div>      
         <mat-accordion>
           <mat-expansion-panel *ngFor="let name of jobIdnames; let i = index"> 
             <mat-expansion-panel-header (click)="getJobReports(name.jobId)">
@@ -57,13 +64,7 @@
                     </ngx-charts-bar-horizontal-stacked>
                   </div> 
           </mat-expansion-panel>
-        </mat-accordion> 
-        <mat-paginator 
-          [length]="length"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="pageSizeOptions"
-          (page)="pageEvent = $event">
-        </mat-paginator>
+        </mat-accordion>
   <br><br><br>
   <div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
     <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
