@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~jsoneditor/dist/jsoneditor.min.css";
+@import "../node_modules/ng2-flex-layout/dist/ng2-flex-layout.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy|Roboto');
+
+
 body{
     margin: 0px;
     font-family: 'Roboto';

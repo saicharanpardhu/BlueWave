@@ -39,3 +39,8 @@
 .mat-menu-item{
     min-width: 9vw;
 }
+
+.mat-sidenav-container{
+    background:url("https://www.planwallpaper.com/static/images/colorful-triangles-background_yB0qTG6.jpg"); /*making the image a bit darker*/
+
+}

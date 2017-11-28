@@ -30,7 +30,9 @@ import { WorkflowDetailsComponent } from './components/workflow-details/workflow
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 
 import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
+import { LayoutModule } from 'ng2-flex-layout';
 import { ReportService } from './services/report/report.service';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { ReportService } from './services/report/report.service';
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
     WorkflowDetailsComponent,
-    JsonEditor,SettingsDialog,GetReportComponent
+    JsonEditor,SettingsDialog,GetReportComponent, LandingPageComponent
   ],
   imports: [
     BrowserModule, 
@@ -57,6 +59,7 @@ import { ReportService } from './services/report/report.service';
     ReactiveFormsModule, 
     HttpModule,
     FormsModule,
+    LayoutModule,    
     NgxChartsModule, 
     NgxChartsDagModule,
     TagInputModule,
