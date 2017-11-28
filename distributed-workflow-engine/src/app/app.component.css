@@ -1,46 +1,60 @@
-.fill-remaining-space, .fill-notif-space{
-    flex:1 1 auto;
-}
-.leftsidenavBox{
-    min-width: 15vw;
-}
-.leftsidenavBox mat-toolbar{ 
-    align-items: center;
-    justify-content: center;
-} 
-.rightsidenavBox mat-toolbar{ 
-    align-items: center;
-    justify-content: center;
-} 
-.rightsidenavBox{
-    min-width: 25vw;
-}
-.leftsidenav a{ 
-    display:block;
-    top: 10px;
-    width: 85%;
-    margin-left: 15px;
-    margin-right: 0px;
-    text-align: left;
-    padding: 5px;
-} 
-.mat-icon-button{ 
-    margin: 0 7px;
-}
-.rightsidenav a{ 
-    display:block;
-    top: 10px;
-    width: 85%;
-    margin-left: 15px;
-    margin-right: 0px;
-    text-align: right;
-    padding: 5px;
-} 
-.mat-menu-item{
-    min-width: 9vw;
+.fill-remaining-space,
+.fill-notif-space {
+  flex: 1 1 auto;
 }
 
+<<<<<<< HEAD
 .mat-sidenav-container{
     background:url("https://www.planwallpaper.com/static/images/colorful-triangles-background_yB0qTG6.jpg"); /*making the image a bit darker*/
 
 }
+=======
+.leftsidenavBox mat-toolbar {
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsidenavBox mat-toolbar {
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsidenavBox {
+  min-width: 25vw;
+}
+
+.app-fab--absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.leftsidenav ul {
+  padding: 0px;
+  display: table-caption;
+  min-width: 15vw;
+}
+
+.leftsidenav ul li {
+  display: flex;
+}
+
+.mat-icon-button {
+  margin: 0 7px;
+}
+
+.rightsidenav a {
+  display: block;
+  top: 10px;
+  width: 85%;
+  margin-left: 15px;
+  margin-right: 0px;
+  text-align: right;
+  padding: 5px;
+}
+
+.mat-menu-item {
+  min-width: 9vw;
+}
+
+>>>>>>> 00ea98173f452d14270b28c9c15e81dc18bde39f

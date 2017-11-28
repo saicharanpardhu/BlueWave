@@ -1,87 +1,156 @@
-import { SocketService } from './../../services/socket/socket.service';
-import { PerisitenceService } from './../../services/persistence/perisitence.service';
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { Router } from '@angular/router'; 
-import { MatSnackBarConfig } from '@angular/material';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { SocketService } from "./../../services/socket/socket.service";
+import { PerisitenceService } from "./../../services/persistence/perisitence.service";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { Router } from "@angular/router";
+import { MatSnackBarConfig } from "@angular/material";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { ReportService } from "../../services/report/report.service";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-execute-workflow',
-  templateUrl: './execute-workflow.component.html',
-  styleUrls: ['./execute-workflow.component.css']
+  selector: "app-execute-workflow",
+  templateUrl: "./execute-workflow.component.html",
+  styleUrls: ["./execute-workflow.component.css"]
 })
 export class ExecuteWorkflowComponent implements OnInit {
+  constructor(
+    private authentication: AuthenticationService,
+    private router: Router,
+    private socketService: SocketService,
+    private reportService: ReportService
+  ) {}
 
-  constructor(private _formBuilder : FormBuilder,
-  private persistenceService: PerisitenceService,
-  private authentication : AuthenticationService,
-  private router: Router, private socketService: SocketService
-  ) { 
-    
+  onSelect(event) {
+    console.log(event);
   }
+
   response: any;
+
+  //Charts options
+  viewCharts: boolean;
+  color = "primary";
+  displayWaterfall = false;
+  viewWaterfall = false;
+  tasks: any[];
+  single: any[];
+  multi: any[];
+  view: any[] = [1000, 100];
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = "Tasks";
+  yAxisLabel = "Timeline";
+  colorScheme = {
+    domain: ["#fafafa", "#663ab7", "#C7B42C", "#AAAAAA"]
+  };
+
+  //Other variables
+  isLinear = true;
   value = 0;
   tasksComplete = 0;
-  consoleOutput : Array<String>;
-  tasks : Array<String>;
+  consoleOutput: Array<String>;
+  taskList: Array<String>;
   displayStepper = false;
   cardDisplay = false;
   notLoaded = false;
-  color = "primary";
-  ngOnInit() {    
+
+  ngOnInit() {
     this.value = 0;
     this.tasksComplete = 0;
     this.consoleOutput = [];
-    this.tasks  = [];
+    this.taskList = [];
     this.displayStepper = false;
-    this.cardDisplay = false
+    this.cardDisplay = false;
+    this.viewCharts = false;
 
-    // this.tasks = this.socketService.taskNames;
-    this.socketService.socketMessages.subscribe( data => {
- 
+    this.socketService.socketMessages.subscribe(data => {
       this.tasksComplete += 1;
-      console.log("Completed" + this.tasksComplete + " of " + this.socketService.socketNumber);
-      // this.tasksComplete += 1;
+      console.log(
+        "Completed" +
+          this.tasksComplete +
+          " of " +
+          this.socketService.socketNumber
+      );
       console.log(data.indexOf("failed"));
-      if(data.indexOf("failed") !== -1) this.color="warn";
-      else this.value = (this.tasksComplete/this.socketService.socketNumber)*100; 
-      console.log(this.value); 
-    }); 
-
-    this.socketService.socketNames.subscribe( data => { 
-            this.tasks.push(data);
-            console.log('LENGTH',this.tasks.length);  
-            if(this.tasks.length == this.socketService.socketNumber) this.displayStepper = true;
+      if (data.indexOf("failed") !== -1) this.color = "warn";
+      else
+        this.value = this.tasksComplete / this.socketService.socketNumber * 100;
+      console.log(this.value);
+      if (this.value == 100) this.displayWaterfall = true;
     });
-  
-  }
-  isLinear = true;  
-  sendMessage(message){
-    this.socketService.sendMessage(message);
+
+    this.socketService.socketNames.subscribe(data => {
+      this.taskList.push(data);
+      console.log("LENGTH", this.taskList.length);
+      if (this.taskList.length == this.socketService.socketNumber)
+        this.displayStepper = true;
+    });
   }
 
-  loadConsole(taskName){
+  loadConsole(taskName) {
     this.cardDisplay = !this.cardDisplay;
-    if(!this.cardDisplay) this.consoleOutput = []; 
-    try{
+    if (!this.cardDisplay) this.consoleOutput = [];
+    try {
       let taskOutput = this.socketService.socketConsoleMap.get(taskName);
       this.notLoaded = false;
-      for(var i = 0; i <= taskOutput.length; i++) this.consoleOutput.push(taskOutput[i]);
-      console.log("Console output: ",this.consoleOutput);
-    }catch(e){
+      for (var i = 0; i <= taskOutput.length; i++)
+        this.consoleOutput.push(taskOutput[i]);
+      console.log("Console output: ", this.consoleOutput);
+    } catch (e) {
       this.notLoaded = true;
     }
-    
   }
 
-  ngOnDestroy(){ 
+  viewWaterFall() {
+    this.viewCharts = true;
+    this.reportService
+      .getReport(this.socketService.jobId)
+      .toPromise()
+      .then(res => {
+        this.loadChart(res.json() as any[]);
+      });
+  }
+
+  loadChart(res) {
+    console.log("RES", res);
+    this.tasks = [];
+    for (var i = 0; i < res.length; i++) {
+      console.log(
+        "not running: ",
+        res[i]["taskStartTime"] - res[i]["jobStartTime"]
+      );
+      console.log("runtime", res[i]["taskStartTime"] - res[i]["taskEndTime"]);
+      let taskWater = {
+        name: res[i]["taskAlias"],
+        series: [
+          {
+            name: "Not started",
+            value: (res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number
+          },
+          {
+            name: "Runtime",
+            value: (res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number
+          }
+        ]
+      };
+      console.log(taskWater);
+      this.tasks.push(taskWater);
+      console.log("Iteration ", i, " ", this.tasks);
+    }
+    console.log(this.tasks);
+  }
+
+  ngOnDestroy() {
     this.value = 0;
     this.tasksComplete = 0;
     this.consoleOutput = null;
-    this.tasks  = [];
+    this.taskList = [];
     this.displayStepper = false;
-    this.cardDisplay = false
+    this.cardDisplay = false;
   }
 }

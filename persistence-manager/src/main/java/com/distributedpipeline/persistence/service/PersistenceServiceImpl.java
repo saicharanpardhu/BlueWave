@@ -1,5 +1,6 @@
 package com.distributedpipeline.persistence.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
 import com.distributedpipeline.persistence.domain.JobIdDetails;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
@@ -37,6 +37,9 @@ public class PersistenceServiceImpl implements PersistenceService {
 	
 	@Autowired
 	private PersistenceJobRepos persistenceJobRepos;
+	
+	@Autowired
+	private PersistenceServiceImpl service;
 	
 	
 	/*---------------------- getters and setters for repos-----------------------------*/
@@ -77,7 +80,34 @@ public class PersistenceServiceImpl implements PersistenceService {
 	public Workflow getWorkflowByName(String workFlowName) throws WorkflowNotFoundException {
 	       return persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
        }
+	
+	/*----------------------- Method to get workflow by owner -----------------------------*/
+	@Override
+	public List<Workflow> getAllWorkflowOfOwner(String userName) {
+		Iterable<Workflow> workFlowList = persistenceWorkflowRepo.findAll();
+		List<Workflow> listWorkflow = new ArrayList<Workflow>();
+		for(Workflow workFlow : workFlowList) {
+			if(userName.equals(workFlow.getOwner())) {
+				listWorkflow.add(workFlow);
+			}
+		}
+		return listWorkflow;
 		
+	}	
+	
+	/*----------------------- Method to get workflow by name and owner -----------------------------*/
+	@Override
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException {
+	      
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
+				return workFlow;
+			}
+		}
+		return null;	       
+       }
 	
 	
 	/*------------------------- Method to get all workflows -----------------------------*/
@@ -89,8 +119,20 @@ public class PersistenceServiceImpl implements PersistenceService {
 	/*--------------------- Method to save workflow to repository -----------------------*/	
 	@Override
 	public String addWorkflow(Workflow workflow) {
+		int count = 0;
 		String workFlowName = workflow.getWorkFlowName();
-		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName)==null) {
+		String owner = workflow.getOwner();		
+		
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workFlowName.equals(workFlow.getWorkFlowName())) {
+				count++;
+			}
+		}
+		
+		if(count ==0) {
+			workflow.setTimeStamp(new Timestamp(System.currentTimeMillis()));
 			persistenceWorkflowRepo.save(workflow);
 			return "Workflow saved";
 		}
@@ -99,23 +141,34 @@ public class PersistenceServiceImpl implements PersistenceService {
 		}
 	}
 	
-	/*-------------------------- Method to update a workflow ----------------------------*/
-	@Override
-	public Workflow updateWorkflow(Workflow workFlow) {
-		String workflowName = workFlow.getWorkFlowName();
-		persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
-		return persistenceWorkflowRepo.save(workFlow);
-	}
-
 	/*--------------------------- Method to delete workflow ----------------------------*/
 	@Override
-	public boolean deleteWorkflow(String workflowName) {
-		if(persistenceWorkflowRepo.getWorkflowByworkFlowName(workflowName) != null) {
-			persistenceWorkflowRepo.deleteByworkFlowName(workflowName);
-			return true;
+	public void deleteWorkflow(String workflowName, String owner) throws WorkflowNotFoundException {
+	
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
+				String workflowId = workFlow.getId();
+				persistenceWorkflowRepo.delete(workflowId);
+			}
 		}
-		else {
-			return false;
+	}
+	
+	/*--------------------------- Method to update workflow ----------------------------*/
+	@Override
+	public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException {
+		
+		String owner = workflow.getOwner();
+		String workflowName = workflow.getWorkFlowName();
+		Iterable<Workflow> workFlowList=persistenceWorkflowRepo.findAll();
+		for(Workflow workFlow : workFlowList)
+		{
+			if(owner.equals(workFlow.getOwner()) && workflowName.equals(workFlow.getWorkFlowName())) {
+				String workflowId = workFlow.getId();
+				persistenceWorkflowRepo.delete(workflowId);
+				persistenceWorkflowRepo.save(workflow);
+			}
 		}
 	}
 	
@@ -172,24 +225,24 @@ public class PersistenceServiceImpl implements PersistenceService {
 	}   
 	
 	
-	/*-------------------------- Method to authenticate a user ----------------------------*/
-	@Override
-	public String userPermissions(String workFlowName, String userName) {
-		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
-		
-		if(workflow!=null && Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
-			return "user can edit workflow";
-		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
-			return "user can execute workflow";
-		}
-		else if(workflow!=null && Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
-			return "user can view workflow";
-		}
-		else {
-			return "user not authorised to access workflow";
-		}
-	}
+//	/*-------------------------- Method to authenticate a user ----------------------------*/
+//	@Override
+//	public String userPermissions(String workFlowName, String userName) {
+//		Workflow workflow = persistenceWorkflowRepo.getWorkflowByworkFlowName(workFlowName);
+//		
+//		if(workflow!=null && Arrays.toString(workflow.getCanEditUser()).contains(userName)) {
+//			return "user can edit workflow";
+//		}
+//		else if(workflow!=null && Arrays.toString(workflow.getCanExecuteUser()).contains(userName)) {
+//			return "user can execute workflow";
+//		}
+//		else if(workflow!=null && Arrays.toString(workflow.getCanViewUser()).contains(userName)) {
+//			return "user can view workflow";
+//		}
+//		else {
+//			return "user not authorised to access workflow";
+//		}
+//	}
 	
 	/*-------------------------- Method to get tasks inside workflow -----------------------------*/
 	

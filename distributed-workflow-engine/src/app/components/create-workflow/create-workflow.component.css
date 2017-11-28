@@ -1,20 +1,24 @@
-.container{ 
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 20px; 
-  }
-  li{
-    list-style: none;
-    display: inline-block;
-  }
-  html, body {
+.container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+}
+
+li {
+  list-style: none;
+  display: inline-block;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
-.fill-remaining-space{
-  flex:1 1 auto;
+
+.fill-remaining-space {
+  flex: 1 1 auto;
 }
 
 .app-fab-absolute {
@@ -23,6 +27,6 @@
   right: 1rem;
 }
 
-.app-fab-absolute:hover{
+.app-fab-absolute:hover {
   cursor: pointer;
 }

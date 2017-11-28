@@ -34,16 +34,9 @@ import com.distributedpipeline.persistence.domain.Workflow;
 @DirtiesContext
 public class PersistenceProducerTest {
 
-//  private static final Logger LOGGER = LoggerFactory.getLogger(SpringKafkaSenderTest.class);
   private static String SENDER_TOPIC = "sender.t";
   @Autowired
   PersistenceProducer sender;
-  
-//  @Autowired
-//  Workflow workflow;
-//  
-//  @Autowired
-//  Tasks task;
   
   private KafkaMessageListenerContainer<String, String> container;
   private BlockingQueue<ConsumerRecord<String, String>> records;

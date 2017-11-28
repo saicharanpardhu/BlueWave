@@ -1,31 +1,18 @@
 <div class="container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Your projects</mat-card-title> 
-    </mat-card-header>
+  <mat-card style="overflow:auto">
     <mat-card-content>
-      <!-- <p>Your recently executed projects.</p> --> 
-      <a mat-raised-button color="primary" [routerLink]="['/workflows']">
-        <span class="mat-button-wrapper" id="workflow">
-          <mat-icon>done_all</mat-icon> <span>Execute CI-CD Workflow</span>
-        </span>
-        <div class="mat-button-ripple mat-ripple" matripple=""></div>
-        <div class="mat-button-focus-overlay"></div>
-      </a>
+      <p>HeatMap</p>
+      <div>
+        <ngx-charts-heat-map [view]="view" [scheme]="colorScheme" [results]="multi" [legend]="showLegend" [gradient]="gradient" [xAxis]="showXAxis"
+          [yAxis]="showYAxis" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+        </ngx-charts-heat-map>
+      </div>
     </mat-card-content>
   </mat-card>
-  <!-- <ngx-charts-bar-horizontal-stacked *ngIf="this.tasks.length"
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="tasks"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)">
-  </ngx-charts-bar-horizontal-stacked> -->
+  <div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+    <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+      <i class="material-icons">add_circle</i>
+    </button>
+  </div>
 </div>

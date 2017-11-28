@@ -11,7 +11,7 @@ public class TaskToScheduler {
 	private String jobId;
 	private String userName;
 	private Map<String,Task> listOfTasks;
-
+	private String workFlowName;
 	
 	public TaskToScheduler(String jobId, String userName, Map<String, Task> listOfTasks) {
 		super();
@@ -39,6 +39,12 @@ public class TaskToScheduler {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getWorkFlowName() {
+		return workFlowName;
+	}
+	public void setWorkFlowName(String workFlowName) {
+		this.workFlowName = workFlowName;
 	}
 	
 }

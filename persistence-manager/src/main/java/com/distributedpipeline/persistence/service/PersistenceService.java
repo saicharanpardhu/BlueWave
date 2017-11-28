@@ -2,7 +2,6 @@ package com.distributedpipeline.persistence.service;
 
 import java.util.List;
 import java.util.Map;
-
 import com.distributedpipeline.persistence.domain.JobIdDetails;
 import com.distributedpipeline.persistence.domain.TaskLibrary;
 import com.distributedpipeline.persistence.domain.Tasks;
@@ -19,14 +18,17 @@ public interface PersistenceService {
 	/*----------------------Add a new workflow-------------------------------------------*/
 	public String addWorkflow(Workflow workflow); 
 	
-	/*----------------------Update a workflow--------------------------------------------*/  
-	public Workflow updateWorkflow(Workflow workFlow) ;
-	
 	/*----------------------Delete a workflow--------------------------------------------*/
-    public boolean deleteWorkflow(String workFlowName) throws WorkflowNotFoundException;
+    public void deleteWorkflow(String workFlowName, String workflowOwner) throws WorkflowNotFoundException;
     
-    /*-------------------------- Method to authenticate a user ----------------------------*/
-    public String userPermissions(String workFlowName, String userName);	
+    /*----------------------Update a workflow--------------------------------------------*/
+    public void updateWorkflow(Workflow workflow) throws WorkflowNotFoundException;
+    
+    /*----------------------- Method to get workflow by owner -----------------------------*/
+	public List<Workflow> getAllWorkflowOfOwner(String userName);
+	
+	/*----------------------- Method to get workflow by name and owner -----------------------------*/
+	public Workflow getWorkflowByNameAndUserName(String workFlowName,String owner) throws WorkflowNotFoundException;
     
     /*-------------------------- Method to get tasks inside workflow -----------------------------*/
     public List<String> getTasksOfWorkflow(String workFlowName);
@@ -65,5 +67,6 @@ public interface PersistenceService {
 	
 	/*----------------------- Method to get Top Ten Job details by user name -----------------------------*/
 	public List<JobIdDetails> getTopJobDetails(String userName);
+		
     
 }

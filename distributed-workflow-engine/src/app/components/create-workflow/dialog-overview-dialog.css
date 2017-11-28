@@ -1,23 +1,23 @@
- div{
-   
-   text-align:center;
+ div {
+   text-align: center;
  }
 
-tag-input tag-input-dropdown /deep/ ng2-dropdown div.ng2-dropdown-menu {
-    top: inherit !important;
-    left: inherit !important;
-    z-index: 100000;
-}
+ tag-input tag-input-dropdown /deep/ ng2-dropdown div.ng2-dropdown-menu {
+   top: inherit !important;
+   left: inherit !important;
+   z-index: 100000;
+ }
 
-#dialog-content{
-  overflow: hidden;  
-}
+ #dialog-content {
+   overflow: hidden;
+ }
 
-tag-input tag-input-dropdown /deep/ ng2-dropdown{
-  top: inherit !important;
-  left: inherit !important;
-  z-index: 100000;
-}
-.radio-button {
-  margin: 5px;
-}
+ tag-input tag-input-dropdown /deep/ ng2-dropdown {
+   top: inherit !important;
+   left: inherit !important;
+   z-index: 100000;
+ }
+
+ .radio-button {
+   margin: 5px;
+ }

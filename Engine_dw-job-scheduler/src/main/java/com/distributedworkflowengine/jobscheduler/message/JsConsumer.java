@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class JsConsumer {
+	private static Logger logger=LogManager.getLogger("JsConsumer.class");
 
 	@Autowired
 	JobSchedulerServiceImpl service;
@@ -48,14 +51,15 @@ public class JsConsumer {
 	public void reportlistener(User user) throws JsonProcessingException {
 		
 		reportModel.setJobStartTime(new Timestamp(System.currentTimeMillis()));
-		System.out.println(user.getJobId());
+		logger.info(user.getJobId());
 		jobInfo=service.getData(user.getJobId());   
 		Map<String,Task> map=service.selectJob(jobInfo,user.getJobId(),user.getUserName());
 		
 		if(!map.isEmpty()) {
 			taskToScheduler.setJobId(user.getJobId());
 			taskToScheduler.setListOfTasks(map);
-			System.out.println(user.getUserName());
+			taskToScheduler.setWorkFlowName(jobInfo.getWorkFlowName());
+			logger.info(user.getUserName());
 			taskToScheduler.setUserName(user.getUserName());
 			producer.sendToTaskSche(taskToScheduler);
 			latch.countDown();
@@ -63,7 +67,7 @@ public class JsConsumer {
 		else
 			{
 			
-				System.out.println("Job completed");
+				logger.info("Job completed");
 			}
 
 

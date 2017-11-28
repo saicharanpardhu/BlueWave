@@ -1,12 +1,12 @@
 const chartGroups = [
   {
-    name: 'Other Charts',
+    name: "Other Charts",
     charts: [
       {
-        name: 'Directed Graph',
-        selector: 'directed-graph',
-        inputFormat: 'graph',
-        options: ['colorScheme', 'showLegend']
+        name: "Directed Graph",
+        selector: "directed-graph",
+        inputFormat: "graph",
+        options: ["colorScheme", "showLegend"]
       }
     ]
   }

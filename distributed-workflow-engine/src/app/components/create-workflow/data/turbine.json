@@ -20,9 +20,7 @@
       "publish": {
         "pipe": "result"
       },
-      "on-success": [
-        "get_url_from_text"
-      ]
+      "on-success": ["get_url_from_text"]
     },
     "get_instagram_post": {
       "type": "lib",
@@ -38,9 +36,7 @@
       "publish": {
         "pipe": "result"
       },
-      "on-success": [
-        "get_ioc_tc"
-      ]
+      "on-success": ["get_ioc_tc"]
     },
     "get_url_from_text": {
       "type": "lib",
@@ -58,9 +54,7 @@
       "publish": {
         "pipe": "result"
       },
-      "on-success": [
-        "get_ioc_tc"
-      ]
+      "on-success": ["get_ioc_tc"]
     },
     "get_ioc_tc": {
       "type": "lib",
@@ -80,12 +74,8 @@
       "publish": {
         "pipe": "result"
       },
-      "on-success": [
-        "render_message"
-      ],
-      "on-error": [
-        "post_to_slack"
-      ]
+      "on-success": ["render_message"],
+      "on-error": ["post_to_slack"]
     },
     "render_message": {
       "type": "lib",
@@ -94,7 +84,8 @@
       "action": "turbine_pipe.render_template",
       "params": {
         "inputs": {
-          "template": "TC reports {{name}} is {{description}}. Rating {{rating}}. {{url}}"
+          "template":
+            "TC reports {{name}} is {{description}}. Rating {{rating}}. {{url}}"
         },
         "map": {
           "get_ioc_tc.name": "name",
@@ -106,9 +97,7 @@
       "publish": {
         "pipe": "result"
       },
-      "on-success": [
-        "post_to_slack"
-      ]
+      "on-success": ["post_to_slack"]
     },
     "post_to_slack": {
       "type": "lib",

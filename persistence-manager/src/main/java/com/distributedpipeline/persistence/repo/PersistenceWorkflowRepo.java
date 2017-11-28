@@ -9,7 +9,5 @@ public interface PersistenceWorkflowRepo extends CrudRepository<Workflow, String
 	
 	/*-------------- Custom Query for get workflow by name -----------------------------*/
 	public Workflow getWorkflowByworkFlowName(String workFlowName);
-	/*-------------- Custom Query for delete workflow ----------------------------------*/
-	public void deleteByworkFlowName(String workFlowName);
 	
 }
