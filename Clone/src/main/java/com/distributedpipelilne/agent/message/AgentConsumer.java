@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
@@ -73,12 +73,12 @@ public class AgentConsumer {
 			    String url= inputdata.getInput()[0];
 			    System.out.println("url : "+ url);
 			    latch.countDown();
-			    Runtime.getRuntime().exec("mkdir /home/imbatch1/Task_source");
+			    Runtime.getRuntime().exec("mkdir /home/jaydeep/Desktop/Task_source/"+inputdata.getJobId()+"/");
 			    
-				File dir = new File("/home/imbatch1/Task_source");
+				File dir = new File("/home/jaydeep/Desktop/Task_source/"+inputdata.getJobId()+"/");
 //				File dirshell = new File("/home/jaydeep/Desktop/main/Stackroute/Spring/agent/");
 				
-				reportModel.setTaskStartTime(new Timestamp(System.currentTimeMillis()));
+				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
 				reportModel.setJobId(inputdata.getJobId());			
 				agentProducer.sendReport(reportModel);
@@ -146,7 +146,8 @@ public class AgentConsumer {
 					reportModel.setTaskAlias(inputdata.getTaskname());
 					reportModel.setJobId(inputdata.getJobId());
 					reportModel.setTaskLogs("[INFO]:"+output.getStderr());
-					reportModel.setTaskEndTime(new Timestamp(System.currentTimeMillis()));
+					reportModel.setTaskEndTime(new Date(System.currentTimeMillis()));
+					System.out.println("end time:"+ reportModel.getTaskEndTime());
 					agentProducer.sendReport(reportModel);
 
 	}
