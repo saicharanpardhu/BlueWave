@@ -49,10 +49,10 @@ public class UserController {
 				
 				if(uniqueEmail == null) {
 					
-//					Role role = rolerepo.findByRole("USER");
-//					Set<Role> roles = new HashSet<Role>();
-// 			    	roles.add(role);
-//					UserDetail.setRoles(roles);
+					Role role = rolerepo.findByRole("USER");
+					Set<Role> roles = new HashSet<Role>();
+ 			    	roles.add(role);
+					UserDetail.setRoles(roles);
 					userService.Signup(UserDetail);
 					return new ResponseEntity<String> ("Your profile is successfully added, Thank you",HttpStatus.OK);
 
