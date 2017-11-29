@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -19,12 +20,16 @@ import com.distributepipeline.task.domain.InputModel;
 @Configuration
 @EnableKafka
 public class RunAgentConsumerConfig {
+
+
+	@Value("${spring.kafka.bootstrap-servers}")
+	private String bootstrapServer;
 	@Bean
     public ConsumerFactory<String, InputModel> triggerConsumerFactory() {
     Map<String, Object> props = new HashMap<>();
     props.put(
       ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-      "${KAFKA_URL}:9092");
+      bootstrapServer);
     
     props.put(
       ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
@@ -57,7 +62,7 @@ public ConsumerFactory<String, String> consumerFactory() {
     Map<String, Object> props = new HashMap<>();
     props.put(
       ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-      "${KAFKA_URL}:9092");
+      bootstrapServer);
     props.put(
       ConsumerConfig.GROUP_ID_CONFIG, 
       "something22");

@@ -1,12 +1,12 @@
 version: '2'
 services:
   
-  build:
+  build_agent:
     environment:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Build
-    container_name: build
+    container_name: build_agent
     image: build
     ports:
       - 8099:8099
