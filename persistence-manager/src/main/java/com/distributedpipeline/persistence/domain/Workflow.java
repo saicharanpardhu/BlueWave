@@ -24,7 +24,7 @@ public class Workflow {
     private String[] canEditUser;
 	private String workFlowStatus;
 	private List<Date> executionTime;
-	private Integer frequency;
+	private String frequency;
     private Map<String,Tasks> tasks;
 	
 	
@@ -122,11 +122,11 @@ public class Workflow {
 		this.tasks = tasks;
 	}
 
-	public Integer getFrequency() {
+	public String getFrequency() {
 		return frequency;
 	}
 
-	public void setFrequency(Integer frequency) {
+	public void setFrequency(String frequency) {
 		this.frequency = frequency;
 	}
 	

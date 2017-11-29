@@ -1,5 +1,5 @@
 FROM java:8-jre
-ADD target/crushAaloo-0.0.1-SNAPSHOT.jar uppercase.jar
+ADD target/uppercase-0.0.1-SNAPSHOT.jar uppercase.jar
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/uppercase.jar"]
 EXPOSE 8096
 

@@ -22,12 +22,15 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 @EnableKafka
 public class AgentProducerConfig {
-    @Bean
+    
+	@Value("${spring.kafka.bootstrap-servers}")
+	private String bootstrapServer;
+	@Bean
     public ProducerFactory<String, Output> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "${KAFKA_URL}:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -49,7 +52,7 @@ public class AgentProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "${KAFKA_URL}:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -70,7 +73,7 @@ public class AgentProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "${KAFKA_URL}:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
