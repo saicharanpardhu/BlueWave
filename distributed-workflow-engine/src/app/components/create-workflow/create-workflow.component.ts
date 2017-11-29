@@ -42,6 +42,9 @@ import {
 import { TSMap } from "typescript-map";
 
 import { OnDestroy } from "@angular/core";
+import {NgcFloatButtonModule} from 'ngc-float-button';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
 /**
  * @title Dialog Overview
  */
@@ -98,6 +101,9 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
 
 
   loadWorkflow = false;
+
+  // with 'true' our FAB will be started open.
+  private open:BehaviorSubject<boolean> = new BehaviorSubject(true); // true is the initial state of FAB
 
   //Chart properties
   version = "APP_VERSION";
@@ -202,7 +208,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
 
   //Display a worflow if user comes to view
   ngOnInit() {
-    this.updateNodes("Start");
+    
     this.selectChart(this.chartType);
     this.selectedColorScheme = "aqua";
 
@@ -233,6 +239,18 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
 
   //Update nodes to add a node to workflow
   updateNodes(taskname: String) {
+    let len2 = this.hierarchialGraph.nodes.length;
+    console.log("update node",len2);
+    if(len2==0){
+      const hNode = {
+      id: id(),
+      label: "Start"
+    };
+    this.hierarchialGraph.nodes.push(hNode);
+    this.hierarchialGraph.links = [...this.hierarchialGraph.links];
+    this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
+    }
+
     const hNode = {
       id: id(),
       label: taskname
@@ -240,7 +258,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     this.hierarchialGraph.nodes.push(hNode);
     this.hierarchialGraph.links = [...this.hierarchialGraph.links];
     this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
-    let len2 = this.hierarchialGraph.nodes.length;
+    
   }
   //update links when add a node
   updateLinks(depends: String[], taskname: String) {

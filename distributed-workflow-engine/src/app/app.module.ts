@@ -33,6 +33,7 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config";
+import {NgcFloatButtonModule} from 'ngc-float-button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,8 @@ import { AppConfig } from "./app.config";
     NgxChartsModule,
     NgxChartsDagModule,
     TagInputModule,
-    Ng4JsonEditorModule
+    Ng4JsonEditorModule,
+    NgcFloatButtonModule
   ],
   providers: [
     AuthenticationService,

@@ -13,7 +13,14 @@
   <!--  <button mat-fab color="primary"  class="app-fab-absolute">
     <i class="material-icons">menu</i>
   </button> -->
-<ul [hidden]="false" style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
+  <ngc-float-button icon="add" style="z-index: 10;position: fixed; right: 20px; bottom: 5%;">
+        <ngc-float-item-button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" icon="play_arrow" content="EXECUTE"></ngc-float-item-button>
+        <ngc-float-item-button icon="done_all" content="SAVE" (click)="saveWorkflow()" ></ngc-float-item-button>
+        <ngc-float-item-button icon="delete" content="{{deleteModeButton}}" (click)="deletemode()" ></ngc-float-item-button>
+        <ngc-float-item-button icon="code" content="JSON EDITOR" (click)="openjsoneditor()"></ngc-float-item-button>
+        <ngc-float-item-button icon="settings" content="Graph Settings" (click)="openSettings()"></ngc-float-item-button>
+    </ngc-float-button>
+<!-- <ul [hidden]="false" style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
  <li>
   <button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" mat-raised-button color="primary"  >
     <mat-icon>play_arrow</mat-icon> <span>EXECUTE</span>
@@ -21,7 +28,7 @@
  </li>
 <li>
 <button *ngIf="!this.loadWorkflow" (click)="saveWorkflow()" mat-raised-button>
-  <mat-icon>done_all</mat-icon> <span>SAVE</span>
+  <mat-icon>done_all</mat-icon> <span>(click)="executeWorkflow()" [routerLink]="['/executeworkflow']"</span>
 </button> 
 </li>
 <li>
@@ -45,7 +52,7 @@
 </button> 
 </li>
 
-</ul>
+</ul> -->
  
 <main [class]="theme" >
 <div class="chart-col" >
@@ -80,8 +87,10 @@
            [tooltipType]="'tooltip'"
            [tooltipTitle]="node.label">
            <svg:rect [attr.width]="node.width" [attr.height]="node.height" [attr.fill]="node.options.color" />
-           <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.height / 2">{{node.label}}</svg:text>
-         </svg:g>
+           <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.height*0.7 ">{{node.label}}</svg:text>
+          </svg:g>
+          
+
        </ng-template>
 
        <ng-template #linkTemplate let-link>
@@ -109,6 +118,8 @@
  
 </main>
 
+
+    
   </div>
   
         
