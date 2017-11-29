@@ -84,8 +84,9 @@ export class AuthenticationService {
         console.log(localStorage.getItem("loginData"));
       }).catch((err) => {
         // Handle any error that occurred in any of the previous
-        console.error('I am the error of auth3',err);
+        console.error('I am the error of auth',err);
         console.error(err.status);
+        console.error(err._body);
         this.statuscode = err.status;
         this.snackBar.open("Network Connection Error. Please try after sometime.",'close');
       })
