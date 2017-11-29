@@ -142,7 +142,7 @@ public class RunAgentConsumer {
 			          }
 			          PrintWriter writer = new PrintWriter("/home/jaydeep/Desktop/output1.txt", "UTF-8");
 			          consoleOutput.setTaskName(inputdata.getTaskname());
-			          consoleOutput.setUserName(inputdata.getUserName());
+			          consoleOutput.setUserName(inputdata.getJobId());
 			          
 			          consoleOutput.setConsole(output1.toString());
 			          producer.sendMessageConsole(consoleOutput);    
