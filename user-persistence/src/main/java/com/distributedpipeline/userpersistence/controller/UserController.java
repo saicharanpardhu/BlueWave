@@ -74,7 +74,6 @@ public class UserController {
 		
 	}
 	
-	
 	@PutMapping(value="/updateuser" , consumes = "application/json")
 	public ResponseEntity updateUser(@Valid @RequestBody User UserDetail)
 	{
