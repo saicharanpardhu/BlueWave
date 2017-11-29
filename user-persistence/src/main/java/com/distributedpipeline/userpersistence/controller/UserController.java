@@ -74,6 +74,45 @@ public class UserController {
 		
 	}
 	
+	
+	@PutMapping(value="/updateuser" , consumes = "application/json")
+	public ResponseEntity updateUser(@Valid @RequestBody User UserDetail)
+	{
+		if(UserDetail.getUserName() == null | UserDetail.getLastName() == null | UserDetail.getEmail() == null ) {
+			
+			return new ResponseEntity<String> ("one or more field is empty",HttpStatus.CONFLICT);
+			
+		}
+		else {
+//					Role role = rolerepo.findByRole("USER");
+//					Set<Role> roles = new HashSet<Role>();
+// 			    	roles.add(role);
+//					UserDetail.setRoles(roles);
+					
+					User user=userService.findByUserName(UserDetail.getUserName());
+					
+					if(UserDetail.getEmail()!=null )
+					{
+						if(Checkmail(UserDetail.getEmail()))
+							user.setEmail(UserDetail.getEmail());
+						else return new ResponseEntity<String> ("Invalid email",HttpStatus.OK);
+					}
+					
+					if(UserDetail.getLastName()!=null)
+						user.setLastName(UserDetail.getLastName());
+					
+					if(UserDetail.getFirstName()!=null)
+						user.setFirstName(UserDetail.getFirstName());
+				
+			
+					userService.Signup(user);
+					return new ResponseEntity<String> ("Your profile is successfully updated, Thank you",HttpStatus.OK);							
+			
+		}
+		
+		
+	}
+	
 	private boolean Checkmail(String email) {
 		String emailValidator = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		return email.matches(emailValidator);
