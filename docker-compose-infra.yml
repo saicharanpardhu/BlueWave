@@ -15,15 +15,6 @@ services:
      container_name: config
      ports:
        - 8888:8888
-
-  api-gateway:
-    environment:
-      EUREKA_URL: eureka
-    build: ./Api-Gateway
-    container_name: api-gateway
-    image: api
-    ports:
-      - 8020:8020
     
   redis: 
     container_name: redis
