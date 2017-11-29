@@ -24,7 +24,8 @@ import {MatCardModule ,
   MatMenuModule,
   MatCheckboxModule,
   MatSidenavModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';
@@ -34,6 +35,7 @@ import { Validators } from '@angular/forms';
     MatTooltipModule,
     BrowserAnimationsModule,  
     MatAutocompleteModule,
+    MatPaginatorModule,
     MatToolbarModule,
     MatSnackBarModule,
     MatProgressBarModule,
@@ -64,6 +66,7 @@ import { Validators } from '@angular/forms';
     MatCardModule,
     MatExpansionModule,
     MatSnackBarModule, 
+    MatPaginatorModule,
     MatGridListModule,
     MatRadioModule,
     MatProgressSpinnerModule,

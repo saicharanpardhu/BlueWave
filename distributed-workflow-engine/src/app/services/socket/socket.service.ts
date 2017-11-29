@@ -81,7 +81,7 @@ export class SocketService implements OnInit {
         let temp: String = response.output;
         console.log("OUTPUT: ", response.output);
         this.socketMessageSource.next(temp);
-        console.log(temp);
+        // console.log(temp);
       }
     );
 
@@ -129,19 +129,13 @@ export class SocketService implements OnInit {
     this.socketConsoleSubscription = this.stomp.subscribe(
       "/console/" + this.username,
       response => {
-        let temp: String = response.taskName;
-        console.log("RECEIEVED Console TASKNAME: ", temp);
+        let temp: String = response.taskName; 
         if (this.socketConsoleMap.get(response.taskName)) {
-          this.socketConsoleMap.get(response.taskName).push(response.console);
-          // console.log(
-          //   "consolemap: ",
-          //   this.socketConsoleMap.get(response.taskName)
-          // );
+          this.socketConsoleMap.get(response.taskName).push(response.console); 
         } else {
           this.socketConsoleMap.set(response.taskName, []);
           this.socketConsoleMap.get(response.taskName).push(response.console);
-        }
-        // console.log("console output: ", this.socketConsoleMap);
+        } 
       }
     );
   }

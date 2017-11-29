@@ -78,13 +78,22 @@ public class PersistenceConsumer {
 				Timestamp executionTime = Timestamp.valueOf(data[2]);
 				logger.info(executionTime);
 				Workflow workflow = service.getWorkflowByNameAndUserName(workFlowName,userName);
-			    Integer freq= workflow.getFrequency();
+			    String freq= workflow.getFrequency();
+			    
+			    logger.info("freq"+freq);
+			    
+			    int frequency = 0;
 			    if(freq==null) {
-			    	freq=1;
+			    	frequency=1;
 			    }
-			    else freq=freq+1;
+			    else {
+				    frequency= Integer.parseInt(freq);
+				    logger.info(frequency);
+			    	frequency=frequency+1;
+			    }
+			    freq = String.valueOf(frequency);
 			    workflow.setFrequency(freq);
-				List<Date> date1 = new ArrayList<Date>();
+				List<Date> date1 = workflow.getExecutionTime();				
 				date1.add(executionTime);				
 				workflow.setExecutionTime(date1);
 				logger.info(executionTime);

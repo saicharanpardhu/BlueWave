@@ -191,16 +191,17 @@ public class PersistenceController {
 	}
 	
 	/*----------------------------------get top ten Job Details by user name ------------------------------ */
-	@RequestMapping(value = "/jobdetails/userName/latest/{userName}", method = RequestMethod.GET)
-	public ResponseEntity<Iterable<JobIdDetails>> getTopJobDetailsByUserName(@PathVariable("userName") String userName) {
-		return new ResponseEntity<Iterable<JobIdDetails>>(persistenceservice.getTopJobDetails(userName), HttpStatus.OK);
+	@RequestMapping(value = "/jobdetails/userName/latest/{userName}/{size}/{integer}", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<JobIdDetails>> getTopJobDetailsByUserName(@PathVariable("userName") String userName, @PathVariable("size") int size, @PathVariable("integer") int integer) {
+		return new ResponseEntity<Iterable<JobIdDetails>>(persistenceservice.getTopJobDetails(userName,integer,size), HttpStatus.OK);
 	}
 	
-//	/*---------------------------------- Passing workflow details to construct heatmap ------------------------------ */
-//	@RequestMapping(value = "/heatmap/{userName}", method = RequestMethod.GET)
-//	public ResponseEntity<Iterable<JobIdDetails>> (@PathVariable("userName") String userName) {
-//		return new ResponseEntity<Iterable<JobIdDetails>>(persistenceservice.getTopJobDetails(userName), HttpStatus.OK);
-//	}
+	/*----------------------------------get count of job details ------------------------------ */
+	@RequestMapping(value = "/count/jobdetails/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<?> getJobDetailsCount(@PathVariable("userName") String userName) {
+		logger.info(persistenceservice.getCountJobDetails(userName));
+		return new ResponseEntity<>(persistenceservice.getCountJobDetails(userName), HttpStatus.OK);
+	}
 	
 	
 	

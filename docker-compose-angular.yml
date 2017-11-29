@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  angular:
+    # Build the container using the Dockerfile
+    build: ./distributed-workflow-engine
+    container_name: angular 
+    # This line maps the contents of the  folder(.) into the container. i.e. folder_name:usr/src/app
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    image: angular
+     

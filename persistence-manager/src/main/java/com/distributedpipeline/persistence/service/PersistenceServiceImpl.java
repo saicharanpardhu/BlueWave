@@ -314,8 +314,20 @@ public class PersistenceServiceImpl implements PersistenceService {
 	}
 	
 	/*----------------------- Method to get Top Ten Job details by user name -----------------------------*/
-	public List<JobIdDetails> getTopJobDetails(String userName) {
-		Pageable topTen = new PageRequest(0, 10,Direction.ASC,"jobId");
+	public List<JobIdDetails> getTopJobDetails(String userName, int pageNumber, int size) {
+		Pageable topTen = new PageRequest(pageNumber, size,Direction.ASC,"jobId");
 		return persistenceJobRepos.findLast10ByUserName(userName,topTen);
 	}
+	
+	/*----------------------- Method to get count Job details by user name -----------------------------*/
+	public int getCountJobDetails(String userName) {
+		int count = 0;
+		Iterable<JobIdDetails> listJobDetails = persistenceJobRepos.getAllJobIdDetailsByUserName(userName);
+		for(JobIdDetails jobDetails: listJobDetails) {
+			count++;
+		}
+		return count;
+		
+	}
+	
 }

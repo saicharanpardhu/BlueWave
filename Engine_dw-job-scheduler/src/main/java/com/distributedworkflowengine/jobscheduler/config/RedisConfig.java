@@ -26,7 +26,7 @@ private static final Logger log = Logger.getLogger(CacheConfig.class);
 public JedisConnectionFactory redisConnectionFactory() {
   JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
 //  redisConnectionFactory.setHostName("172.23.238.159");
-  redisConnectionFactory.setHostName("redis");
+  redisConnectionFactory.setHostName("${REDIS_URL}");
   redisConnectionFactory.setPort(6379);
   return redisConnectionFactory;
 }

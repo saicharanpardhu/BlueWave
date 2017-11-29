@@ -34,19 +34,19 @@ export class ExecuteWorkflowComponent implements OnInit {
   color = "primary";
   displayWaterfall = false;
   viewWaterfall = false;
-  tasks: any[];
+  tasks : any;
   single: any[];
   multi: any[];
   view: any[] = [1000, 150];
-  showXAxis = true;
+  showXAxis = false;
   showYAxis = true;
   gradient = false;
-  showLegend = false;
+  showLegend = true;
   showXAxisLabel = true;
   xAxisLabel = "Tasks";
   yAxisLabel = "Timeline";
   colorScheme = {
-    domain: ["#fafafa", "#663ab7", "#C7B42C", "#AAAAAA"]
+    domain: ["#fad73f", "#663ab7", "#fad73f", "#AAAAAA"]
   };
 
   //Other variables
@@ -64,6 +64,7 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.tasksComplete = 0;
     this.consoleOutput = [];
     this.taskList = [];
+    this.tasks = [];
     this.displayStepper = false;
     this.cardDisplay = false;
     this.viewCharts = false;
@@ -130,17 +131,21 @@ export class ExecuteWorkflowComponent implements OnInit {
         series: [
           {
             name: "Not started",
-            value: Math.abs((res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number)
+            value: (Math.abs((res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number))%res[i]["jobStartTime"]
           },
           {
             name: "Runtime",
-            value: Math.abs((res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number)
+            value: (Math.abs((res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number))%res[i]["jobStartTime"]
+          },
+          {
+            name: "Idletime",
+            value: (Math.abs((res[i]["taskEndTime"] - res[i]["jobEndTime"]) as number))%res[i]["jobStartTime"]
           }
         ]
       };
       console.log(taskWater);
       this.tasks.push(taskWater);
-      console.log("Iteration ", i, " ", this.tasks);
+      // console.log("Iteration ", i, " ", this.tasks);
     }
     console.log(this.tasks);
   }
@@ -150,6 +155,7 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.tasksComplete = 0;
     this.consoleOutput = null;
     this.taskList = [];
+    this.tasks = []
     this.displayStepper = false;
     this.cardDisplay = false;
   }
