@@ -112,7 +112,7 @@ public class BuildConsumer {
 			 
 	         PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
-             consoleOutput.setUserName(inputdata.getUserName());
+             consoleOutput.setUserName(inputdata.getJobId());
              /*
               * sending the data to UI 
               */
