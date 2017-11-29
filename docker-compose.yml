@@ -1,6 +1,16 @@
 version: '2'
 services:
   
+  api-gateway:
+    environment:
+      EUREKA_URL: eureka
+      CONFIG_URL: config
+    build: ./Api-Gateway
+    container_name: api-gateway
+    image: api
+    ports:
+      - 8020:8020
+  
   persistence:
     environment:
       MONGO_URI: mongodb
@@ -18,8 +28,6 @@ services:
     build: ./ReportingService
     container_name: reporting-service
     image: reporting-service
-    links:
-      - cassandra_db1
     ports: 
       - "8040:8040"
     environment:
@@ -123,4 +131,4 @@ services:
     container_name: socket-service
     image: socket-service
     ports:
-      - "8029:8029"
+      - "9000:9000"
