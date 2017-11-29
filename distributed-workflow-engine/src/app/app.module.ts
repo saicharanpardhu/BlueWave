@@ -26,7 +26,6 @@ import { WorkflowDetailsService } from './services/workflow-details/workflow-det
 import { Ng4JsonEditorModule } from 'angular4-jsoneditor'; 
 import { LayoutModule } from 'ng2-flex-layout';
 import { ReportService } from './services/report/report.service';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { HttpInterceptor } from './services/interceptor.service';
 import { AppConfig } from "./app.config";
 import { WorkflowComponent } from './components/workflow/workflow.component';
@@ -44,7 +43,7 @@ import { GetReportComponent } from './components/reports/reports.component';
     DialogOverviewDialog,
     WnameOverviewDialog,
     ExecuteWorkflowComponent ,
-    JsonEditor,SettingsDialog,GetReportComponent, LandingPageComponent,
+    JsonEditor,SettingsDialog,GetReportComponent,
     ExecuteWorkflowComponent,
     JsonEditor,
     SettingsDialog,

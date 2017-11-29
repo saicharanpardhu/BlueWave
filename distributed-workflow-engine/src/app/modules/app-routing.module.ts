@@ -10,7 +10,6 @@ import { CreateWorkflowComponent } from '../components/create-workflow/create-wo
 import { AuthGuardService } from '../services/authentication/auth-guard.service';
 
 import { WorkflowComponent } from '../components/workflow/workflow.component';
-import { LandingPageComponent } from '../components/landing-page/landing-page.component';
 
 
 const routes: Routes = [
@@ -26,7 +25,7 @@ const routes: Routes = [
   {path : 'workflows', component: WorkflowComponent, canActivate: [AuthGuardService]}, 
   {path : 'executeworkflow', component: ExecuteWorkflowComponent,canActivate: [AuthGuardService]},
   {path : 'viewworkflow', component: CreateWorkflowComponent,canActivate: [AuthGuardService]},
-  {path: 'landing', component: LandingPageComponent},
+
 
 ];
 @NgModule({ 

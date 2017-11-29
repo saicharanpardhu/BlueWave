@@ -6,15 +6,18 @@ import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
 import { Router } from "@angular/router";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
+  statuscode:any;
   constructor(
     private authentication: AuthenticationService,
-    private workflowService: WorkflowDetailsService
+    private workflowService: WorkflowDetailsService,
+    private snackBar:MatSnackBar
   ) {
     Object.assign(this, { multi });
   }
@@ -52,7 +55,14 @@ load_workflows() {
     console.log("W");
     console.log(this.workflows);
     this.loadHeatmap(workflows as any[]);
-  });
+  }).catch((err) => {
+    // Handle any error that occurred in any of the previous
+    console.error('I am the error of auth3',err);
+    console.error(err.status);
+    this.statuscode = err.status;
+    this.snackBar.open("Network Connection Error. Please try after sometime.",'close');
+  })
+  ;
 }
 
 showHeatMap = false;
