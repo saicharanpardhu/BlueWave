@@ -61,7 +61,7 @@ public class JobManagerProducer {
 	
     //method to send total no. of tasks
 	
-	public void sendNumberOfTasks(Integer noOfTasks) {
+    public void sendNumberOfTasks(Integer noOfTasks) {
 		String userName=jobManagerController.getUserName();
 		String string1=noOfTasks.toString();
 		userName=userName.concat("-");
@@ -136,7 +136,7 @@ public class JobManagerProducer {
         logger.info("jdslkjlkf:"+trigger.getJobId());
         jobIdDetails.setUserName(userName);
 		jobIdDetails.setWorkFlowName(workFlowName);
-		
+		countStatusToPersistence(jobIdDetails.getUserName(), workFlowName);
 		logger.info("jobid send:"+jobIdDetails.getJobId());
 		kafkaTemplate2.send(topic5,jobIdDetails);	
 					
@@ -150,4 +150,15 @@ public class JobManagerProducer {
 	   kafkaTemplate2.send(topic6,jobIdDetails);	
 	}
 	
+	@Value("${kafka.topic.countStatus}")
+	private String topic7;
+	
+	public void countStatusToPersistence(String userName,String workFlowName) {
+		
+		Date time=(new Timestamp(System.currentTimeMillis()));
+		 kafkaTemplate1.send(topic7,userName+"&"+workFlowName+"&"+time);	
+		 logger.info(userName+"&"+workFlowName+"&"+time);
+	}
+		
+
 }
