@@ -9,7 +9,16 @@
   flex-direction: column;
   min-width: 300px;
 }
-
+.consolecontainer {
+  height: 400px;
+  text-align: left;
+  font-size: 13px;
+  background-color: black;
+  font-family: 'Inconsolata', monospace;
+  color: white;
+  padding: 10px;
+  overflow: auto;
+}
 .app-fab--absolute {
   position: fixed;
   bottom: 1rem;
@@ -64,7 +73,9 @@ form {
   font-size: 20px;
   outline: none;
 }
-
+.console {
+  margin-top: 20px;
+}
 .jobId .mat-expansion-panel-header-title,
 .jobId .mat-expansion-panel-header-description {
   flex-basis: 0;

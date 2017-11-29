@@ -52,7 +52,7 @@ export class GetReportComponent implements OnInit {
   xAxisLabel = "Tasks";
   yAxisLabel = "Timeline";
   colorScheme = {
-    domain: ["#000000", "#663ab7", "#C7B42C", "#AAAAAA"]
+    domain: ["#fad73f", "#663ab7", "#fad73f", "#AAAAAA"]
   };
   showWaterFall = false;
 
@@ -63,7 +63,8 @@ export class GetReportComponent implements OnInit {
   pageEvent: PageEvent;
   pageIndex ;
 
-
+  //console
+  // cardDisplay = false
   constructor(
     private _service: ReportService,
     private workflowService: WorkflowDetailsService
@@ -88,7 +89,7 @@ export class GetReportComponent implements OnInit {
       console.log("jobidnames", this.jobIdnames); 
       this.jobId = this.jobIdnames[0].jobId; 
     }); 
-  console.log("USER", localStorage.getItem("Email")); 
+  // console.log("USER", localStorage.getItem("Email")); 
   }
 
   getJobReports(jobId: String) {
@@ -97,7 +98,7 @@ export class GetReportComponent implements OnInit {
       this.jobStartTime = new Date(response.json()[0]["jobStartTime"]);
       this.jobEndTime = new Date(response.json()[0]["jobEndTime"]);
       this.jobStatus = response.json()[0]["jobStatus"];
-      console.log(response.json().length);
+      // console.log(response.json().length);
       let len = response.json().length;
       this.tasks = [];
       this.taskLogs = [];
@@ -112,17 +113,21 @@ export class GetReportComponent implements OnInit {
           series: [
             {
               name: "Not started",
-              value: Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["jobStartTime"]) as number)
+              value: (Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["jobStartTime"]) as number))%response.json()[0]["jobStartTime"]
             },
             {
               name: "Runtime",
-              value: Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["taskEndTime"]) as number)
+              value: (Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["taskEndTime"]) as number))%response.json()[0]["jobStartTime"]
+            },
+            {
+              name: "Idletime",
+              value: (Math.abs((response.json()[i]["taskEndTime"] - response.json()[i]["jobEndTime"]) as number))%response.json()[i]["jobStartTime"]
             }
           ]
         };
         this.tasks.push(this.taskWaterfall);
         this.taskLogs.push(this.task);
-        console.log(this.tasks);
+        // console.log(this.tasks);
       }
       this.showWaterFall = true;
     });

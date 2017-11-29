@@ -20,15 +20,24 @@
         <mat-tab label="{{task.taskAlias}}" *ngFor="let task of taskLogs">
           <p> TaskStartTime: {{task.taskStartTime | date: 'short'}}</p>
           <p> TaskEndTime: {{task.taskEndTime | date: 'short'}}</p>
-          <mat-expansion-panel #expansion class="logs-list" *ngIf="this.task.taskLogs!=null">
+          <!-- <mat-expansion-panel #expansion class="logs-list" *ngIf="this.task.taskLogs!=null">
             <mat-expansion-panel-header>
               <mat-panel-title>View Logs</mat-panel-title>
             </mat-expansion-panel-header>
             <div class="logsreport" *ngFor="let line of this.task.taskLogs.split('\n')">
               {{line}}
             </div>
-          </mat-expansion-panel>
-
+          </mat-expansion-panel> -->
+          <mat-card class="console" *ngIf="this.task.taskLogs!=null">
+            <mat-card-title>Console output</mat-card-title>
+            <mat-card-content class="consolecontainer">
+              <div *ngFor="let line of this.task.taskLogs.split('\n')">
+                <code>
+                    {{line}}
+                  </code>
+              </div>
+            </mat-card-content>
+          </mat-card>
         </mat-tab>
       </mat-tab-group>
 
