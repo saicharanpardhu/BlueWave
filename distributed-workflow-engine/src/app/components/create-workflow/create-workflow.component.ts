@@ -211,6 +211,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     
     this.selectChart(this.chartType);
     this.selectedColorScheme = "aqua";
+    this.updateNodes("Start");
 
     if (!this.fitContainer) {
       this.applyDimensions();
@@ -241,15 +242,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   updateNodes(taskname: String) {
     let len2 = this.hierarchialGraph.nodes.length;
     console.log("update node",len2);
-    if(len2==0){
-      const hNode = {
-      id: id(),
-      label: "Start"
-    };
-    this.hierarchialGraph.nodes.push(hNode);
-    this.hierarchialGraph.links = [...this.hierarchialGraph.links];
-    this.hierarchialGraph.nodes = [...this.hierarchialGraph.nodes];
-    }
+    
 
     const hNode = {
       id: id(),

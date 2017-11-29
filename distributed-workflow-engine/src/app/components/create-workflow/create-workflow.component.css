@@ -3,6 +3,7 @@
   margin: 0 auto;
   text-align: center;
   margin-top: 20px;
+  overflow:hidden;
 }
 
 li {
@@ -15,6 +16,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow:hidden;
 }
 
 .fill-remaining-space {
