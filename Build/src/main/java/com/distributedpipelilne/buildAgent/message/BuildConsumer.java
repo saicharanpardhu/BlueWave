@@ -67,7 +67,7 @@ public class BuildConsumer {
 		 * getting the file name through the Git url 
 		 */
 		reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
-		System.out.println(reportModel.getTaskStartTime()+"******");
+		logger.info(reportModel.getTaskStartTime()+"******");
 		String[] url = inputdata.getInput();
 		String fname[] = url[0].split("/");
 		String fileName = fname[fname.length-1].split("\\.")[0];
@@ -90,7 +90,6 @@ public class BuildConsumer {
 		producer.sendReport(reportModel);
 		
 		try{
-			System.out.println("sout");
 			logger.info("./Build-Plugin.sh "+filePath);
 			logger.info("Task Processing...");
 			/*
@@ -115,7 +114,7 @@ public class BuildConsumer {
 	         PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
              consoleOutput.setUserName(inputdata.getUserName()+" "+inputdata.getJobId());
-             System.out.println(consoleOutput.getUserName());
+             logger.info(consoleOutput.getUserName());
              
              /*
               * sending the data to UI 
@@ -157,7 +156,7 @@ public class BuildConsumer {
 		output.setType(inputdata.getType());
 		reportModel.setTaskEndTime(new Date(System.currentTimeMillis()));
 //		Timestamp endtime = new Timestamp(System.currentTimeMillis());
-		System.out.println(reportModel.getTaskEndTime()+"#####");
+		logger.info(reportModel.getTaskEndTime()+"#####");
 																																																																																																																																																																																																					
 		
 		/*
