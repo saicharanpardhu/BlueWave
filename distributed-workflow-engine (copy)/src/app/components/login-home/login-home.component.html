@@ -1,0 +1,73 @@
+<mat-card class="container">
+	<mat-card-content>
+		<mat-tab-group>
+			<mat-tab label="Login">
+				<form #loginForm="ngForm" (ngSubmit)="login(emailLoginBox.value,passwordLoginBox.value)">
+					<div class="form-container">
+						<mat-form-field [hideRequiredMarker]="true">
+							<input #emailLoginBox matInput (keyup)="checkLoginValidation()" placeholder="Enter your username" [formControl]="emailLoginValidator"
+							 required>
+							<mat-error *ngIf="emailLoginValidator.invalid">{{getEmailLoginErrorMessage()}}</mat-error>
+						</mat-form-field>
+						<mat-form-field [hideRequiredMarker]="true">
+							<input #passwordLoginBox (keyup)="checkLoginValidation()" matInput placeholder="Enter your password" [formControl]="passwordLoginValidator"
+							 [type]="hide ? 'password' : 'text'" required>
+							<mat-icon matSuffix id="password-hide" (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+							<mat-error *ngIf="passwordLoginValidator.invalid">{{getPasswordLoginErrorMessage()}}</mat-error>
+						</mat-form-field>
+						<br>
+						<button mat-raised-button color="primary" type="submit" [disabled]="!loginSubmit" (keyup.enter)="login(emailLoginBox.value,passwordLoginBox.value)"
+						 (click)="login(emailLoginBox.value,passwordLoginBox.value)">Login</button>
+					</div>
+				</form>
+			</mat-tab>
+			<mat-tab label="Signup">
+				<div class="form-container">
+					<mat-form-field [hideRequiredMarker]="true">
+						<input matInput #firstName placeholder="First name" (keyup)="checkSubmitValidation()" [formControl]="nameValidator" required>
+					</mat-form-field>
+					<mat-form-field matInput [hideRequiredMarker]="true">
+						<input #lastName matInput placeholder="Last name" (keyup)="checkSubmitValidation()" [formControl]="nameValidator" required>
+						<mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
+					</mat-form-field>
+					<mat-form-field [hideRequiredMarker]="true">
+						<input #emailSignup matInput placeholder="Email" (keyup)="checkSubmitValidation()" [formControl]="emailSignupValidator" required>
+						<mat-error *ngIf="emailSignupValidator.invalid">{{getEmailSignupErrorMessage()}}</mat-error>
+					</mat-form-field>
+					<mat-form-field [hideRequiredMarker]="true">
+						<input #userName matInput placeholder="Username" (keyup)="checkSubmitValidation();checkUsername(userName.value)" [formControl]="usernameValidator"
+						 required>
+						<mat-error *ngIf="usernameValidator.invalid">{{getUsernameErrorMessage()}}</mat-error>
+						<mat-hint align="end">
+							<div *ngIf="userName.value?.length  < 6">Please add atleast {{6-(userName.value?.length || 0)}} more characters.</div>
+							<div *ngIf="userName.value?.length  >= 6">
+								<mat-icon>done</mat-icon>
+							</div>
+						</mat-hint>
+					</mat-form-field>
+
+					<mat-form-field [hideRequiredMarker]="true">
+						<input #passwordSignup matInput placeholder="Password" (keyup)="checkSubmitValidation()" [formControl]="passwordValidator"
+						 [type]="signUphide ? 'password' : 'text'" required>
+						<mat-icon matSuffix id="password-hide" (click)="signUphide = !signUphide">{{signUphide ? 'visibility' : 'visibility_off'}}</mat-icon>
+						<mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+						<mat-hint align="end">
+							<div *ngIf="passwordSignup.value?.length  < 6">Please add atleast {{6-(passwordSignup.value?.length || 0)}} more characters.</div>
+							<div *ngIf="passwordSignup.value?.length  >= 6">
+								<mat-icon>done</mat-icon>
+							</div>
+						</mat-hint>
+					</mat-form-field>
+					<br>
+					<button mat-raised-button color="primary" type="submit" [disabled]="!signupSubmit" (click)="signup(firstName.value,lastName.value,emailSignup.value,userName.value,passwordSignup.value)"
+					 (keyup.enter)="signup(firstName.value,lastName.value,emailSignup.value,userName.value,passwordSignup.value)">Signup</button>
+				</div>
+			</mat-tab>
+		</mat-tab-group>
+	</mat-card-content>
+	<!-- <div *ngIf="(this.authenticationService.statuscode == 0)">
+			<h1>Sorry!</h1>
+			<p>Service is currently unavailable, Please try again later.</p>
+			<hr>
+			</div> -->
+</mat-card>

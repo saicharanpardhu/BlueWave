@@ -1,0 +1,34 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+  overflow:hidden;
+}
+
+li {
+  list-style: none;
+  display: inline-block;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow:hidden;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.app-fab-absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.app-fab-absolute:hover {
+  cursor: pointer;
+}

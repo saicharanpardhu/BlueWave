@@ -1,0 +1,126 @@
+
+<div class="container" style="position: absolute; top:10%; left: 0px; right: 0px; bottom: 0px;" > 
+  
+  <button  (click)="openDialog()"  style="z-index: 10" mat-raised-button color="primary">
+   <mat-icon>add_circle</mat-icon> <span>ADD TASK</span>
+   
+  </button> 
+ <div *ngIf="this.workflow.workFlowName" style="z-index: 10;position: fixed; left: 50px; bottom: 10px;" >
+
+   <p style="float :left; font-size: 25px;font-weight:500;" *ngIf="this.workflow.workFlowName" (click)= openWnameDialog(true)>{{this.workflow.workFlowName}}</p>
+  <!-- / <mat-card-content style="float :left; padding: 10px; font-size: 25px;font-weight:1000;" *ngIf="this.workflow.workFlowName">{{this.workflow_service.displayWorkflow.workFlowName}}</mat-card-content> -->
+   </div>
+  <!--  <button mat-fab color="primary"  class="app-fab-absolute">
+    <i class="material-icons">menu</i>
+  </button> -->
+  <ngc-float-button icon="add" style="z-index: 10;position: fixed; right: 20px; bottom: 5%;">
+        <ngc-float-item-button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" icon="play_arrow" content="EXECUTE"></ngc-float-item-button>
+        <ngc-float-item-button icon="done_all" content="SAVE" (click)="saveWorkflow()" ></ngc-float-item-button>
+        <ngc-float-item-button icon="delete" content="{{deleteModeButton}}" (click)="deletemode()" ></ngc-float-item-button>
+        <ngc-float-item-button icon="code" content="JSON EDITOR" (click)="openjsoneditor()"></ngc-float-item-button>
+        <ngc-float-item-button icon="settings" content="Graph Settings" (click)="openSettings()"></ngc-float-item-button>
+    </ngc-float-button>
+<!-- <ul [hidden]="false" style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
+ <li>
+  <button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" mat-raised-button color="primary"  >
+    <mat-icon>play_arrow</mat-icon> <span>EXECUTE</span>
+  </button>
+ </li>
+<li>
+<button *ngIf="!this.loadWorkflow" (click)="saveWorkflow()" mat-raised-button>
+  <mat-icon>done_all</mat-icon> <span>(click)="executeWorkflow()" [routerLink]="['/executeworkflow']"</span>
+</button> 
+</li>
+<li>
+  <button *ngIf="this.loadWorkflow" (click)="updateWorkflow()" mat-raised-button >
+    <mat-icon>done_all</mat-icon> <span>UPDATE</span>
+  </button> 
+  </li>
+<li>
+<button (click)="deletemode()"  mat-raised-button color="warn"  >
+  <mat-icon>delete</mat-icon> <span>{{deleteModeButton}}</span>
+</button> 
+</li>
+<li>
+<button   (click)="openjsoneditor()" mat-raised-button color="accent" >
+  <mat-icon>code</mat-icon> <span>EDIT JSON</span>
+</button> 
+</li>
+<li>
+<button (click)="openSettings()" mat-raised-button  >
+  <mat-icon>settings</mat-icon> <span>SETTINGS</span>
+</button> 
+</li>
+
+</ul> -->
+ 
+<main [class]="theme" >
+<div class="chart-col" >
+
+
+   <div style="position: absolute; top:1%; left: 0px; right: 0px; bottom: 0px;">
+     <ngx-charts-directed-graph
+       class="chart-container"
+       [view]="view"
+       
+       [legend]="showLegend"
+       [links]="hierarchialGraph.links"
+       (legendLabelClick)="onLegendLabelClick($event)"
+       [nodes]="hierarchialGraph.nodes"
+       [scheme]="colorScheme"
+       [orientation]="orientation"
+       [curve]="curve"
+       (select)="select($event)">
+
+
+
+       <ng-template #defsTemplate>
+         <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+           <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+         </svg:marker>
+       </ng-template>
+
+       <ng-template #nodeTemplate let-node>
+         <svg:g class="node"
+           ngx-tooltip
+           [tooltipPlacement]="'top'"
+           [tooltipType]="'tooltip'"
+           [tooltipTitle]="node.label">
+           <svg:rect [attr.width]="node.width" [attr.height]="node.height" [attr.fill]="node.options.color" />
+           <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.height*0.7 ">{{node.label}}</svg:text>
+          </svg:g>
+          
+
+       </ng-template>
+
+       <ng-template #linkTemplate let-link>
+         <svg:g class="edge">
+           <svg:path
+             class="line"
+             stroke-width="2"
+             marker-end="url(#arrow)" >
+           </svg:path>
+           <svg:text class="edge-label" text-anchor="middle">
+             <textPath
+               class="text-path"
+               [attr.href]="'#' + link.id"
+               [style.dominant-baseline]="link.dominantBaseline"
+               startOffset="50%">
+               {{link.label}}
+             </textPath>
+           </svg:text>
+         </svg:g>
+       </ng-template>
+       
+     </ngx-charts-directed-graph>
+   </div>
+ </div>
+ 
+</main>
+
+
+    
+  </div>
+  
+        
+        

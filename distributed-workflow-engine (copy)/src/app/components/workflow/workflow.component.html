@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>
+    Workflows
+  </h2>
+    <div *ngIf="(statuscode == 0)">
+      <h1>Sorry!</h1>
+      <p>Cannot fetch data from backend</p>
+      <hr>
+      </div>
+  <mat-card id="workflowcard" *ngFor="let data of datas">
+    <mat-card-header>
+      <mat-card-title class="workflowtitle">{{data.workFlowName}}</mat-card-title>
+      <span class="fill-remaining-space"></span>
+      <mat-card-actions id="workflowmodify">
+        <button mat-raised-button color="primary" [routerLink]="['/executeworkflow']" (click)="executeWorkFlow(data.workFlowName)">
+          <mat-icon>play_arrow</mat-icon>Execute</button>
+        <button mat-raised-button color="accent" (click)="getWorkflow(data.workFlowName)">
+          <i class="material-icons">cached</i>Modify</button>
+        <button mat-raised-button color="warn" (click)="deleteWorkFlow(data.workFlowName)">
+          <mat-icon>delete</mat-icon>Delete</button>
+      </mat-card-actions>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+  <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+    <i class="material-icons">add_circle</i>
+  </button>
+</div>

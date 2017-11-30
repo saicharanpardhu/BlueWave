@@ -1,0 +1,62 @@
+<h1 mat-dialog-title *ngIf="!data.editing">Add a new task to the workflow</h1>
+<h1 mat-dialog-title *ngIf="data.editing">Edit Task</h1>
+<div mat-dialog-content id="dialog-content">
+  <mat-form-field>
+    <input matInput tabindex="1" placeholder="TaskName" [(ngModel)]="data.taskName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="TaskType" [(ngModel)]="data.type" name="tasks">
+      <mat-option *ngFor="let task of data.taskTypes" [value]="task.value">
+        {{task.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="data.taskAliases.length">
+    <h3>Depends on: </h3>
+    <tag-input (onAdd)="onItemAdded($event)" [(ngModel)]="data.dependsOn" [onlyFromAutocomplete]="true">
+      <tag-input-dropdown [showDropdownIfEmpty]="true" [focusFirstElement]="true" [offset]="'100 0'" [displayBy]="'value'" [appendToBody]="false"
+        [autocompleteItems]="data.taskAliases">
+        <ng-template let-item="item" let-index="index">
+          {{ item.value}}
+        </ng-template>
+      </tag-input-dropdown>
+    </tag-input>
+  </div>
+  <div>
+    <h3>Input Type: </h3>
+    <mat-radio-group [(ngModel)]="data.inputType">
+      <mat-radio-button class="radio-button" [value]="'Derived'" *ngIf="data.taskAliases.length">Derived
+      </mat-radio-button>
+      <mat-radio-button class="radio-button" [value]="'Custom'">Custom
+      </mat-radio-button>
+      <mat-radio-button class="radio-button" [value]="'None'">None
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div *ngIf="data.inputType=='Derived'">
+    <mat-form-field>
+      <mat-select placeholder="Input" [(ngModel)]="data.input" name="input">
+        <mat-option *ngFor="let task of data.taskAliases" [value]="task">
+          {{task}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+  <div *ngIf="data.inputType=='Custom'">
+    <mat-form-field>
+      <input matInput tabindex="1" placeholder="Custom Input" [(ngModel)]="data.input">
+    </mat-form-field>
+
+
+
+
+
+
+  </div>
+  <div mat-dialog-actions style="float:right">
+    <button mat-button (click)="onNoClick()" tabindex="2" mat-raised-button color="primary">Add task</button>
+    <button mat-button (click)="onCancelClick()" tabindex="-1">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<mat-card class="container">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>face</mat-icon>
+        <span> Your Infomation</span>
+      </ng-template>
+      <div class="info">
+        <div class="fields">
+          <p>Name</p>
+          <p>Email</p>
+        </div>
+        <div class="values">
+          <p>Akshay Dharamkar</p>
+          <p>akshay.dharamkar@gmail.com</p>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>settings</mat-icon>
+        <span> Edit Infomation</span>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+<div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+  <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+    <i class="material-icons">add_circle</i>
+  </button>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+  <mat-card style="overflow:auto">
+    <mat-card-content>
+      <p>HeatMap</p>
+      <div *ngIf="(this.statuscode == 0)">
+			<h1>Sorry!</h1>
+			<p>Not able to retreive data, Please try again later.</p>
+			</div>
+      <div *ngIf="showHeatMap">
+          <ngx-charts-heat-map
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="workflowList"
+          [legend]="showLegend"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel"
+          (select)="onSelect($event)">
+          </ngx-charts-heat-map>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  <div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+    <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+      <i class="material-icons">add_circle</i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+ .container {
+   width: 80%;
+   margin: 0 auto;
+   text-align: center;
+   margin-top: 50px;
+ }
+
+ span {
+   margin-left: 3px;
+ }
+
+ .info {
+   width: 100%;
+ }
+
+ .fields {
+   float: left;
+   width: 20%;
+ }
+
+ .values {
+   position: absolute;
+   width: 60%;
+ }
+
+ .app-fab--absolute {
+   position: fixed;
+   bottom: 1rem;
+   right: 1rem;
+ }
