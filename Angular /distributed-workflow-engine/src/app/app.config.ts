@@ -6,7 +6,7 @@ export class AppConfig {
   public readonly saveWorkflow = "http://172.23.238.189:8055/v1.0/persistence/workflow/";
   public readonly removeWorkflow = "http://172.23.238.189:8055/v1.0/persistence/workflow/remove/";
   public readonly reportGetJobId = "http://172.23.238.189:8055/v1.0/persistence/jobdetails/userName/latest/";
-  public readonly getReport = "http://172.23.238.176:8080/checkout/";
+  public readonly getReport = "http://172.23.238.176:8188/checkout/";
   public readonly persistence = "http://172.23.238.189:8055/v1.0/persistence/workflow/";
   public readonly socket = "http://172.23.238.216:9000/gs-guide-websocket";
   public readonly getAllWorkflows = "http://172.23.238.189:8055/v1.0/persistence/workflow/users/";

@@ -26,7 +26,9 @@ export class LoginHomeComponent implements OnInit {
   hide = true;
   signUphide = true;
 
-  ngOnInit() {}
+  ngOnInit() {
+      if(this.authenticationService.isLoggedIn()) this.router.navigate(['/home']);
+  }
 
   loginSubmit = false;
   signupSubmit = false;

@@ -56,7 +56,8 @@
 
   </div>
   <div mat-dialog-actions style="float:right">
-    <button mat-button (click)="onNoClick()" tabindex="2" mat-raised-button color="primary">Add task</button>
+    <button mat-button (click)="onNoClick()" tabindex="2" mat-raised-button color="primary" *ngIf="!data.editing" >Add task</button>
+    <button mat-button (click)="onNoClick()" tabindex="2" mat-raised-button color="primary" *ngIf="data.editing" >Save Changes</button>
     <button mat-button (click)="onCancelClick()" tabindex="-1">Cancel</button>
   </div>
 </div>

@@ -49,8 +49,8 @@ export class GetReportComponent implements OnInit {
   showLegend = false;
   showXAxisLabel = true;
   tasks : any;
-  xAxisLabel = "Tasks";
-  yAxisLabel = "Timeline";
+  xAxisLabel = "Timeline(s)";
+  yAxisLabel = "Timeline(s)";
   colorScheme = {
     domain: ["#fad73f", "#663ab7", "#fad73f", "#AAAAAA"]
   };
@@ -72,11 +72,13 @@ export class GetReportComponent implements OnInit {
   viewmodeexit(): void {
     this.workflowService.displayWorkflow = null;
   }
+  loading = false;
   ngOnInit() {
     console.log("ngonit reports component ");
     this._service.getTaskNumber().then( res => this.length = res.json()); 
     this.pageSize = 10;
     this.pageIndex = 0;
+    this.loading = true;
     console.log(this.length);
     this.getAllJobReports();
   } 
@@ -113,15 +115,15 @@ export class GetReportComponent implements OnInit {
           series: [
             {
               name: "Not started",
-              value: (Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["jobStartTime"]) as number))%response.json()[0]["jobStartTime"]
+              value: ((Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["jobStartTime"]) as number))%response.json()[0]["jobStartTime"])/1000
             },
             {
               name: "Runtime",
-              value: (Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["taskEndTime"]) as number))%response.json()[0]["jobStartTime"]
+              value: ((Math.abs((response.json()[i]["taskStartTime"] - response.json()[i]["taskEndTime"]) as number))%response.json()[0]["jobStartTime"])/1000
             },
             {
               name: "Idletime",
-              value: (Math.abs((response.json()[i]["taskEndTime"] - response.json()[i]["jobEndTime"]) as number))%response.json()[i]["jobStartTime"]
+              value: ((Math.abs((response.json()[i]["taskEndTime"] - response.json()[i]["jobEndTime"]) as number))%response.json()[i]["jobStartTime"])/1000
             }
           ]
         };

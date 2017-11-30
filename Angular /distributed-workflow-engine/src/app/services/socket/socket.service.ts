@@ -65,11 +65,10 @@ export class SocketService implements OnInit {
     this.stomp.startConnect().then(() => {
       this.stomp.done("init");
       // console.log(localStorage['loginData']);
-      this.subscribe();
     });
   }
-  subscribe() {
-    this.username = JSON.parse(localStorage["loginData"])["SessionId"].toString();
+  subscribe(jobId) {
+    this.username = jobId.toString();
     console.log("SUBSCRIBE: ", this.username);
     if (this.messageSubscription != null) {
       this.messageSubscription.unsubscribe();

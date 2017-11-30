@@ -70,14 +70,13 @@ export class AuthenticationService {
       )
       .toPromise()
       .then(response => {
-        let id = UUID.UUID();
+        
         localStorage.setItem(
           "loginData",
           JSON.stringify({
             access_token: response.json().access_token,
             refresh_token: response.json().refresh_token,
-            Email: username,
-            SessionId: id
+            Email: username
           })
         );
         this.socket.connect();

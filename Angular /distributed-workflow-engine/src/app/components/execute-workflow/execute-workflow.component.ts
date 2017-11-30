@@ -110,7 +110,7 @@ export class ExecuteWorkflowComponent implements OnInit {
   viewWaterFall() {
     this.viewCharts = true;
     this.reportService
-      .getReport(this.socketService.jobId)
+      .getReport(localStorage["jobId"])
       .toPromise()
       .then(res => {
         this.loadChart(res.json() as any[]);

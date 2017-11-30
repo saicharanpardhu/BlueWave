@@ -1,5 +1,6 @@
 <div class="container">
-  <mat-card class="main">
+  <div *ngIf="!loading"><mat-progress-spinner mode="indeterminate"></mat-progress-spinner></div>
+  <mat-card class="main" *ngIf="loading">
     Reports
     <p>Choose the job for which you wish to see the report!</p>
     <mat-expansion-panel *ngFor="let name of jobIdnames; let i = index">

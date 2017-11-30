@@ -1,7 +1,7 @@
 
-<div class="container" style="position: absolute; top:10%; left: 0px; right: 0px; bottom: 0px;" > 
+<div class="container" id="container "style="position: absolute; top:9.5%; left: 0px; right: 0px; bottom: 0px; background-color:#404040 ;" > 
   
-  <button  (click)="openDialog()"  style="z-index: 10" mat-raised-button color="primary">
+  <button  (click)="openDialog()"  style="z-index: 10;margin-top: 10px;" mat-raised-button color="primary">
    <mat-icon>add_circle</mat-icon> <span>ADD TASK</span>
    
   </button> 
@@ -13,13 +13,20 @@
   <!--  <button mat-fab color="primary"  class="app-fab-absolute">
     <i class="material-icons">menu</i>
   </button> -->
-  <ngc-float-button icon="add" style="z-index: 10;position: fixed; right: 20px; bottom: 5%;">
-        <ngc-float-item-button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" icon="play_arrow" content="EXECUTE"></ngc-float-item-button>
-        <ngc-float-item-button icon="done_all" content="SAVE" (click)="saveWorkflow()" ></ngc-float-item-button>
-        <ngc-float-item-button icon="delete" content="{{deleteModeButton}}" (click)="deletemode()" ></ngc-float-item-button>
-        <ngc-float-item-button icon="code" content="JSON EDITOR" (click)="openjsoneditor()"></ngc-float-item-button>
-        <ngc-float-item-button icon="settings" content="Graph Settings" (click)="openSettings()"></ngc-float-item-button>
+  <div style="z-index: 10;position: fixed; right: 60px; bottom: 12%;">
+  <ngc-float-button icon="compare_arrows" [direction]="'left'"  [open]="open"  >
+ <!-- [open]="open" -->
+        <ngc-float-item-button id="execute" (click)="executeWorkflow()" [routerLink]="['/executeworkflow']"  icon="play_arrow" content="EXECUTE">
+
+        </ngc-float-item-button>
+        
+        <ngc-float-item-button id="execute1" icon="done_all" content="SAVE" *ngIf="!this.loadWorkflow" (click)="saveWorkflow()" ></ngc-float-item-button>
+         <ngc-float-item-button id="execute1" icon="done_all" content="UPDATE" *ngIf="this.loadWorkflow" (click)="updateWorkflow()" ></ngc-float-item-button>
+        <ngc-float-item-button id="execute" icon="delete" content="{{deleteModeButton}}" (click)="deletemode()" ></ngc-float-item-button>
+        <ngc-float-item-button id="execute" icon="code" content="EDITOR" (click)="openjsoneditor()"></ngc-float-item-button>
+        <ngc-float-item-button id="execute" icon="settings" content="Settings" (click)="openSettings()"></ngc-float-item-button>
     </ngc-float-button>
+    </div>
 <!-- <ul [hidden]="false" style="z-index: 10;position: fixed; right: 0px; bottom: 0%;" mat-raised-button color="primary">
  <li>
   <button (click)="executeWorkflow()" [routerLink]="['/executeworkflow']" mat-raised-button color="primary"  >
@@ -58,7 +65,7 @@
 <div class="chart-col" >
 
 
-   <div style="position: absolute; top:1%; left: 0px; right: 0px; bottom: 0px;">
+   <div  class="chart">
      <ngx-charts-directed-graph
        class="chart-container"
        [view]="view"
@@ -106,7 +113,7 @@
                [attr.href]="'#' + link.id"
                [style.dominant-baseline]="link.dominantBaseline"
                startOffset="50%">
-               {{link.label}}
+              
              </textPath>
            </svg:text>
          </svg:g>
@@ -118,6 +125,15 @@
  
 </main>
 
+<!-- <pop-over
+ #popOver5 [my]="'bottom left'" [at]="'top right'"
+ [anchor-to]="true" [x-offset]="5" [y-offset]="5">
+ <div>asfferfertfre</div>
+ </pop-over> -->
+ <!-- <div class="inline-trigger" [pop-over-trigger]="popOver5"
+ [show-on]="showOn" [hide-on]="'mouseleave'">
+ hover for a custom component pop over right and above
+ </div> -->
 
     
   </div>

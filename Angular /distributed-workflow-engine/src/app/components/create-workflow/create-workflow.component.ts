@@ -81,7 +81,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   workflow: Workflow = {};
   task: Task = {};
   //wORKFLOW Name
-
+  workflowDescription :String ="";
   Wname  :String="";
   taskName :String;
   type : String;
@@ -96,7 +96,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   //DEletion Mode
 
   deleteMode : boolean = false;
-  deleteModeButton ="DELETE TASKS";
+  deleteModeButton ="DELETE";
   inputType = 'None';
 
 
@@ -312,18 +312,18 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       let config = new MatSnackBarConfig();
       config.duration = 3000;
       this.snackBar.open(
-        "You are in deletion mode.Click on the nodes to delete them",
+        "You are in deletion mode.Click on the nodes to delete them and delete button to exit this mode",
         "Close",
         config
       );
 
-      this.deleteModeButton = "EXIT MODE";
+      this.deleteModeButton = "EXIT";
     } else {
       this.deleteMode = false;
       let config = new MatSnackBarConfig();
       config.duration = 3000;
       this.snackBar.open("You are out of deletion mode", "Close", config);
-      this.deleteModeButton = "DELETE TASKS";
+      this.deleteModeButton = "DELETE";
     }
   }
   //On select a node to delete
@@ -346,7 +346,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     
         let dialogRef = this.dialog.open(DialogOverviewDialog, {
           width: '500px',
-          data: { taskName: taskName, type:task.type ,dependsOn:task.depends_on,input:task.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks,inputType:inputType,editing:true,cancel:false,taskNameOld:taskName}
+          data: { taskName: taskName, type:task.type ,dependsOn:task.depends_on,input:task.input,taskAliases:this.wTaskAliases.filter(item => item!=taskName),taskTypes:this.tasks,inputType:inputType,editing:true,cancel:false,taskNameOld:taskName}
     
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -390,6 +390,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
           console.log(this.taskName);
           this.map.set(this.taskName, task);
           this.workflow.tasks = this.map;
+          this.taskName = "";
           console.log(this.map);
         }
         });
@@ -405,7 +406,9 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     this.wTaskAliases = this.wTaskAliases.filter(item => item != label);
     console.log(this.map);
     this.map.forEach((value: Task, key: String) => {
+      if(value.depends_on!=null)
       value.depends_on = value.depends_on.filter(item => item != label);
+    if(value.input!=null)
       value.input = value.input.filter(item => item != label);
     });
     this.workflow.tasks = this.map;
@@ -534,10 +537,18 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       console.log(this.taskName);
       this.map.set(this.taskName, task);
       this.workflow.tasks = this.map;
+      this.taskName = "";
       console.log(this.map);
     });
   }
   executeWorkflow() {
+    if(this.loadWorkflow){
+      this.updateWorkflow();
+    }
+    if(!this.loadWorkflow){
+      this.saveWorkflow();
+    }
+
     this.updateWorkflow().then(() =>
       this.persistence.triggerEngine(this.workflow.workFlowName)
     );
@@ -552,6 +563,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       .sendWorkFlow2(
         this.workflow.workFlowName,
         this.workflow.owner,
+        this.workflowDescription,
         this.status,
         this.map
       )
@@ -572,6 +584,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       .updateWorkFlow(
         this.workflow.workFlowName,
         this.workflow.owner,
+        this.workflowDescription,
         this.status,
         this.map
       )
@@ -588,13 +601,14 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     openWnameDialog(boolean:Boolean): void {
     let dialogRef = this.dialog.open(WnameOverviewDialog, {
       width: '300px',
-      data: { Wname: this.Wname ,editing:boolean},
+      data: { Wname: this.Wname ,editing:boolean,description:this.workflowDescription},
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
       
-      this.workflow.workFlowName=result;
-      this.Wname = result;
+      this.workflow.workFlowName=result.Wname;
+      this.Wname = result.Wname;
+      this.workflowDescription = result.description;
       console.log(this.workflow.workFlowName,'The dialog was closed');
       
       
@@ -739,7 +753,7 @@ export class WnameOverviewDialog implements OnInit{
    allWorkflowNames :any;
    workflowNameexists :boolean = false;
    wname :String ="";
-
+   description :String ="";
   constructor(
     public dialogRef: MatDialogRef<WnameOverviewDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -749,7 +763,7 @@ export class WnameOverviewDialog implements OnInit{
    ngOnInit(){
     
     this.wname=this.data.Wname;  
-
+    this.description = this.data.description;
    }
   
 
@@ -762,13 +776,14 @@ export class WnameOverviewDialog implements OnInit{
     }
 
     if (this.data.Wname != null&&!this.workflowNameexists)
-      this.dialogRef.close(this.data.Wname);
+      this.dialogRef.close(this.data);
   }
 
  onCancelClick(): void{
    if(this.data.editing)
-      this.data.Wname = this.wname;
-      this.dialogRef.close(this.data.Wname);
+      this.data.Wname = this.wname; 
+     this.data.description = this.description;
+      this.dialogRef.close(this.data);
    if(!this.data.editing) 
    {
      this.dialogRef.close();
