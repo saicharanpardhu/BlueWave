@@ -16,10 +16,21 @@ export class PerisitenceService {
   triggerEngine(workFlowName) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
+    console.log("Triggering...");
+    console.log(
+      this.config.triggerEngine +
+        localStorage.getItem("Email") +
+        "/" +
+        JSON.parse(localStorage["loginData"])["SessionId"].toString() +
+        "/" +
+        workFlowName
+    );
     return this.http
       .get(
         this.config.triggerEngine +
           localStorage.getItem("Email") +
+          "/" +
+          JSON.parse(localStorage["loginData"])["SessionId"].toString() +
           "/" +
           workFlowName,
         { headers: headers }
@@ -65,11 +76,10 @@ export class PerisitenceService {
       .toPromise();
   }
 
-  getWorkflowNames(username:String){
-    
-    return this.http.get(this.config.persistence + "users/"+localStorage.getItem('Email'), {headers:this.headers});    
-
+  getWorkflowNames(username: String) {
+    return this.http.get(
+      this.config.persistence + "users/" + localStorage.getItem("Email"),
+      { headers: this.headers }
+    );
   }
-
-
 }

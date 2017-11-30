@@ -19,9 +19,6 @@ import "rxjs/add/operator/switchMap";
 import { Timestamp } from "rxjs";
 import { Task } from "./task";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
-//import {PageEvent} from '@angular/material';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-
 @Component({
   selector: "app-reports",
   templateUrl: "./reports.component.html",
@@ -39,10 +36,7 @@ export class GetReportComponent implements OnInit {
   jobStartTime: any;
   jobStatus: any;
   task : any;
-  errorMsg:string;
-  statusMsg:string;
   viewCharts: boolean;
-  statuscode:any;
   color = "primary";
   displayWaterfall = false;
   viewWaterfall = false; 
@@ -73,8 +67,7 @@ export class GetReportComponent implements OnInit {
   // cardDisplay = false
   constructor(
     private _service: ReportService,
-    private workflowService: WorkflowDetailsService,
-    private snackBar:MatSnackBar
+    private workflowService: WorkflowDetailsService
   ) {}
   viewmodeexit(): void {
     this.workflowService.displayWorkflow = null;
@@ -137,13 +130,7 @@ export class GetReportComponent implements OnInit {
         // console.log(this.tasks);
       }
       this.showWaterFall = true;
-    },
-    resEmployeeError => {this.errorMsg = resEmployeeError;
-      //this.snackBar.open(resEmployeeError,'close');
-      this.statusMsg = 'Error, Please try after sometime';
-      this.snackBar.open('Cannot fetch Data, Please check Backend:'+ resEmployeeError,'close');
-    }
-  );
+    });
   } 
 
   updatePage(){
