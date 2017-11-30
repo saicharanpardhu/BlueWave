@@ -93,7 +93,11 @@ public class PersistenceConsumer {
 			    }
 			    freq = String.valueOf(frequency);
 			    workflow.setFrequency(freq);
-				List<Date> date1 = workflow.getExecutionTime();				
+			    if(workflow.getExecutionTime() != null)
+    				List<Date> date1 = workflow.getExecutionTime();				
+	            else
+	                List<Date> date1  = new ArrayList<Date>();
+	                   
 				date1.add(executionTime);				
 				workflow.setExecutionTime(date1);
 				logger.info(executionTime);
