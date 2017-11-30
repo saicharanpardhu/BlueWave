@@ -80,7 +80,7 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/user/{userName}", method = RequestMethod.GET)
+	@RequestMapping(value="/user/userName/{userName}", method = RequestMethod.GET)
 	public ResponseEntity<?> getWorkFlowOfUser(@PathVariable("userName") String owner){
 		return new ResponseEntity<User>(userService.findByUserName(owner), HttpStatus.OK);
 	}
