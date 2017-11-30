@@ -11,6 +11,7 @@ import { WorkflowDetailsService } from "./../../services/workflow-details/workfl
 })
 export class WorkflowComponent implements OnInit {
   public datas: any;
+  statuscode: any;
 
   constructor(
     private workflow_service: WorkflowDetailsService,
@@ -26,6 +27,11 @@ export class WorkflowComponent implements OnInit {
     return this.workflow_service.getAllWorkflows().then(datas => {
       this.datas = datas;
       console.log(this.datas);
+    }).catch((err) => {
+      // Handle any error that occurred in any of the previous
+      console.error('I am the error in workflow',err);
+      console.error(err.status);
+      this.statuscode = err.status;
     });
   }
   getCurrentWorkflow(workFlowName: String) {
@@ -44,7 +50,6 @@ export class WorkflowComponent implements OnInit {
   }
 
   executeWorkFlow(workFlowName) {
-    console.log("Executing workflow: ", workFlowName);
     this.persistence.triggerEngine(workFlowName);
   }
 

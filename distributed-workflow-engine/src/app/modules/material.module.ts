@@ -25,7 +25,8 @@ import {MatCardModule ,
   MatCheckboxModule,
   MatSidenavModule,
   MatTooltipModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 import { Validators } from '@angular/forms';

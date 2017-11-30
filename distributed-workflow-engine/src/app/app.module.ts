@@ -1,4 +1,4 @@
-import { ProfileService } from './services/profile/profile.service';
+import { NgcFloatButtonModule } from 'ngc-float-button';
 import { PerisitenceService } from "./services/persistence/perisitence.service";
 import { MaterialModule } from "./modules/material.module";
 import { RouterModule, Routes } from "@angular/router";
@@ -35,8 +35,8 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config";
-import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module";
 import {HttpInterceptor} from "./services/interceptor.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,10 +47,12 @@ import {HttpInterceptor} from "./services/interceptor.service";
     CreateWorkflowComponent,
     DialogOverviewDialog,
     WnameOverviewDialog,
+    ExecuteWorkflowComponent ,
+    JsonEditor,SettingsDialog,GetReportComponent,
     ExecuteWorkflowComponent,
     JsonEditor,
     SettingsDialog,
-    GetReportComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import {HttpInterceptor} from "./services/interceptor.service";
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    FormsModule,
+    FormsModule,    
+    NgxChartsModule, 
     NgxChartsModule,
     NgxChartsDagModule,
     TagInputModule,
@@ -68,7 +71,6 @@ import {HttpInterceptor} from "./services/interceptor.service";
   providers: [
     AuthenticationService,
     AppConfig,
-    ProfileService,
     WorkflowDetailsService,
     PerisitenceService,
     AuthGuardService,

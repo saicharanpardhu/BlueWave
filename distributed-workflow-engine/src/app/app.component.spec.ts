@@ -36,30 +36,9 @@ describe('AppComponent', () => {
  
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
-        HomeComponent,
-        WorkflowComponent, 
-        ProfileComponent,
-        LoginHomeComponent,
-        CreateWorkflowComponent,
-        DialogOverviewDialog,
-        WnameOverviewDialog,
-        ExecuteWorkflowComponent , 
-        JsonEditor,
-        SettingsDialog,
-        GetReportComponent
+        AppComponent
       ],
-      imports: [
-        BrowserModule, 
-        AppRoutingModule,
-        MaterialModule,
-        ReactiveFormsModule, 
-        HttpModule,
-        FormsModule,
-        NgxChartsModule, 
-        NgxChartsDagModule,
-        TagInputModule,
-        Ng4JsonEditorModule
+      imports: [ 
       ],
       providers:    [  
         {provide: APP_BASE_HREF, useValue : '/' } ]

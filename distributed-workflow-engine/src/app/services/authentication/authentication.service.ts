@@ -4,10 +4,10 @@ import { Headers, Http } from "@angular/http";
 import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { Router } from "@angular/router";
 import { AppConfig } from "../../app.config";
-import { UUID } from "angular2-uuid";
 
 @Injectable()
 export class AuthenticationService {
+  statuscode: any;
   public logout() {
     localStorage.clear();
     localStorage.removeItem("Email");
@@ -70,21 +70,25 @@ export class AuthenticationService {
       )
       .toPromise()
       .then(response => {
-        let id = UUID.UUID();
         localStorage.setItem(
           "loginData",
           JSON.stringify({
             access_token: response.json().access_token,
             refresh_token: response.json().refresh_token,
-            Email: username,
-            SessionId: id
+            Email: username
           })
         );
         this.socket.connect();
         localStorage.setItem("Email", username);
-        console.log(localStorage.getItem('loginData'));
         this.router.navigate(["/home"]);
         console.log(localStorage.getItem("loginData"));
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error of auth',err);
+        console.error(err.status);
+        console.error(err._body);
+        this.statuscode = err.status;
+        this.snackBar.open("Network Connection Error. Please try after sometime.",'close');
       })
       .catch(() => {
         let config = new MatSnackBarConfig();

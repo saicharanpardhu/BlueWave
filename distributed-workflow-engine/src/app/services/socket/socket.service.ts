@@ -64,13 +64,12 @@ export class SocketService implements OnInit {
     });
     this.stomp.startConnect().then(() => {
       this.stomp.done("init");
-      // console.log(localStorage['loginData']);
-      this.subscribe();
+      if (localStorage["loginData"]) this.subscribe();
     });
   }
   subscribe() {
-    this.username = JSON.parse(localStorage["loginData"])["SessionId"].toString();
-    console.log("SUBSCRIBE: ", this.username);
+    this.username = JSON.parse(localStorage["loginData"])["Email"];
+
     if (this.messageSubscription != null) {
       this.messageSubscription.unsubscribe();
       console.log("message unsubscribed");
@@ -130,13 +129,13 @@ export class SocketService implements OnInit {
     this.socketConsoleSubscription = this.stomp.subscribe(
       "/console/" + this.username,
       response => {
-        let temp: String = response.taskName;
+        let temp: String = response.taskName; 
         if (this.socketConsoleMap.get(response.taskName)) {
-          this.socketConsoleMap.get(response.taskName).push(response.console);
+          this.socketConsoleMap.get(response.taskName).push(response.console); 
         } else {
           this.socketConsoleMap.set(response.taskName, []);
           this.socketConsoleMap.get(response.taskName).push(response.console);
-        }
+        } 
       }
     );
   }

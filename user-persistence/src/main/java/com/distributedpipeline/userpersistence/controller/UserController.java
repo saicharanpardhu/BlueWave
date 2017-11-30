@@ -53,9 +53,9 @@ public class UserController {
 				User uniqueEmail = userService.findByEmail(email);
 				User uniqueUserName = userrepo.findByUserName(UserDetail.getUserName());
 				
-				if(uniqueEmail == null) {
+				if(uniqueEmail == null&&uniqueUserName == null) {
 					
-					Role role = rolerepo.findByRole("USER");
+					Role role = new Role("USER");
 					Set<Role> roles = new HashSet<Role>();
  			    	roles.add(role);
 					UserDetail.setRoles(roles);
@@ -99,7 +99,7 @@ public class UserController {
 // 			    	roles.add(role);
 //					UserDetail.setRoles(roles);
 					
-					User user=userService.findByUserName(UserDetail.getUserName());
+				/*	User user=userService.findByUserName(UserDetail.getUserName());
 					
 					if(UserDetail.getEmail()!=null )
 					{
@@ -113,9 +113,9 @@ public class UserController {
 					
 					if(UserDetail.getFirstName()!=null)
 						user.setFirstName(UserDetail.getFirstName());
-				
+				*/
 			
-					userService.Signup(user);
+					userService.Signup(UserDetail);
 					return new ResponseEntity<String> ("Your profile is successfully updated, Thank you",HttpStatus.OK);							
 			
 		}

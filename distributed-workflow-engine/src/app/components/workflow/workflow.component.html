@@ -2,11 +2,15 @@
   <h2>
     Workflows
   </h2>
+    <div *ngIf="(statuscode == 0)">
+      <h1>Sorry!</h1>
+      <p>Cannot fetch data from backend</p>
+      <hr>
+      </div>
   <mat-card id="workflowcard" *ngFor="let data of datas">
     <mat-card-header>
       <mat-card-title class="workflowtitle">{{data.workFlowName}}</mat-card-title>
       <span class="fill-remaining-space"></span>
-      <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
       <mat-card-actions id="workflowmodify">
         <button mat-raised-button color="primary" [routerLink]="['/executeworkflow']" (click)="executeWorkFlow(data.workFlowName)">
           <mat-icon>play_arrow</mat-icon>Execute</button>
