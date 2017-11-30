@@ -73,7 +73,7 @@ public class RunAgentConsumer {
 				String fname="";					//"/GoPlacesBackend-0.1.0.jar";
 				String fnameJar = "";
 				
-				String pathProject = "/home/jaydeep/Desktop/Task_source/"+inputdata.getJobId();// /Spring_restapi/target";
+				String pathProject = "/home/imbatch1/Task_Source"+inputdata.getJobId();// /Spring_restapi/target";
 				
 				System.out.println("p "+pathProject);
 
@@ -83,7 +83,7 @@ public class RunAgentConsumer {
 			     String fileName = fname2[fname2.length-1].split("\\.")[0];
 			     System.out.println(fileName);											//getting the fileName of .jar
 
-				String pathJar = "/home/jaydeep/Desktop/Task_source/"+inputdata.getJobId()+"/"+fileName+"/target";
+				String pathJar = "/home/imbatch1/Task_Source"+inputdata.getJobId()+"/"+fileName+"/target";
 				System.out.println(pathJar);
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
@@ -121,7 +121,7 @@ public class RunAgentConsumer {
 
 
 			if(process.isAlive() ) {
-					String []str= {"Run Task Complete","https://172.23.238.186:8321/gitsearch/repo"};
+					String []str= {"Run Task Complete"};
 					output.setOutput(str);
 					output.setErrcode(200);
 					output.setStderr("task complete");
@@ -140,9 +140,9 @@ public class RunAgentConsumer {
 			                  output1.append(line + "\n");
 			                 
 			          }
-			          PrintWriter writer = new PrintWriter("/home/jaydeep/Desktop/output1.txt", "UTF-8");
+			          PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output1.txt", "UTF-8");
 			          consoleOutput.setTaskName(inputdata.getTaskname());
-			          consoleOutput.setUserName(inputdata.getUserName());
+			          consoleOutput.setUserName(inputdata.getJobId());
 			          
 			          consoleOutput.setConsole(output1.toString());
 			          producer.sendMessageConsole(consoleOutput);    

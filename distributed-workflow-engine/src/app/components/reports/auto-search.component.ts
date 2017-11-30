@@ -25,12 +25,12 @@ export class AutoSearchComponent implements OnInit {
     
   }
 
-  filterStates(name1: string) {
+  filterStates(name: string) {
     console.log('inside filter states');
     let c= this.states.filter((state) =>
       { console.log('inside filterStates',state);
-        console.log( state.workFlowName.toLowerCase().indexOf(name1.toLowerCase()) == 0)
-          return state.workFlowName.toLowerCase().indexOf(name1.toLowerCase()) == 0;
+        console.log( state.workFlowName.toLowerCase().indexOf(name.toLowerCase()) == 0)
+          return state.workFlowName.toLowerCase().indexOf(name.toLowerCase()) == 0;
       })
       console.log('filtre state return',c);
      return c;

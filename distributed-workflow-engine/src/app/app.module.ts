@@ -35,8 +35,8 @@ import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config";
 import {HttpInterceptor} from "./services/interceptor.service";
-import { AutoSearchComponent } from './components/reports/auto-search.component'; 
-import { WorkflowService } from './components/reports/auto-search.service';
+import { AutoSearchComponent } from './components/auto-search/auto-search.component'; 
+import { WorkflowService } from './components/auto-search/auto-search.service';
 
 @NgModule({
   declarations: [

@@ -14,7 +14,7 @@ public interface ReportModelCRUDRepository extends CassandraRepository<ReportMod
 	
 	public List<ReportModel> findByJobId(String jobId);
     public ReportModel save(ReportModel reportModel);
-   
+   public ReportModel findByJobIdAndTaskAlias(String jobId,String taskAlias);
     
     
 
