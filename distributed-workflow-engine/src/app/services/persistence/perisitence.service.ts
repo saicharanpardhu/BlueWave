@@ -57,11 +57,7 @@ export class PerisitenceService {
 
   updateWorkFlow(workflowName, owner, description, status, tasks) {
     let workflow = new WorkFlow(workflowName, owner, description,[], [], status, tasks);
-   return this.http
-     .delete(this.config.saveWorkflow+owner+"/"+workflowName+"/", {
-       headers: this.headers
-     })
-     .toPromise().then( () => {
+    return this.deleteWorkFlow(workflowName).then( () => {
        this.sendWorkFlow2(workflowName, owner, description, status, tasks);
      });
   }
