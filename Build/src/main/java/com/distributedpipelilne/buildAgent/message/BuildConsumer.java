@@ -1,6 +1,8 @@
 package com.distributedpipelilne.buildAgent.message;
 
 
+import static org.mockito.Matchers.contains;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -112,7 +114,9 @@ public class BuildConsumer {
 			 
 	         PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
-             consoleOutput.setUserName(inputdata.getJobId());
+             consoleOutput.setUserName(inputdata.getUserName()+" "+inputdata.getJobId());
+             System.out.println(consoleOutput.getUserName());
+             
              /*
               * sending the data to UI 
               */
