@@ -2,10 +2,6 @@
   <mat-card style="overflow:auto">
     <mat-card-content>
       <p>HeatMap</p>
-      <div *ngIf="(this.statuscode == 0)">
-			<h1>Sorry!</h1>
-			<p>Not able to retreive data, Please try again later.</p>
-			</div>
       <div *ngIf="showHeatMap">
           <ngx-charts-heat-map
           [view]="view"

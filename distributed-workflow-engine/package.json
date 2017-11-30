@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -H 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -26,6 +26,7 @@
     "@stomp/ng2-stompjs": "0.4.2",
     "@swimlane/ngx-charts-dag": "^2.1.4",
     "angular2-notifications-lite": "^0.1.2",
+    "angular2-uuid": "^1.1.1",
     "angular4-jsoneditor": "^1.0.7",
     "aws-sdk": "^2.157.0",
     "core-js": "2.4.1",

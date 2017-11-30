@@ -1,13 +1,7 @@
 <div class="container">
   <mat-card class="main">
-      <div *ngIf="(statuscode == 0)">
-          <h1>Sorry!</h1>
-          <p>Cannot fetch data from backend</p>
-          <hr>
-          </div>
-         <div *ngIf="!(statuscode == 0)">
-      <p>Choose the job for which you wish to see the report!</p>   
-    </div>      
+    Reports
+    <p>Choose the job for which you wish to see the report!</p>
     <mat-expansion-panel *ngFor="let name of jobIdnames; let i = index">
       <mat-expansion-panel-header (click)="getJobReports(name.jobId)">
         <mat-panel-title>

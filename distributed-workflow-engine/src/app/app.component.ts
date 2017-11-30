@@ -13,7 +13,7 @@ import {
   animate,
   state
 } from "@angular/animations";
-
+import { UUID } from 'angular2-uuid';
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",

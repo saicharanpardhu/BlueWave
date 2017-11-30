@@ -1,3 +1,5 @@
+
+import { ProfileService } from './services/profile/profile.service';
 import { PerisitenceService } from "./services/persistence/perisitence.service";
 import { MaterialModule } from "./modules/material.module";
 import { RouterModule, Routes } from "@angular/router";
@@ -32,10 +34,12 @@ import { WorkflowDetailsService } from "./services/workflow-details/workflow-det
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
+
 import { AppConfig } from "./app.config"; 
 import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module"; 
 import {HttpInterceptor} from "./services/interceptor.service"
 import { PopoverModule } from 'ng2-pop-over';
+
 
 @NgModule({
   declarations: [
@@ -47,22 +51,18 @@ import { PopoverModule } from 'ng2-pop-over';
     CreateWorkflowComponent,
     DialogOverviewDialog,
     WnameOverviewDialog,
-    ExecuteWorkflowComponent ,
-    JsonEditor,SettingsDialog,GetReportComponent,
     ExecuteWorkflowComponent,
     JsonEditor,
     SettingsDialog,
-    
+    GetReportComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgcFloatButtonModule,
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    FormsModule,    
-    NgxChartsModule, 
+    FormsModule,
     NgxChartsModule,
     NgxChartsDagModule,
     TagInputModule,
@@ -73,13 +73,13 @@ import { PopoverModule } from 'ng2-pop-over';
   providers: [
     AuthenticationService,
     AppConfig,
+    ProfileService,
     WorkflowDetailsService,
     PerisitenceService,
     AuthGuardService,
     SocketService,
     StompService,
-    ReportService,
-    HttpInterceptor
+    ReportService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

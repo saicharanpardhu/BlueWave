@@ -24,7 +24,7 @@
 			<mat-tab label="Signup">
 				<div class="form-container">
 					<mat-form-field [hideRequiredMarker]="true">
-						<input matInput #firstName placeholder="First name" (keyup)="checkSubmitValidation()" [formControl]="nameValidator" required>
+						<input matInput #firstName placeholder="First name" (keyup)="checkSubmitValidation() " [formControl]="nameValidator" required>
 					</mat-form-field>
 					<mat-form-field matInput [hideRequiredMarker]="true">
 						<input #lastName matInput placeholder="Last name" (keyup)="checkSubmitValidation()" [formControl]="nameValidator" required>
@@ -65,9 +65,4 @@
 			</mat-tab>
 		</mat-tab-group>
 	</mat-card-content>
-	<!-- <div *ngIf="(this.authenticationService.statuscode == 0)">
-			<h1>Sorry!</h1>
-			<p>Service is currently unavailable, Please try again later.</p>
-			<hr>
-			</div> -->
 </mat-card>
