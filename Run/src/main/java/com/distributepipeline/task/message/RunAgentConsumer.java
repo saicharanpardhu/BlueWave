@@ -73,7 +73,7 @@ public class RunAgentConsumer {
 				String fname="";					//"/GoPlacesBackend-0.1.0.jar";
 				String fnameJar = "";
 				
-				String pathProject = "/home/imbatch1/Task_Source"+inputdata.getJobId();// /Spring_restapi/target";
+				String pathProject = "/home/imbatch1/Task_Source";// /Spring_restapi/target";
 				
 				System.out.println("p "+pathProject);
 
@@ -83,7 +83,7 @@ public class RunAgentConsumer {
 			     String fileName = fname2[fname2.length-1].split("\\.")[0];
 			     System.out.println(fileName);											//getting the fileName of .jar
 
-				String pathJar = "/home/imbatch1/Task_Source"+inputdata.getJobId()+"/"+fileName+"/target";
+				String pathJar = "/home/imbatch1/Task_Source"+"/"+fileName+"/target";
 				System.out.println(pathJar);
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
