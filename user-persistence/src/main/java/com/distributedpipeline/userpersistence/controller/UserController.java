@@ -6,16 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
 import com.distributedpipeline.userpersistence.domain.Role;
 import com.distributedpipeline.userpersistence.domain.User;
 import com.distributedpipeline.userpersistence.service.UserService;
 import com.distributedpipeline.userpersistence.repository.*;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -72,6 +78,11 @@ public class UserController {
 		}
 		
 		
+	}
+	
+	@RequestMapping(value="/user/{userName}", method = RequestMethod.GET)
+	public ResponseEntity<?> getWorkFlowOfUser(@PathVariable("userName") String owner){
+		return new ResponseEntity<User>(userService.findByUserName(owner), HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/updateuser" , consumes = "application/json")
