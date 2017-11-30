@@ -85,7 +85,7 @@ public class UserController {
 		return new ResponseEntity<User>(userService.findByUserName(owner), HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/updateuser" , consumes = "application/json")
+	@PutMapping(value="/user/updateuser" , consumes = "application/json")
 	public ResponseEntity updateUser(@Valid @RequestBody User UserDetail)
 	{
 		if(UserDetail.getUserName() == null | UserDetail.getLastName() == null | UserDetail.getEmail() == null ) {
