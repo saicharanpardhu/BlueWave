@@ -9,7 +9,7 @@ services:
     container_name: api-gateway
     image: api
     ports:
-      - 8020:8020
+      - 8090:8090
   
   persistence:
     environment:
@@ -56,7 +56,7 @@ services:
     container_name: auth-service
     image: auth-service
     ports:
-      - 8087:8087
+      - 5000:5000
     
       
 
@@ -131,4 +131,4 @@ services:
     container_name: socket-service
     image: socket-service
     ports:
-      - "9000:9000"
+      - "3000:3000"
