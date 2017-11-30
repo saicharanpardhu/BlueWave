@@ -76,7 +76,7 @@ public class AgentConsumer {
 			   // Runtime.getRuntime().exec("mkdir /home/imbatch1/Task_Source/"+inputdata.getJobId()+"/");
 			    
 			   System.out.println("folder path");
-				File dir = new File("/home/akshay/Desktop/Task_Source/");
+				File dir = new File("${HOME}/Task_Source/");
 //				File dirshell = new File("/home/jaydeep/Desktop/main/Stackroute/Spring/agent/");
 				
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
@@ -96,7 +96,7 @@ public class AgentConsumer {
 			            
 			            if (b == true & b1 == true){
 			                System.out.println("Task Processing...");
-		                Process process = Runtime.getRuntime().exec("git clone "+url);
+		                Process process = Runtime.getRuntime().exec("git clone "+url,null,dir);
 			                System.out.println("jsdfalkkjh");
 			                process.waitFor();
 			                while(process.exitValue()==0) {
