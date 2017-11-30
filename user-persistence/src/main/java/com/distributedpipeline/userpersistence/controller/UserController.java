@@ -55,7 +55,7 @@ public class UserController {
 				
 				if(uniqueEmail == null) {
 					
-					Role role = rolerepo.findByRole("USER");
+					Role role = new Role("USER");
 					Set<Role> roles = new HashSet<Role>();
  			    	roles.add(role);
 					UserDetail.setRoles(roles);
