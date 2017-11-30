@@ -346,7 +346,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     
         let dialogRef = this.dialog.open(DialogOverviewDialog, {
           width: '500px',
-          data: { taskName: taskName, type:task.type ,dependsOn:task.depends_on,input:task.input,taskAliases:this.wTaskAliases,taskTypes:this.tasks,inputType:inputType,editing:true,cancel:false,taskNameOld:taskName}
+          data: { taskName: taskName, type:task.type ,dependsOn:task.depends_on,input:task.input,taskAliases:this.wTaskAliases.filter(item => item!=taskName),taskTypes:this.tasks,inputType:inputType,editing:true,cancel:false,taskNameOld:taskName}
     
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -390,6 +390,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
           console.log(this.taskName);
           this.map.set(this.taskName, task);
           this.workflow.tasks = this.map;
+          this.taskName = "";
           console.log(this.map);
         }
         });
@@ -534,6 +535,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       console.log(this.taskName);
       this.map.set(this.taskName, task);
       this.workflow.tasks = this.map;
+      this.taskName = "";
       console.log(this.map);
     });
   }

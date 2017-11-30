@@ -1,4 +1,3 @@
-import { NgcFloatButtonModule } from 'ngc-float-button';
 import { PerisitenceService } from "./services/persistence/perisitence.service";
 import { MaterialModule } from "./modules/material.module";
 import { RouterModule, Routes } from "@angular/router";
@@ -36,7 +35,7 @@ import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config"; 
 import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module"; 
 import {HttpInterceptor} from "./services/interceptor.service"
->>>>>>> 6999a77731cd155e1c14c1a57aadf22bfcc34b5e
+
 @NgModule({
   declarations: [
     AppComponent,
