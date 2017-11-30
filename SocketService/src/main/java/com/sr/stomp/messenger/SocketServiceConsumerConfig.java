@@ -3,7 +3,8 @@ package com.sr.stomp.messenger;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer; 
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -22,12 +23,14 @@ import com.sr.stomp.domain.SocketModel;
 @EnableKafka
 public class SocketServiceConsumerConfig {
     
+	@Value("${spring.kafka.bootstrap-servers}")
+	private String bootstrapServer;
 	@Bean
     public ConsumerFactory<String, Message> consumerMessageFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.159:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");
@@ -57,7 +60,7 @@ public class SocketServiceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.159:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");
@@ -87,7 +90,7 @@ public class SocketServiceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.159:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");
@@ -117,7 +120,7 @@ public class SocketServiceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.159:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");
@@ -148,7 +151,7 @@ public class SocketServiceConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.159:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");
