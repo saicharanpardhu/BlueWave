@@ -1,6 +1,8 @@
 package com.distributedpipelilne.buildAgent.message;
 
 
+import static org.mockito.Matchers.contains;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -65,19 +67,19 @@ public class BuildConsumer {
 		 * getting the file name through the Git url 
 		 */
 		reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
-		System.out.println(reportModel.getTaskStartTime()+"******");
+		logger.info(reportModel.getTaskStartTime()+"******");
 		String[] url = inputdata.getInput();
 		String fname[] = url[0].split("/");
 		String fileName = fname[fname.length-1].split("\\.")[0];
         System.out.println(fileName);
-		String path = "/home/avalabche/testrun2/"+inputdata.getJobId()+"/";
+		String path = "/home/imbatch1/Task_Source"+inputdata.getJobId()+"/";
 		StringBuffer output1 = new StringBuffer();
 		File dir = new File(path);	
 		String filePath = path+"/"+fileName; 
 		/*
 		 * path where the script file is located
 		 */
-		File directory = new File("/home/avalabche/Desktop/final_clone_2.0/buildAgent");
+		File directory = new File("/home/imbatch1/distributedpipeline/Build");
 		
 		/*
 		 * setting starting time stamp
@@ -88,7 +90,6 @@ public class BuildConsumer {
 		producer.sendReport(reportModel);
 		
 		try{
-			System.out.println("sout");
 			logger.info("./Build-Plugin.sh "+filePath);
 			logger.info("Task Processing...");
 			/*
@@ -110,9 +111,11 @@ public class BuildConsumer {
 			  * writing the console output in the output.txt
 			  */
 			 
-	         PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
+	         PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
-             consoleOutput.setUserName(inputdata.getJobId());
+             consoleOutput.setUserName(inputdata.getUserName()+" "+inputdata.getJobId());
+             logger.info(consoleOutput.getUserName());
+             
              /*
               * sending the data to UI 
               */
@@ -153,7 +156,7 @@ public class BuildConsumer {
 		output.setType(inputdata.getType());
 		reportModel.setTaskEndTime(new Date(System.currentTimeMillis()));
 //		Timestamp endtime = new Timestamp(System.currentTimeMillis());
-		System.out.println(reportModel.getTaskEndTime()+"#####");
+		logger.info(reportModel.getTaskEndTime()+"#####");
 																																																																																																																																																																																																					
 		
 		/*

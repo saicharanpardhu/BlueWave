@@ -2,21 +2,25 @@ package com.distributedpipelilne.buildAgent.domain;
 
 import org.springframework.stereotype.Component;
 
+
+/*
+ * this model is input from the Task-scheduler
+ */
+
 @Component
 public class Input {
 	
 	private String jobId;
 	public Input() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	private String taskname;
-	private String input;
+	private String[] input;
 	private String userName;
 	private String type;
 	
-	public Input(String jobId, String taskname, String input, String userName, String type) {
+	public Input(String jobId, String taskname, String[] input, String userName, String type) {
 		super();
 		this.jobId = jobId;
 		
@@ -25,10 +29,10 @@ public class Input {
 		this.userName = userName;
 		this.type = type;
 	}
-	public String getInput() {
+	public String[] getInput() {
 		return input;
 	}
-	public void setInput(String input) {
+	public void setInput(String[] input) {
 		this.input = input;
 	}
 	public String getJobId() {
