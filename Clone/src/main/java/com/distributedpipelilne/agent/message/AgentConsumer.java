@@ -73,9 +73,9 @@ public class AgentConsumer {
 			    String url= inputdata.getInput()[0];
 			    System.out.println("url : "+ url);
 			    latch.countDown();
-			    Runtime.getRuntime().exec("mkdir /home/imbatch1/Task_Source/"+inputdata.getJobId()+"/");
+			   // Runtime.getRuntime().exec("mkdir /home/imbatch1/Task_Source/"+inputdata.getJobId()+"/");
 			    
-				File dir = new File("/home/imbatch1/Task_Source/"+inputdata.getJobId()+"/");
+				File dir = new File("/home/imbatch1/Task_Source/");
 //				File dirshell = new File("/home/jaydeep/Desktop/main/Stackroute/Spring/agent/");
 				
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
