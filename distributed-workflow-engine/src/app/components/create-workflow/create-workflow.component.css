@@ -32,3 +32,19 @@ body {
 .app-fab-absolute:hover {
   cursor: pointer;
 }
+
+
+#execute .content-wrapper{
+
+  display: block !important; 
+  position:relative !important;
+  top:90% !important;
+  left:25% !important;
+}
+#execute1 .content-wrapper{
+
+  display: block !important; 
+  position:relative !important;
+  top:90% !important;
+  left:20% !important;
+}

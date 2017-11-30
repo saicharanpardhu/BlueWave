@@ -96,7 +96,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   //DEletion Mode
 
   deleteMode : boolean = false;
-  deleteModeButton ="DELETE TASKS";
+  deleteModeButton ="DELETE";
   inputType = 'None';
 
 
@@ -317,13 +317,13 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
         config
       );
 
-      this.deleteModeButton = "EXIT MODE";
+      this.deleteModeButton = "EXIT";
     } else {
       this.deleteMode = false;
       let config = new MatSnackBarConfig();
       config.duration = 3000;
       this.snackBar.open("You are out of deletion mode", "Close", config);
-      this.deleteModeButton = "DELETE TASKS";
+      this.deleteModeButton = "DELETE";
     }
   }
   //On select a node to delete

@@ -35,6 +35,7 @@ import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config"; 
 import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module"; 
 import {HttpInterceptor} from "./services/interceptor.service"
+import { PopoverModule } from 'ng2-pop-over';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {HttpInterceptor} from "./services/interceptor.service"
     NgxChartsDagModule,
     TagInputModule,
     Ng4JsonEditorModule,
-    NgcFloatButtonModule
+    NgcFloatButtonModule,
+    PopoverModule
   ],
   providers: [
     AuthenticationService,

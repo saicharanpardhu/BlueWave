@@ -95,7 +95,13 @@ export class GetReportComponent implements OnInit {
       this.jobIdnames = resData1;
       console.log("jobidnames", this.jobIdnames); 
       this.jobId = this.jobIdnames[0].jobId; 
-    }); 
+    },
+    resEmployeeError => {this.errorMsg = resEmployeeError;
+      //this.snackBar.open(resEmployeeError,'close');
+      this.statusMsg = 'Error, Please try after sometime';
+      this.snackBar.open('Cannot fetch Data, Please check Backend:'+ resEmployeeError,'close');
+    }
+    ); 
   // console.log("USER", localStorage.getItem("Email")); 
   }
 
