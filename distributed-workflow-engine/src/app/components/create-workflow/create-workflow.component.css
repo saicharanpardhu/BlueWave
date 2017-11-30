@@ -1,0 +1,71 @@
+
+
+.container{
+
+width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+
+  margin-top: 0px;
+  overflow:hidden;
+    
+    color:white;
+    top:0px;
+}
+
+li {
+  list-style: none;
+  display: inline-block;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow:hidden;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.app-fab-absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.app-fab-absolute:hover {
+  cursor: pointer;
+}
+
+
+#execute .content-wrapper{
+
+  display: block !important; 
+  position:relative !important;
+  top:90% !important;
+  left:25% !important;
+}
+#execute1 .content-wrapper{
+
+  display: block !important; 
+  position:relative !important;
+  top:90% !important;
+  left:20% !important;
+}
+.chart{
+  background-color: #fafafa;
+  position: fixed; 
+  top:20%;
+   left: 3%; 
+   right: 3%; 
+   bottom: 13%;
+    border: 2px solid ;
+    border-color:#ffffff;
+    border-radius: 25px;
+    background-image: url("https://78.media.tumblr.com/3f8d9d8c9f63a36d4e6d7162c99eea7d/tumblr_nnh0zu3ixz1telelro1_250.png");
+    background-repeat: repeat;
+}

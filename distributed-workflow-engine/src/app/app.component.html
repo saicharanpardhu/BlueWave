@@ -1,0 +1,95 @@
+<!-- <mat-grid-list cols="20">
+        <mat-grid-tile [colspan]="1"></mat-grid-tile>
+        <mat-grid-tile [colspan]="18" id="content">
+                <router-outlet></router-outlet>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1"></mat-grid-tile>
+</mat-grid-list> -->
+<mat-sidenav-container fullscreen>
+	<mat-sidenav #sidenav mode="push" class="leftsidenavBox">
+		<mat-toolbar color="primary">Menu</mat-toolbar>
+		<div class="leftsidenav">
+
+			<ul>
+				<li _ngcontent-c1="" aria-label="My Workflows" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+				 aria-disabled="false" (click)="sidenav.close()" [routerLink]="['/workflows']">
+					<span class="mat-button-wrapper">
+						<mat-icon>work</mat-icon>
+						<span>My Workflows</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+				</li>
+
+				<li _ngcontent-c1="" aria-label="Reports" class="docs-navbar-hide-small docs-button mat-button" mat-button="" tabindex="0"
+				 aria-disabled="false" (click)="sidenav.close()" [routerLink]="['/reports']">
+					<span class="mat-button-wrapper">
+						<mat-icon>description</mat-icon>
+						<span>Reports</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+				</li>
+
+
+				<li _ngcontent-c1="" aria-label="Profile" (click)="sidenav.close()" [routerLink]="['/profile']" mat-button="" class="docs-navbar-hide-small docs-button mat-button"
+				 tabindex="0" aria-disabled="false">
+					<span class="mat-button-wrapper" id="profile">
+						<mat-icon>account_circle</mat-icon>
+						<span>Profile</span>
+					</span>
+					<div class="mat-button-ripple mat-ripple" matripple=""></div>
+					<div class="mat-button-focus-overlay"></div>
+				</li>
+			</ul>
+		</div>
+	</mat-sidenav>
+	<mat-sidenav #rightsidenav mode="push" position="end" class="rightsidenavBox" openedChange="sideNavopened()">
+		<mat-toolbar color="primary">
+			Notifications
+			<span class="fill-notif-space"></span>
+			<button mat-icon-button (click)="clearNotifications()">
+				<mat-icon>clear_all</mat-icon>
+			</button>
+		</mat-toolbar>
+		<div class="rightsidenav">
+			<div *ngIf="notifications.length">
+				<mat-card *ngFor="let notification of notifications">
+					<mat-card-content>{{notification}}</mat-card-content>
+				</mat-card>
+			</div>
+
+
+
+		</div>
+	</mat-sidenav>
+	<mat-toolbar *ngIf="this.authService.isLoggedIn()" color="primary">
+		<button mat-icon-button type="button" mat-button (click)="sidenav.open()">
+			<mat-icon>menu</mat-icon>
+		</button>
+
+		<button _ngcontent-c1="" aria-label="Home" class=" docs-navbar docs-button mat-button" mat-icon-button tabindex="0" aria-disabled="false"
+		 [routerLink]="['/home']">
+			<mat-icon>home</mat-icon>
+		</button>
+
+		<span class="fill-remaining-space"></span>
+
+		<button mat-button (click)="rightsidenav.open();" aria-label="Notifications" mat-icon-button class="docs-navbar-hide-small docs-button mat-button"
+		 tabindex="0" aria-disabled="false">
+			<mat-icon>notifications</mat-icon>
+		</button>
+
+		<button mat-icon-button aria-label="Logout" (click)="logout()" [routerLink]="['/index']" class="docs-navbar-hide-small docs-button mat-button">
+			<mat-icon>power_settings_new</mat-icon>
+		</button>
+
+
+	</mat-toolbar>
+
+
+	<router-outlet>
+
+	</router-outlet>
+
+</mat-sidenav-container>

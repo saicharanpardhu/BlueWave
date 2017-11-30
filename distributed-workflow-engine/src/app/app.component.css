@@ -1,0 +1,53 @@
+.fill-remaining-space,
+.fill-notif-space {
+  flex: 1 1 auto;
+}
+
+.leftsidenavBox mat-toolbar {
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsidenavBox mat-toolbar {
+  align-items: center;
+  justify-content: center;
+}
+
+.rightsidenavBox {
+  min-width: 25vw;
+}
+
+.app-fab--absolute {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.leftsidenav ul {
+  padding: 0px;
+  display: table-caption;
+  min-width: 15vw;
+}
+
+.leftsidenav ul li {
+  display: flex;
+}
+
+.mat-icon-button {
+  margin: 0 7px;
+}
+
+.rightsidenav a {
+  display: block;
+  top: 10px;
+  width: 85%;
+  margin-left: 15px;
+  margin-right: 0px;
+  text-align: right;
+  padding: 5px;
+}
+
+.mat-menu-item {
+  min-width: 9vw;
+}
+
