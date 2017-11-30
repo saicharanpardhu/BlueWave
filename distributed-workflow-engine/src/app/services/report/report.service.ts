@@ -4,6 +4,7 @@ import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
 import { AppConfig } from "../../app.config";
 
+
 @Injectable()
 export class ReportService {
   public displayReport;

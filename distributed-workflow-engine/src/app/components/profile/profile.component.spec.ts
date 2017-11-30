@@ -21,11 +21,9 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { NgxChartsDagModule } from "@swimlane/ngx-charts-dag";
 import { TagInputModule } from "ngx-chips";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
-import { SocketService } from "../../services/socket/socket.service";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
 import { PerisitenceService } from "../../services/persistence/perisitence.service";
 import { APP_BASE_HREF } from "@angular/common";
-import { StompService } from "ng2-stomp-service";
 import { ReportService } from "../../services/report/report.service";
 import { AuthGuardService } from "../../services/authentication/auth-guard.service";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
@@ -33,10 +31,7 @@ import { AppConfig } from "../../app.config";
 
 describe("ProfileComponent", () => {
   let component: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
-  class SocketServiceStub extends SocketService{
-    
-  }
+  let fixture: ComponentFixture<ProfileComponent>; 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -68,7 +63,6 @@ describe("ProfileComponent", () => {
           Ng4JsonEditorModule
         ],
         providers: [
-          {provide: SocketService, useValue: SocketServiceStub },
           AppConfig,
           WorkflowDetailsService,
           PerisitenceService,

@@ -8,11 +8,9 @@ import { GetReportComponent } from "../reports/reports.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { NgxChartsModule } from "@swimlane/ngx-charts"; 
-import { SocketService } from "../../services/socket/socket.service";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
 import { PerisitenceService } from "../../services/persistence/perisitence.service";
 import { APP_BASE_HREF } from "@angular/common";
-import { StompService } from "ng2-stomp-service";
 import { ReportService } from "../../services/report/report.service";
 import { AuthGuardService } from "../../services/authentication/auth-guard.service";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
@@ -22,9 +20,7 @@ import { AppConfig } from "../../app.config";
 describe("ExecuteWorkflowComponent", () => {
   let component: ExecuteWorkflowComponent;
   let fixture: ComponentFixture<ExecuteWorkflowComponent>;
-  class SocketServiceStub extends SocketService{
-    
-  }
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -40,7 +36,6 @@ describe("ExecuteWorkflowComponent", () => {
           NgxChartsModule
         ],
         providers: [
-          {provide: SocketService, useValue: SocketServiceStub },
           AppConfig, 
           AuthGuardService,  
           ReportService,

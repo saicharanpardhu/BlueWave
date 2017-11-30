@@ -22,6 +22,7 @@ import {
   JsonEditor,
   SettingsDialog
 } from "./components/create-workflow/create-workflow.component";
+var Stomp = require("stompjs/lib/stomp.js").Stomp
 import { ExecuteWorkflowComponent } from "./components/execute-workflow/execute-workflow.component";
 import { AuthGuardService } from "./services/authentication/auth-guard.service";
 import { SocketService } from "./services/socket/socket.service";
@@ -35,6 +36,7 @@ import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
 import { AppConfig } from "./app.config";
 import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module";
+import {HttpInterceptor} from "./services/interceptor.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +74,8 @@ import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-butt
     AuthGuardService,
     SocketService,
     StompService,
-    ReportService
+    ReportService,
+    HttpInterceptor
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -1,10 +1,8 @@
 import { HomeComponent } from './components/home/home.component';
-import { AuthenticationService } from './services/authentication/authentication.service';
 import { TestBed, async,  ComponentFixture } from '@angular/core/testing';
 import { By, BrowserModule }              from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { DebugElement }    from '@angular/core'; 
-import { SocketService } from './services/socket/socket.service';
 import { MaterialModule } from './modules/material.module';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { HttpModule } from '@angular/http';
@@ -23,10 +21,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AuthGuardService } from './services/authentication/auth-guard.service';
 import { WorkflowDetailsService } from './services/workflow-details/workflow-details.service';
 import { PerisitenceService } from './services/persistence/perisitence.service';
-import { StompService } from 'ng2-stomp-service';
 import { ReportService } from './services/report/report.service';
 import { AppConfig } from './app.config';
-
 describe('AppComponent', () => {
 
   let comp:    AppComponent;
@@ -34,16 +30,8 @@ describe('AppComponent', () => {
   let de:      DebugElement;
   let el:      HTMLElement; 
   let spy; 
-
-  class AuthenticationServiceStub extends AuthenticationService{
-    isLoggedIn(){
-      return true;
-    }
-  }
-
-  class SocketServiceStub extends SocketService{
-    
-  }
+ 
+  
   beforeEach(async(() => {
  
     TestBed.configureTestingModule({
@@ -73,16 +61,7 @@ describe('AppComponent', () => {
         TagInputModule,
         Ng4JsonEditorModule
       ],
-      providers:    [ 
-        SocketService, 
-        AppConfig,
-        WorkflowDetailsService, 
-        PerisitenceService, 
-        AuthGuardService, 
-        SocketService, 
-        {provide: SocketService, useValue: SocketServiceStub }, 
-        ReportService, 
-        {provide: AuthenticationService, useValue: AuthenticationServiceStub },
+      providers:    [  
         {provide: APP_BASE_HREF, useValue : '/' } ]
     }).compileComponents();
   }));

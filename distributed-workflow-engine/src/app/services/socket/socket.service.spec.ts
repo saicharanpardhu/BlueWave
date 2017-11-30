@@ -10,9 +10,9 @@ describe('SocketService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:[HttpModule],
-      providers: [AppConfig, SocketService, StompService]
+      providers: [AppConfig, SocketService]
     });
-  });
+  }); 
 
   it('should be created', inject([SocketService], (service: SocketService) => {
     expect(service).toBeTruthy();

@@ -9,9 +9,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { NgxChartsDagModule } from "@swimlane/ngx-charts-dag";
 import { TagInputModule } from "ngx-chips";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
-import { SocketService } from "../../services/socket/socket.service";
 import { APP_BASE_HREF } from "@angular/common";
-import { StompService } from "ng2-stomp-service";
 import { ReportService } from "../../services/report/report.service";
 import { AuthGuardService } from "../../services/authentication/auth-guard.service";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
@@ -20,9 +18,7 @@ import { AppConfig } from "../../app.config";
 describe("LoginHomeComponent", () => {
   let component: LoginHomeComponent;
   let fixture: ComponentFixture<LoginHomeComponent>;
-  class SocketServiceStub extends SocketService{
-    
-  }
+
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -43,7 +39,6 @@ describe("LoginHomeComponent", () => {
           Ng4JsonEditorModule
         ],
         providers: [
-          {provide: SocketService, useValue: SocketServiceStub },
           AppConfig,
           AuthGuardService, 
           AuthenticationService,

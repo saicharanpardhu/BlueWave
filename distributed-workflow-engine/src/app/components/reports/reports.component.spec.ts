@@ -21,11 +21,9 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { NgxChartsDagModule } from "@swimlane/ngx-charts-dag";
 import { TagInputModule } from "ngx-chips";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
-import { SocketService } from "../../services/socket/socket.service";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
 import { PerisitenceService } from "../../services/persistence/perisitence.service";
 import { APP_BASE_HREF } from "@angular/common";
-import { StompService } from "ng2-stomp-service";
 import { ReportService } from "../../services/report/report.service";
 import { AuthGuardService } from "../../services/authentication/auth-guard.service";
 import { AuthenticationService } from "../../services/authentication/authentication.service";
@@ -34,49 +32,13 @@ import { AppConfig } from "../../app.config";
 describe("ReportsComponent", () => {
   let component: GetReportComponent;
   let fixture: ComponentFixture<GetReportComponent>;
-  class SocketServiceStub extends SocketService{
-    
-  }
+ 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
         declarations: [
-          CreateWorkflowComponent,
-          HomeComponent,
-          LoginHomeComponent,
-          ProfileComponent,
-          LoginHomeComponent,
-          CreateWorkflowComponent,
-          DialogOverviewDialog,
-          WnameOverviewDialog,
-          WorkflowComponent,
-          ExecuteWorkflowComponent,
-          JsonEditor,
-          SettingsDialog,
           GetReportComponent
         ],
-        imports: [
-          BrowserModule,
-          AppRoutingModule,
-          MaterialModule,
-          ReactiveFormsModule,
-          HttpModule,
-          FormsModule,
-          NgxChartsModule,
-          NgxChartsDagModule,
-          TagInputModule,
-          Ng4JsonEditorModule
-        ],
-        providers: [
-          {provide: SocketService, useValue: SocketServiceStub },
-          AppConfig,
-          WorkflowDetailsService,
-          PerisitenceService,
-          AuthGuardService, 
-          ReportService,
-          AuthenticationService,
-          { provide: APP_BASE_HREF, useValue: "/" }
-        ]
       }).compileComponents();
     })
   );
