@@ -29,19 +29,21 @@ public class JobManagerController{
 	JobManagerProducer producer;
 	//for resource sharing
 	private String userName;
+	private String uuid;
 	
 	@CrossOrigin(origins="*") 
 	
 	//getting workflow name from user using request mapping
 	
-	@RequestMapping(path="/workflowname/{userName}/{workFlowName}") 
-	public ResponseEntity<?> echoWord(@PathVariable("userName") String userName ,@PathVariable("workFlowName") String workFlowName) {
+	@RequestMapping(path="/workflowname/{userName}/{UUID}/{workFlowName}") 
+	public ResponseEntity<?> echoWord(@PathVariable("userName") String userName ,@PathVariable("workFlowName") String workFlowName, @PathVariable("UUID") String uuid) {
 		
 		//sending workflow name to workflow persistence
 		
 		System.out.println("sending...");
 		System.out.println(workFlowName);
 		this.userName=userName;
+		this.uuid=uuid;
 //		producer.jobIdDetailsToPersistence(userName, workFlowName);
 		jobManagerProducer.sendWorkFlowName(workFlowName); 
 		return new ResponseEntity<String>(workFlowName, HttpStatus.OK); 
@@ -54,5 +56,13 @@ public class JobManagerController{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
     }

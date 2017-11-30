@@ -8,7 +8,7 @@ import {
   FormBuilder
 } from "@angular/forms";
 import { SocketService } from "./../../services/socket/socket.service";
-
+import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 @Component({
   selector: "app-login-home",
   templateUrl: "./login-home.component.html",
@@ -16,10 +16,12 @@ import { SocketService } from "./../../services/socket/socket.service";
 })
 export class LoginHomeComponent implements OnInit {
   loginForm: FormGroup;
+  statuscode:any;
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private socket: SocketService
+    private socket: SocketService,
+    private snackBar: MatSnackBar
   ) {}
 
   public user: any;
@@ -123,6 +125,14 @@ export class LoginHomeComponent implements OnInit {
       .signup(firstName, lastName, userName, email, password)
       .then(() => {
         this.login(email, password);
-      });
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error of userexist',err);
+        console.error(err.status);
+        console.error(err._body);
+        this.statuscode = err.status;
+        this.snackBar.open(err._body,'close');
+      })
+      ;
   }
 }

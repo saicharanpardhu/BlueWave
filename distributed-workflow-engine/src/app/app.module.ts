@@ -1,3 +1,4 @@
+import { NgcFloatButtonModule } from 'ngc-float-button';
 import { PerisitenceService } from "./services/persistence/perisitence.service";
 import { MaterialModule } from "./modules/material.module";
 import { RouterModule, Routes } from "@angular/router";
@@ -32,8 +33,10 @@ import { WorkflowDetailsService } from "./services/workflow-details/workflow-det
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Ng4JsonEditorModule } from "angular4-jsoneditor";
 import { ReportService } from "./services/report/report.service";
-import { AppConfig } from "./app.config";
-import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module";
+import { AppConfig } from "./app.config"; 
+import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-button.module"; 
+import {HttpInterceptor} from "./services/interceptor.service"
+>>>>>>> 6999a77731cd155e1c14c1a57aadf22bfcc34b5e
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,10 +47,12 @@ import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-butt
     CreateWorkflowComponent,
     DialogOverviewDialog,
     WnameOverviewDialog,
+    ExecuteWorkflowComponent ,
+    JsonEditor,SettingsDialog,GetReportComponent,
     ExecuteWorkflowComponent,
     JsonEditor,
     SettingsDialog,
-    GetReportComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -56,11 +61,13 @@ import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-butt
     MaterialModule,
     ReactiveFormsModule,
     HttpModule,
-    FormsModule,
+    FormsModule,    
+    NgxChartsModule, 
     NgxChartsModule,
     NgxChartsDagModule,
     TagInputModule,
-    Ng4JsonEditorModule
+    Ng4JsonEditorModule,
+    NgcFloatButtonModule
   ],
   providers: [
     AuthenticationService,
@@ -70,7 +77,8 @@ import { NgcFloatButtonModule } from "ngc-float-button/components/ngc-float-butt
     AuthGuardService,
     SocketService,
     StompService,
-    ReportService
+    ReportService,
+    HttpInterceptor
   ],
   bootstrap: [AppComponent],
   entryComponents: [
