@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Settings for workflow</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="Input" [(ngModel)]="data.orientation" name="input">
+      <mat-option *ngFor="let orientation of data.orientations" [value]="orientation.value">
+        {{orientation.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Input" [(ngModel)]="data.color" name="input">
+      <mat-option *ngFor="let color of data.colors" [value]="color">
+        {{color}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Input" [(ngModel)]="data.curveType" name="input">
+      <mat-option *ngFor="let curve of data.curveTypes" [value]="curve">
+        {{curve}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" tabindex="-1">OK</button>
+</div>

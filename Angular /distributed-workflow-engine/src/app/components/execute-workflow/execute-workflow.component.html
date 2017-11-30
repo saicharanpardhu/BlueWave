@@ -1,0 +1,43 @@
+<div class="container">
+  <mat-card style="overflow:auto">
+    <mat-card-header>
+      Workflow Execution:
+    </mat-card-header>
+    <mat-card-content>
+      <br>
+      <ul *ngIf="displayStepper" style="list-style: none; ">
+        <li *ngFor="let name of taskList" style="display: inline-block">
+          <mat-card class="cards" (click)="loadConsole(name)"> {{name}}</mat-card>
+        </li>
+      </ul>
+      <mat-progress-bar mode="determinate" [color]="color" [value]="value"></mat-progress-bar>
+      <br>
+      <br>
+
+      <!-- <mat-form-field [hideRequiredMarker]="true">
+          <input #messageBox matInput placeholder="Message" [type]="'text'" >  
+        </mat-form-field> 
+        <button mat-raised-button (click)="sendMessage(messageBox.value)" color="primary">Submit</button>
+        <br><br> -->
+      <mat-card class="console" *ngIf="cardDisplay">
+        <mat-card-title>Console output</mat-card-title>
+        <mat-card-content class="consolecontainer">
+          <div *ngFor="let output of consoleOutput">
+            <code>
+                {{output}}
+              </code>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <br>
+      <br>
+      <button mat-raised-button (click)="viewWaterFall();displayWaterfall=false" color="primary" *ngIf="displayWaterfall">View Waterfall</button>
+      <div *ngIf="viewCharts">
+        <ngx-charts-bar-horizontal-stacked [view]="view" [scheme]="colorScheme" [results]="tasks" [gradient]="gradient" [xAxis]="showXAxis"
+          [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+        </ngx-charts-bar-horizontal-stacked>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

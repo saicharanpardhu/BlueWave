@@ -1,0 +1,36 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container>* {
+  width: 100%;
+}
+
+h2 {
+  font-weight: normal;
+  text-align: center;
+}
+
+#password-hide {
+  cursor: pointer;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.form-container {
+  padding: 30px;
+}
+
+.mat-tab-group {
+  width: 100%;
+}
+
+/deep/ .mat-tab-label {
+  width: 50%;
+}
