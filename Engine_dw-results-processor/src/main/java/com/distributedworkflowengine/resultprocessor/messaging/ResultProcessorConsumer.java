@@ -74,7 +74,7 @@ public class ResultProcessorConsumer {
 		logger.info(model);
 		if(model.getOutput()!=null)
 		user.setOutput(model.getOutput()[0]);
-		user.setUserName(model.getJobId);
+		user.setUserName(model.getJobId());
 		logger.info(user.getUserName());
 		producer.sendMessageSocket(user);
 		if(model.getErrcode()==200)
