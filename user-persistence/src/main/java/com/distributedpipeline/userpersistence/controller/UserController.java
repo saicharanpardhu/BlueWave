@@ -53,7 +53,7 @@ public class UserController {
 				User uniqueEmail = userService.findByEmail(email);
 				User uniqueUserName = userrepo.findByUserName(UserDetail.getUserName());
 				
-				if(uniqueEmail == null) {
+				if(uniqueEmail == null&&uniqueUserName == null) {
 					
 					Role role = new Role("USER");
 					Set<Role> roles = new HashSet<Role>();
