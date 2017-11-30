@@ -17,6 +17,7 @@ import com.sr.report.model.ReportModel;
 import com.sr.report.repository.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ReportManagerController {
 	@Autowired
 	private ReportModelCRUDRepository reportModelCRUDRepository;
