@@ -93,8 +93,8 @@ public class SocketServiceConsumer {
             public void numberListener(String message) {
                 logger.info(message);
                 latch.countDown(); 
-                String[] args = message.split("-");
-                System.out.println("USERNAME from tasknumber"+ args[0]);
+                String[] args = message.split(" ");
+                System.out.println("Data from tasknumber: "+ args[0] + " number: " + args[1]);
                 this.template.convertAndSend("/number/"+args[0], args[1]);
                 
             } 
