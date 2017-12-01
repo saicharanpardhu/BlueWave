@@ -67,7 +67,9 @@ public class BuildConsumer {
 		 * getting the file name through the Git url 
 		 */
 		reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
+		reportModel.setJobEndTime(null);
 		logger.info(reportModel.getTaskStartTime()+"******");
+		
 		String[] url = inputdata.getInput();
 		String fname[] = url[0].split("/");
 		String fileName = fname[fname.length-1].split("\\.")[0];
