@@ -81,7 +81,9 @@ public class AgentConsumer {
 				
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
-				reportModel.setJobId(inputdata.getJobId());			
+				reportModel.setJobId(inputdata.getJobId());
+				reportModel.setJobEndTime(null);
+
 				agentProducer.sendReport(reportModel);
 				
 				System.out.println("start time:"+ reportModel.getTaskStartTime());
