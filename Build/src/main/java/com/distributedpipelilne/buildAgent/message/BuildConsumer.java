@@ -74,7 +74,8 @@ public class BuildConsumer {
 		String fname[] = url[0].split("/");
 		String fileName = fname[fname.length-1].split("\\.")[0];
         System.out.println(fileName);
-		String path = "/var/lib/Task_Source";
+		String path = "/Task_Source";
+		//String path = "/var/lib/Task_Source";
 		StringBuffer output1 = new StringBuffer();
 		File dir = new File(path);	
 		String filePath = path+"/"+fileName; 
