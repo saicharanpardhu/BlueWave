@@ -83,7 +83,7 @@ public class RunAgentConsumer {
 			     String fileName = fname2[fname2.length-1].split("\\.")[0];
 			     System.out.println(fileName);											//getting the fileName of .jar
 
-				String pathJar = "/var/lib/Task_Source""+"/"+fileName+"/target";
+				String pathJar = "/var/lib/Task_Source"+"/"+fileName+"/target";
 				System.out.println(pathJar);
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
