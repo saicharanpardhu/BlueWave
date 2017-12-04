@@ -76,7 +76,7 @@ public class AgentConsumer {
 			   // Runtime.getRuntime().exec("mkdir /home/imbatch1/Task_Source/"+inputdata.getJobId()+"/");
 			    
 			   System.out.println("folder path");
-				File dir = new File("${HOME}/Task_Source/");
+				File dir = new File("/var/lib/Task_Source/");
 //				File dirshell = new File("/home/jaydeep/Desktop/main/Stackroute/Spring/agent/");
 				
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
