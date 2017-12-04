@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../services/authentication/authenticat
 import { Router } from "@angular/router";
 import { Input, Output } from "@angular/core";
 import { WorkflowDetailsService } from "./../../services/workflow-details/workflow-details.service";
+import { MatSnackBar } from "@angular/material";
 @Component({
   selector: "app-workflow",
   templateUrl: "./workflow.component.html",
@@ -15,17 +16,32 @@ export class WorkflowComponent implements OnInit {
   constructor(
     private workflow_service: WorkflowDetailsService,
     private router: Router,
-    private persistence: PerisitenceService
+    private persistence: PerisitenceService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.load_workflows();
   }
-
+  statuscode : any;
+  loading = true;
+  noWorkflows = false;
   load_workflows() {
     return this.workflow_service.getAllWorkflows().then(datas => {
       this.datas = datas;
       console.log(this.datas);
+      if(this.datas.length == 0){
+        
+        this.noWorkflows = true;
+      }
+      this.loading = false;
+    }).catch((err) => {
+      // Handle any error that occurred in any of the previous
+      console.error('I am the error in workflow',err);
+      console.error(err.status);
+      this.statuscode = err.status;
+      this.loading = false;
+      this.snackBar.open('Cannot fetch data. Please try after some time','Close');
     });
   }
   getCurrentWorkflow(workFlowName: String) {

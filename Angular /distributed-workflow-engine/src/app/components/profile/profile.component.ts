@@ -23,20 +23,29 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService
   ) {}
 
-  user: any;
+  user: any = null;
   signUphide = true;
   reenterhide = true;
   username: string;
-  loading=false;
+  loading=true;
   ngOnInit() {
     console.log("Triggering service..");
     this.profileService
       .getUserDetails(JSON.parse(localStorage["loginData"])["Email"])
       .then(res => {
-        this.loading = true;
+        this.loading = false;
         console.log(res.json());
         this.user = res.json();
         console.log(this.user);
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error in workflow',err);
+        console.error(err.status);
+        this.statuscode = err.status;
+        this.loading = false;
+        this.user = [];
+        console.log(this.loading, "GOLA");
+        this.snackBar.open('Cannot fetch data. Please try after some time','Close');
       });
   }
 
@@ -117,6 +126,7 @@ export class ProfileComponent implements OnInit {
     this.passwordButton = this.getPasswordErrorMessage() == "";
     console.log(this.passwordButton);
   }
+  statuscode :any;
   updatePassword(reenterPassword, passwordSignup) {
     this.profileService
       .getUserDetails(JSON.parse(localStorage["loginData"])["Email"])
@@ -133,6 +143,13 @@ export class ProfileComponent implements OnInit {
         } else {
           this.snackBar.open("Please enter the correct password", "Close");
         }
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error in workflow',err);
+        console.error(err.status);
+        this.statuscode = err.status;
+        this.loading = true;
+        this.snackBar.open('Cannot fetch data. Please try after some time','Close');
       });
   }
 }

@@ -7,7 +7,11 @@ import { AppConfig } from "../../app.config";
 import { OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
 
 describe("AuthenticationService", () => {
-  class AuthenticationServiceStub extends AuthenticationService{};
+  class AuthenticationServiceStub extends AuthenticationService{
+    isLoggedIn(){
+      return true;
+    }
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
-import { AppConfig } from "../../app.config";
-
+import { AppConfig } from "../../app.config"; 
+import { HttpInterceptor } from "../interceptor.service";
 
 @Injectable()
 export class ReportService {
   public displayReport;
   public taskNumber;
-  constructor(private _http: Http, private config: AppConfig) {}
+  constructor(private _http: HttpInterceptor, private config: AppConfig) {}
   private headers = new Headers({
     "Content-Type": "application/json",
     Accept: "application/json",

@@ -7,7 +7,7 @@ import { AuthenticationService } from "../../services/authentication/authenticat
 import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
 import { ReportService } from "./../../services/report/report.service";
 import { Http } from "@angular/http";
-import { PageEvent } from "@angular/material"; 
+import { PageEvent, MatSnackBar } from "@angular/material"; 
 import { DataSource } from "@angular/cdk/collections";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/merge";
@@ -19,6 +19,7 @@ import "rxjs/add/operator/switchMap";
 import { Timestamp } from "rxjs";
 import { Task } from "./task";
 import { WorkflowDetailsService } from "../../services/workflow-details/workflow-details.service";
+
 @Component({
   selector: "app-reports",
   templateUrl: "./reports.component.html",
@@ -67,7 +68,8 @@ export class GetReportComponent implements OnInit {
   // cardDisplay = false
   constructor(
     private _service: ReportService,
-    private workflowService: WorkflowDetailsService
+    private workflowService: WorkflowDetailsService,
+    private snackBar: MatSnackBar
   ) {}
   viewmodeexit(): void {
     this.workflowService.displayWorkflow = null;
@@ -82,14 +84,26 @@ export class GetReportComponent implements OnInit {
     console.log(this.length);
     this.getAllJobReports();
   } 
-
+  errorMsg : any;
+  statusMsg: any;
+  statuscode : any;
+  noReports = false;
   getAllJobReports(){
     this._service
     .getJobID(localStorage.getItem("Email"),this.pageIndex,this.pageSize)
     .subscribe(resData1 => {
       this.jobIdnames = resData1;
+      if(this.jobIdnames.length == 0) this.noReports = true;
       console.log("jobidnames", this.jobIdnames); 
+      this.loading = false;
       this.jobId = this.jobIdnames[0].jobId; 
+    },
+    resEmployeeError => {this.errorMsg = resEmployeeError;
+      //this.snackBar.open(resEmployeeError,'close');
+      this.statusMsg = 'Error, Please try after sometime';
+      this.statuscode = this.errorMsg.status;
+      this.loading = false;
+      this.snackBar.open('Cannot fetch data. Please try after some time','Close');
     }); 
   // console.log("USER", localStorage.getItem("Email")); 
   }
@@ -132,6 +146,13 @@ export class GetReportComponent implements OnInit {
         // console.log(this.tasks);
       }
       this.showWaterFall = true;
+    },
+    resEmployeeError => {this.errorMsg = resEmployeeError;
+      //this.snackBar.open(resEmployeeError,'close');
+      this.statusMsg = 'Error, Please try after sometime';
+      this.statuscode = this.errorMsg.status;
+      this.loading = false;
+      this.snackBar.open('Cannot fetch data. Please try after some time','Close');
     });
   } 
 

@@ -1,11 +1,4 @@
-<!-- <mat-grid-list cols="20">
-        <mat-grid-tile [colspan]="1"></mat-grid-tile>
-        <mat-grid-tile [colspan]="18" id="content">
-                <router-outlet></router-outlet>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1"></mat-grid-tile>
-</mat-grid-list> -->
-<mat-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen style="position:absolute" >
 	<mat-sidenav #sidenav mode="push" class="leftsidenavBox">
 		<mat-toolbar color="primary">Menu</mat-toolbar>
 		<div class="leftsidenav">
@@ -63,7 +56,7 @@
 
 		</div>
 	</mat-sidenav>
-	<mat-toolbar *ngIf="this.authService.isLoggedIn()" color="primary">
+	<mat-toolbar *ngIf="this.authService.isLoggedIn()" color="primary" style="z-index:100">
 		<button mat-icon-button type="button" mat-button (click)="sidenav.open()">
 			<mat-icon>menu</mat-icon>
 		</button>

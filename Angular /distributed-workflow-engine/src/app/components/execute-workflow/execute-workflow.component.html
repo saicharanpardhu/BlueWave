@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card style="overflow:auto">
     <mat-card-header>
-      Workflow Execution: (Please do not refresh or go back!)
+      Workflow Execution: {{this.workFlowName}} 
     </mat-card-header>
     <mat-card-content>
       <br>
@@ -33,6 +33,7 @@
       <br>
       <button mat-raised-button (click)="viewWaterFall();displayWaterfall=false" color="primary" *ngIf="displayWaterfall">View Waterfall</button>
       <div *ngIf="viewCharts">
+        <p>JobId: {{this.jobId}}</p>
         <ngx-charts-bar-horizontal-stacked [view]="view" [scheme]="colorScheme" [results]="tasks" [gradient]="gradient" [xAxis]="showXAxis"
           [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
           [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">

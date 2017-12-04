@@ -18,13 +18,13 @@ export class ProfileService {
   getUserDetails(username){
     console.log("Getting user details : ", username);
     // console.log("Url: ", this.config.userSignup + "/userName/" + username);
-    return this.http.get(this.config.userSignup + "user/userName/" + username).toPromise().then( res => {
+    return this.http.get(this.config.userSignup + "/userName/" + username).toPromise().then( res => {
       // console.log("From service: ", res);
       return res;
     });
   }
 
   update(user){
-    return this.http.put(this.config.userSignup + "updateuser", user, { headers: this.headers }).toPromise();
+    return this.http.put(this.config.userSignup + "/updateuser", user, { headers: this.headers }).toPromise();
   }
 }
