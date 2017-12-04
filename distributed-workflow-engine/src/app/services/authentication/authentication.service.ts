@@ -46,7 +46,7 @@ export class AuthenticationService {
       .toPromise()
       .then(response => console.log(response));
   }
-
+  statuscode:any;
   login(username, password) {
     let json = "grant_type=password&password=akshay&username=akshay";
     let body = new URLSearchParams();
@@ -84,11 +84,18 @@ export class AuthenticationService {
         console.log(localStorage.getItem('loginData'));
         this.router.navigate(["/home"]);
         console.log(localStorage.getItem("loginData"));
-      })
-      .catch(() => {
-        let config = new MatSnackBarConfig();
-        config.duration = 1000;
-        this.snackBar.open("Wrong username/password.", "", config);
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error of auth',err);
+        console.error(err.status);
+        console.error(err._body);
+        this.statuscode = err.status;
+        if(this.statuscode == 0) this.snackBar.open("Network Connection Error. Please try after sometime.",'close');
+        else{
+          let config = new MatSnackBarConfig();
+          config.duration = 1000;
+          this.snackBar.open("Wrong username/password.", "Close", config);
+        }
       });
   }
 

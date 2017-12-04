@@ -23,6 +23,7 @@ export class PerisitenceService {
     console.log("Triggering...");
     let jobId = UUID.UUID();
     localStorage.setItem("jobId",jobId);
+    localStorage.setItem("workFlowName",workFlowName);
     this.socketService.subscribe(jobId);
     return this.http
       .get(
@@ -57,11 +58,9 @@ export class PerisitenceService {
 
   updateWorkFlow(workflowName, owner, description, status, tasks) {
     let workflow = new WorkFlow(workflowName, owner, description,[], [], status, tasks);
-    return this.http
-      .put(this.config.saveWorkflow, JSON.stringify(workflow), {
-        headers: this.headers
-      })
-      .toPromise();
+    return this.deleteWorkFlow(workflowName).then( () => {
+        this.sendWorkFlow2(workflowName, owner, description, status, tasks);
+      });
   }
 
   deleteWorkFlow(workFlowName) {

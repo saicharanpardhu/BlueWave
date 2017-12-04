@@ -67,12 +67,14 @@ public class BuildConsumer {
 		 * getting the file name through the Git url 
 		 */
 		reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
+		reportModel.setJobEndTime(null);
 		logger.info(reportModel.getTaskStartTime()+"******");
+		
 		String[] url = inputdata.getInput();
 		String fname[] = url[0].split("/");
 		String fileName = fname[fname.length-1].split("\\.")[0];
         System.out.println(fileName);
-		String path = "/home/imbatch1/Task_Source"+inputdata.getJobId()+"/";
+		String path = "/var/lib/Task_Source";
 		StringBuffer output1 = new StringBuffer();
 		File dir = new File(path);	
 		String filePath = path+"/"+fileName; 
@@ -111,7 +113,7 @@ public class BuildConsumer {
 			  * writing the console output in the output.txt
 			  */
 			 
-	         PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output.txt", "UTF-8");
+	        // PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
              consoleOutput.setUserName(inputdata.getUserName()+" "+inputdata.getJobId());
              logger.info(consoleOutput.getUserName());
@@ -120,9 +122,9 @@ public class BuildConsumer {
               * sending the data to UI 
               */
              consoleOutput.setConsole(output1.toString());	
-	         writer.println(output1);
+	       //  writer.println(output1);
 	         
-	         writer.close();
+	       //  writer.close();
 	         
 	         logger.info(inputdata.getUserName()); 
 			if(process.exitValue()==0) {

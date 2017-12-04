@@ -8,6 +8,7 @@ import {
   FormBuilder
 } from "@angular/forms";
 import { SocketService } from "./../../services/socket/socket.service";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-login-home",
@@ -19,7 +20,8 @@ export class LoginHomeComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private socket: SocketService
+    private socket: SocketService,
+    private snackBar: MatSnackBar
   ) {}
 
   public user: any;
@@ -119,12 +121,23 @@ export class LoginHomeComponent implements OnInit {
   login(email, password) {
     this.authenticationService.login(email, password);
   }
-
+  statuscode: any;
   signup(firstName, lastName, userName, email, password) {
     this.authenticationService
       .signup(firstName, lastName, userName, email, password)
       .then(() => {
         this.login(email, password);
+      }).catch((err) => {
+        // Handle any error that occurred in any of the previous
+        console.error('I am the error of userexist',err);
+        console.error(err.status);
+        console.error(err._body);
+        this.statuscode = err.status;
+        if(this.statuscode == 0){
+          this.snackBar.open('Cannot signup right now. Please check credentials or try again later.','Close');
+        }else{
+          this.snackBar.open(err._body,'Close');
+        }
       });
   }
 }

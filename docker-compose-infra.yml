@@ -6,7 +6,7 @@ services:
     build: ./eureka-server
     container_name: eureka
     ports:
-      - 8090:8090
+      - 8080:8080
 
   config:
      image: config

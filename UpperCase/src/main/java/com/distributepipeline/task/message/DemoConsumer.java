@@ -52,6 +52,7 @@ public class DemoConsumer {
                         
             String url= inputdata.getInput()[0];
             reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
+            reportModel.setJobEndTime(null);
             System.out.println("start time:"+ reportModel.getTaskStartTime());
             reportModel.setTaskAlias(inputdata.getTaskname());
             reportModel.setJobId(inputdata.getJobId());

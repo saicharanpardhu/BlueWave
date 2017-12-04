@@ -6,6 +6,8 @@ services:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Build
+    volumes:
+      - ${HOME}/Task_Source:/var/lib/Task_Source
     container_name: build_agent
     image: build
     ports:
@@ -16,6 +18,8 @@ services:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Clone
+    volumes:
+      - ${HOME}/Task_Source:/var/lib/Task_Source
     container_name: clone
     image: clone
     ports:
@@ -26,6 +30,8 @@ services:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Run
+    volumes:
+      - ${HOME}/Task_Source:/var/lib/Task_Source
     container_name: run
     image: run
     ports:

@@ -44,7 +44,7 @@ export class ExecuteWorkflowComponent implements OnInit {
   showLegend = true;
   showXAxisLabel = true;
   xAxisLabel = "Tasks";
-  yAxisLabel = "Timeline";
+  yAxisLabel = "Timeline(s)";
   colorScheme = {
     domain: ["#fad73f", "#663ab7", "#fad73f", "#AAAAAA"]
   };
@@ -59,6 +59,9 @@ export class ExecuteWorkflowComponent implements OnInit {
   cardDisplay = false;
   notLoaded = false;
 
+
+  jobId: String;
+  workFlowName : String;
   ngOnInit() {
     this.value = 0;
     this.tasksComplete = 0;
@@ -68,7 +71,9 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.displayStepper = false;
     this.cardDisplay = false;
     this.viewCharts = false;
-
+    this.jobId = localStorage.getItem("jobId");
+    
+    this.workFlowName = localStorage.getItem("workFlowName");
     this.socketService.socketMessages.subscribe(data => {
       this.tasksComplete += 1;
       console.log(
@@ -131,15 +136,15 @@ export class ExecuteWorkflowComponent implements OnInit {
         series: [
           {
             name: "Not started",
-            value: (Math.abs((res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number))%res[i]["jobStartTime"]
+            value: ((Math.abs((res[i]["taskStartTime"] - res[i]["jobStartTime"]) as number))%res[i]["jobStartTime"])/1000
           },
           {
             name: "Runtime",
-            value: (Math.abs((res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number))%res[i]["jobStartTime"]
+            value: ((Math.abs((res[i]["taskStartTime"] - res[i]["taskEndTime"]) as number))%res[i]["jobStartTime"])/1000
           },
           {
             name: "Idletime",
-            value: (Math.abs((res[i]["taskEndTime"] - res[i]["jobEndTime"]) as number))%res[i]["jobStartTime"]
+            value: ((Math.abs((res[i]["taskEndTime"] - res[i]["jobEndTime"]) as number))%res[i]["jobStartTime"])/1000
           }
         ]
       };

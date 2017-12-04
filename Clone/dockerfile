@@ -1,7 +1,6 @@
 FROM java:8-jre
+RUN apt-get update
+RUN apt-get install -y git
 ADD target/CloneAgent-0.0.1-SNAPSHOT.jar clone.jar
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/clone.jar"]
 EXPOSE 8098
-
-
-

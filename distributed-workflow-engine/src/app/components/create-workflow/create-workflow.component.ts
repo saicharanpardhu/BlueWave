@@ -543,15 +543,17 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   }
   executeWorkflow() {
     if(this.loadWorkflow){
-      this.updateWorkflow();
-    }
-    if(!this.loadWorkflow){
-      this.saveWorkflow();
-    }
-
-    this.updateWorkflow().then(() =>
+      this.updateWorkflow().then(() =>
       this.persistence.triggerEngine(this.workflow.workFlowName)
     );
+    }
+    if(!this.loadWorkflow){
+      this.saveWorkflow().then(() =>
+      this.persistence.triggerEngine(this.workflow.workFlowName)
+    );
+    }
+
+    // this.updateWorkflow()
   }
   //Save workflow to DB
   saveWorkflow() {

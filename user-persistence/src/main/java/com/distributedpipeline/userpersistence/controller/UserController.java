@@ -80,12 +80,12 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/user/{userName}", method = RequestMethod.GET)
+	@RequestMapping(value="/user/userName/{userName}", method = RequestMethod.GET)
 	public ResponseEntity<?> getWorkFlowOfUser(@PathVariable("userName") String owner){
 		return new ResponseEntity<User>(userService.findByUserName(owner), HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/updateuser" , consumes = "application/json")
+	@PutMapping(value="/user/updateuser" , consumes = "application/json")
 	public ResponseEntity updateUser(@Valid @RequestBody User UserDetail)
 	{
 		if(UserDetail.getUserName() == null | UserDetail.getLastName() == null | UserDetail.getEmail() == null ) {
