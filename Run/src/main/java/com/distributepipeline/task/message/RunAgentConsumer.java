@@ -73,7 +73,7 @@ public class RunAgentConsumer {
 				String fname="";					//"/GoPlacesBackend-0.1.0.jar";
 				String fnameJar = "";
 				
-				String pathProject = "/home/imbatch1/Task_Source";// /Spring_restapi/target";
+				String pathProject = "/var/lib/Task_Source";// /Spring_restapi/target";
 				
 				System.out.println("p "+pathProject);
 
@@ -83,7 +83,7 @@ public class RunAgentConsumer {
 			     String fileName = fname2[fname2.length-1].split("\\.")[0];
 			     System.out.println(fileName);											//getting the fileName of .jar
 
-				String pathJar = "/home/imbatch1/Task_Source"+"/"+fileName+"/target";
+				String pathJar = "/var/lib/Task_Source""+"/"+fileName+"/target";
 				System.out.println(pathJar);
 				reportModel.setTaskStartTime(new Date(System.currentTimeMillis()));
 				reportModel.setTaskAlias(inputdata.getTaskname());
@@ -142,13 +142,13 @@ public class RunAgentConsumer {
 			                  output1.append(line + "\n");
 			                 
 			          }
-			          PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output1.txt", "UTF-8");
+			         // PrintWriter writer = new PrintWriter("/home/imbatch1/Output/output1.txt", "UTF-8");
 			          consoleOutput.setTaskName(inputdata.getTaskname());
 			          consoleOutput.setUserName(inputdata.getJobId());
 			          
 			          consoleOutput.setConsole(output1.toString());
 			          producer.sendMessageConsole(consoleOutput);    
-			          writer.println(output1);
+			         // writer.println(output1);
 					
 			          System.out.println(process.getOutputStream());
 			          reportModel.setTaskEndTime(new Date(System.currentTimeMillis()));  
