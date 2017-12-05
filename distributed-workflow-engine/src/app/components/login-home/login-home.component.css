@@ -2,7 +2,14 @@
   display: flex;
   flex-direction: column;
 }
- 
+.heading{
+  font-family: 'Spectral SC', serif;
+  font-weight: 600;
+  font-size: 2em;
+  margin: 0px;
+  top: 0px;
+  bottom: 0px;
+}
 
 .form-container>* {
   width: 100%;
@@ -21,7 +28,24 @@ h2 {
   width: 50%;
   margin: 0 auto;
   text-align: center;
-  margin-top: 50px;
+}
+.card{
+
+  top: 50px;
+}
+body, html {
+  height: 100%;
+}
+.wrapper{
+  background-image: url("/assets/bg.jpg");
+  
+      /* Full height */
+      height: 100%; 
+  
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
 }
 
 .form-container {

@@ -56,7 +56,8 @@
 
 		</div>
 	</mat-sidenav>
-	<mat-toolbar *ngIf="this.authService.isLoggedIn()" color="primary" style="z-index:100">
+	<div *ngIf="this.authService.isLoggedIn()" >
+	<mat-toolbar color="primary" style="z-index:100">
 		<button mat-icon-button type="button" mat-button (click)="sidenav.open()">
 			<mat-icon>menu</mat-icon>
 		</button>
@@ -79,7 +80,7 @@
 
 
 	</mat-toolbar>
-	
+</div>
 		<!-- <ng2-slim-loading-bar>
 		</ng2-slim-loading-bar> -->
 	

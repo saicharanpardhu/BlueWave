@@ -1,6 +1,10 @@
-
-<mat-card class="container">
-	<mat-card-content>
+<div class="wrapper">
+<div class="container">
+	<br>
+	<p class="heading">Bluewave</p>
+	<p  class="heading" style="font-size:1em;font-family: 'Ubuntu', serif;font-weight:500">A distributed workflow engine</p>
+	<mat-card class="card"  style="opacity:0.9">
+	<mat-card-content  >
 		<mat-tab-group>
 			<mat-tab label="Login">
 				<form #loginForm="ngForm" (ngSubmit)="login(emailLoginBox.value,passwordLoginBox.value)">
@@ -66,4 +70,5 @@
 			</mat-tab>
 		</mat-tab-group>
 	</mat-card-content>
-</mat-card> 
+	
+</mat-card></div></div>
