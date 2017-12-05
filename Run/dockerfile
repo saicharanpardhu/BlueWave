@@ -1,7 +1,7 @@
 FROM java:8-jre
 ADD target/Agent_JavaRun-0.0.1-SNAPSHOT.jar run.jar
+RUN mkdir -p /usr/src/
+WORKDIR /usr/src/
+COPY ./Run-Plugin.sh /usr/src/
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/run.jar"]
 EXPOSE 8097
-
-
-
