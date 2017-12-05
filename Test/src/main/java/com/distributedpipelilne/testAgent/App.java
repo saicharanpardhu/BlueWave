@@ -10,6 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * this is the main driver class
  *
  */
+@EnableDiscoveryClient
 @SpringBootApplication
 public class App {
 
