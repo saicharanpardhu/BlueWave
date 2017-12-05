@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div *ngIf="loading" style="margin-left:45%;margin-top:10%">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div> 
+  
+  <div *ngIf="!loading"> 
+    <h1>
+      Workflows
+    </h1>
+    <div *ngIf="(statuscode == 0)" style="text-align:center">
+      <h2>Sorry!</h2>
+      <p>Cannot fetch data from backend</p>
+      <img src="/assets/error.jpg">
+    </div>
+    <div *ngIf="!(statuscode == 0)">
+      <div *ngIf="noWorkflows">
+        <p>No workflows found. Please try creating new workflows.</p>
+      </div>
+      <mat-card id="workflowcard" *ngFor="let data of datas">
+        <mat-card-header>
+          <mat-card-title class="workflowtitle">{{data.workFlowName}}</mat-card-title>
+          <span class="fill-remaining-space"></span>
+          <mat-card-subtitle>{{data.description}}</mat-card-subtitle>
+          <mat-card-actions id="workflowmodify">
+            <button mat-raised-button color="primary" [routerLink]="['/executeworkflow']" (click)="executeWorkFlow(data.workFlowName)">
+              <mat-icon>play_arrow</mat-icon>Execute</button>
+            <button mat-raised-button color="accent" (click)="getWorkflow(data.workFlowName)">
+              <i class="material-icons">cached</i>Modify</button>
+            <button mat-raised-button color="warn" (click)="deleteWorkFlow(data.workFlowName)">
+              <mat-icon>delete</mat-icon>Delete</button>
+          </mat-card-actions>
+        </mat-card-header>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+  <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+    <i class="material-icons">add_circle</i>
+  </button>
+</div>

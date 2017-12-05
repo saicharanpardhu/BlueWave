@@ -1,0 +1,98 @@
+  <div *ngIf="loading" style="margin-left:45%;margin-top:10%">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <mat-card class="container" *ngIf="this.user && !loading">
+    <div *ngIf="(this.statuscode == 0)">
+      <h2>Sorry!</h2>
+      <p>Not able to retreive data, Please try again later.</p>
+      <img src="/assets/error.jpg">
+    </div>
+    <div *ngIf="!(this.statuscode == 0)">
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>face</mat-icon>
+            <span> Your Infomation</span>
+          </ng-template>
+          <div class="info">
+            <div class="fields">
+              <p>Name</p>
+              <p>Email</p>
+              <p>Username</p>
+            </div>
+            <div class="values">
+              <p>{{user.firstName + " " + user.lastName}}</p>
+              <p>{{user.email}}</p>
+              <p>{{user.userName}}</p>
+              <!-- <p>Akshay Dharamkar</p> -->
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>settings</mat-icon>
+            <span> Edit Infomation</span>
+
+          </ng-template>
+
+          <h2 class="form-header">Update Basic Info</h2>
+          <div class="form-container">
+
+            <br>
+            <mat-form-field [hideRequiredMarker]="true">
+              <input matInput #firstName value="{{user.firstName}}" placeholder="Firstname" (keyup)="checkSubmitValidation()" [formControl]="nameValidator"
+                required>
+            </mat-form-field>
+
+            <mat-form-field matInput [hideRequiredMarker]="true">
+              <input #lastName matInput value="{{user.lastName}}" placeholder="Lastname" (keyup)="checkSubmitValidation()" [formControl]="nameValidator"
+                required>
+              <mat-error *ngIf="nameValidator.invalid">{{getNameErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field [hideRequiredMarker]="true">
+              <input #emailSignup matInput value="{{user.email}}" placeholder="Email" (keyup)="checkSubmitValidation()" [formControl]="emailSignupValidator"
+                required>
+              <mat-error *ngIf="emailSignupValidator.invalid">{{getEmailSignupErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <br>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!signupSubmit" (click)="signup(firstName.value,lastName.value,emailSignup.value)"
+              (keyup.enter)="signup(firstName.value,lastName.value,emailSignup.value)">Update Information</button>
+            <br>
+          </div>
+          <h2 class="form-header">Update Password</h2>
+          <div class="form-container">
+            <mat-form-field [hideRequiredMarker]="true">
+              <input #reenterPassword matInput placeholder="Enter your old password" [type]="reenterhide ? 'password' : 'text'" required>
+              <mat-icon matSuffix id="password-hide" (click)="reenterhide = !reenterhide">{{reenterhide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field [hideRequiredMarker]="true">
+              <input #passwordSignup matInput (keyup)="checkLogin()" (keyup.enter)="updatePassword(reenterPassword.value,passwordSignup.value)"
+                placeholder="Enter your new password" [formControl]="passwordValidator" [type]="signUphide ? 'password' : 'text'"
+                required>
+              <mat-icon matSuffix id="password-hide" (click)="signUphide = !signUphide">{{signUphide ? 'visibility' : 'visibility_off'}}</mat-icon>
+              <mat-error *ngIf="passwordValidator.invalid">{{getPasswordErrorMessage()}}</mat-error>
+              <mat-hint align="end">
+                <div *ngIf="passwordSignup.value?.length  < 6">Please add atleast {{6-(passwordSignup.value?.length || 0)}} more characters.</div>
+                <div *ngIf="passwordSignup.value?.length  >= 6">
+                  <mat-icon>done</mat-icon>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!passwordButton" (click)="updatePassword(reenterPassword.value,passwordSignup.value)">Update Password</button>
+            <br>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+  </mat-card>
+
+<div matTooltip="Add a new workflow!" class="app-fab--absolute" matTooltipPosition="left">
+  <button mat-fab color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
+    <i class="material-icons">add_circle</i>
+  </button>
+</div>

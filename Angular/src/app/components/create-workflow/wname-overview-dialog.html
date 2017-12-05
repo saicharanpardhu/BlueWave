@@ -1,0 +1,24 @@
+
+  <!-- <h1 mat-dialog-title>Add a new task to the workflow</h1> -->
+  <div mat-dialog-content>
+    <p style="text-align: center;">Workflow Details</p>
+    <mat-form-field [hideRequiredMarker]="true" style="width:100%">
+      <input matInput tabindex="1" (keyup.enter)="onNoClick()" placeholder="Workflow name" [(ngModel)]="data.Wname" [value]="data.Wname" (keyup)="searchWorkflowName(data.Wname)" [formControl]="workflowNameValidator" required>
+      <mat-error *ngIf="workflowNameValidator.invalid">{{getworkflowNameErrorMessage()}}</mat-error>
+    </mat-form-field> 
+    <div *ngIf="workflowNameexists" style="color: red;">*Workflow name already exists</div>
+  </div>
+ 
+  <mat-form-field style="width:100%">
+  <textarea matInput placeholder="Workflow description" (keyup.enter)="onNoClick()" matTextareaAutosize matAutosizeMinRows="1"
+            matAutosizeMaxRows="5"  [(ngModel)]="data.description" ></textarea>
+</mat-form-field>
+
+  <div mat-dialog-actions style="float:right">
+     <button mat-button (click)="onNoClick()" [disabled]="workflowNameValidator.invalid"  mat-raised-button color="primary"  >OK</button>
+      <button mat-button  (click)="onCancelClick()" >Cancel</button>
+     
+  </div>  
+<!--  
+[mat-dialog-close]="data" -->
+

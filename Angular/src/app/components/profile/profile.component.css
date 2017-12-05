@@ -1,0 +1,46 @@
+ .container {
+   width: 80%;
+   margin: 0 auto;
+   text-align: center;
+   margin-top: 50px;
+ }
+ /deep/ .mat-tab-label {
+  width: 50%;
+}
+
+ span {
+   margin-left: 3px;
+ }
+ #password-hide {
+  cursor: pointer;
+}
+ .info {
+   width: 100%;
+ }
+ .form-header{
+   text-align: left;
+   margin-left: 20px;
+ }
+ .form-container {
+  display: flex;
+  flex-direction: column;   
+}
+.form-container>* {
+  width: 80%; 
+  margin-left: 20px;
+}
+ .fields {
+   float: left;
+   width: 20%;
+ }
+
+ .values {
+   position: absolute;
+   width: 60%;
+ }
+
+ .app-fab--absolute {
+   position: fixed;
+   bottom: 1rem;
+   right: 1rem;
+ }

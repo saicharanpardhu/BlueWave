@@ -1,13 +1,13 @@
 version: '2'
 services:
-  
+
   build_agent:
     environment:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Build
     volumes:
-      - ${HOME}/Task_Source:/var/lib/Task_Source
+      - /home/imbatch1/Task_Source:/Task_Source
     container_name: build_agent
     image: build
     ports:
@@ -19,19 +19,19 @@ services:
       KAFKA_URL: kafka
     build: ./Clone
     volumes:
-      - ${HOME}/Task_Source:/var/lib/Task_Source
+      - /home/imbatch1/Task_Source:/Task_Source
     container_name: clone
     image: clone
     ports:
       - 8098:8098
-
+      
   run:
     environment:
       EUREKA_URL: eureka
       KAFKA_URL: kafka
     build: ./Run
     volumes:
-      - ${HOME}/Task_Source:/var/lib/Task_Source
+      - /home/imbatch1/Task_Source:/Task_Source
     container_name: run
     image: run
     ports:
@@ -46,3 +46,4 @@ services:
     image: uppercase
     ports:
       - 8096:8096
+      
