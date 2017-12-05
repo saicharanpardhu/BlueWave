@@ -6,6 +6,8 @@ ReportingService/mvnw.cmd
 ReportingService/.project
 ReportingService/.classpath
 
+Test/target
+
 PersistenceManager/target
 PersistenceManager/.mvn
 PersistenceManager/.settings
