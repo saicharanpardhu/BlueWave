@@ -41,6 +41,7 @@
         <module>Build</module>
         <module>Clone</module>
         <module>UpperCase</module>
+        <module>Test</module>
   </modules>
 
 
