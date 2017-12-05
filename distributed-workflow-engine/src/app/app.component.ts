@@ -14,6 +14,7 @@ import {
   state
 } from "@angular/animations";
 import { UUID } from 'angular2-uuid';
+import { SlimLoadingBarService } from "ng2-slim-loading-bar";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -26,10 +27,12 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private socketService: SocketService,
     private authService: AuthenticationService,
-    private workflowService: WorkflowDetailsService
+    private workflowService: WorkflowDetailsService,
+    private slimLoadingBarService: SlimLoadingBarService
   ) {}
   notifications = [];
   ngOnInit() {
+    this.slimLoadingBarService.interval = 1;
     this.socketService.socketMessages.subscribe(data => {
       let config = new MatSnackBarConfig();
       config.duration = 1000;

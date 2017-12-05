@@ -25,6 +25,12 @@ export class PerisitenceService {
     localStorage.setItem("jobId",jobId);
     localStorage.setItem("workFlowName",workFlowName);
     this.socketService.subscribe(jobId);
+    console.log(this.config.triggerEngine +
+      localStorage.getItem("Email") +
+      "/" +
+      localStorage.getItem("jobId") +
+      "/" +
+      workFlowName);
     return this.http
       .get(
         this.config.triggerEngine +
@@ -49,6 +55,7 @@ export class PerisitenceService {
 
   sendWorkFlow2(workflowName, owner, description, status, tasks) {
     let workflow = new WorkFlow(workflowName, owner, description, [], [], status, tasks);
+    console.log(JSON.stringify(workflow));
     return this.http
       .post(this.config.saveWorkflow, JSON.stringify(workflow), {
         headers: this.headers
@@ -56,9 +63,10 @@ export class PerisitenceService {
       .toPromise();
   }
 
-  updateWorkFlow(workflowName, owner, description, status, tasks) {
+  updateWorkFlow(oldworkflowName,workflowName, owner, description, status, tasks) {
     let workflow = new WorkFlow(workflowName, owner, description,[], [], status, tasks);
-    return this.deleteWorkFlow(workflowName).then( () => {
+    console.log(oldworkflowName);
+    return this.deleteWorkFlow(oldworkflowName).then( () => {
         this.sendWorkFlow2(workflowName, owner, description, status, tasks);
       });
   }

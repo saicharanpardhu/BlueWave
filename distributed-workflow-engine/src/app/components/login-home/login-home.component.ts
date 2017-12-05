@@ -9,6 +9,7 @@ import {
 } from "@angular/forms";
 import { SocketService } from "./../../services/socket/socket.service";
 import { MatSnackBar } from "@angular/material";
+import { SlimLoadingBarService } from "ng2-slim-loading-bar";
 
 @Component({
   selector: "app-login-home",
@@ -21,7 +22,8 @@ export class LoginHomeComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private socket: SocketService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private slimLoadingBarService: SlimLoadingBarService
   ) {}
 
   public user: any;
@@ -119,6 +121,9 @@ export class LoginHomeComponent implements OnInit {
   }
 
   login(email, password) {
+    this.slimLoadingBarService.interval = 1000;
+    this.slimLoadingBarService.progress = 25;
+    
     this.authenticationService.login(email, password);
   }
   statuscode: any;

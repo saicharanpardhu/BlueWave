@@ -44,6 +44,7 @@ import { TSMap } from "typescript-map";
 import { OnDestroy } from "@angular/core";
 import {NgcFloatButtonModule} from 'ngc-float-button';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { forEach } from "@angular/router/src/utils/collection";
 
 /**
  * @title Dialog Overview
@@ -68,11 +69,15 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     },
     {
       name: "Build",
-      value: "Build1"
+      value: "Build3"
     },
     {
       name: "Run",
       value: "run"
+    },
+    {
+      name: "Test",
+      value: "test5"
     }
   ];
   //Tasks of the workflow
@@ -88,7 +93,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   dependsOn : any;
   depends_on : any;
   input :String;
-
+  oldworkflowName :String ="";
   //workFlow Status
   status = "created";
   //List of all aliases in a workflow
@@ -98,7 +103,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
   deleteMode : boolean = false;
   deleteModeButton ="DELETE";
   inputType = 'None';
-
+ 
 
   loadWorkflow = false;
 
@@ -225,6 +230,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
           this.wTaskAliases = this.map.keys();
           this.workflowToGraph(this.map);
           this.workflow.workFlowName = this.workflowService.displayWorkflow.workFlowName;
+          this.oldworkflowName = this.workflow.workFlowName;
       console.log(this.map);    
     }
     else{
@@ -352,7 +358,29 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
           
           if(result!=undefined){
-          this.deleteTask(taskName);
+           if(result.taskName != taskName ){
+            this.map.forEach((value: Task, key: String) => {
+              if(value.depends_on!=null){
+            let len  = value.depends_on.length;
+              for(let i=0;i<len;i++ ){
+                 if(value.depends_on[i] == taskName)
+                 value.depends_on[i] = result.taskName;
+              }
+              }
+            if(value.input!=null){
+              let len = value.input.length;
+              for(let i=0;i<len;i++ ){
+                if(value.input[i] == taskName)
+                value.input[i] = result.taskName;
+             }
+            }
+            });
+            this.deleteTask(taskName);
+          }
+          else{
+            //this.deleteTask2(taskName);
+          }
+         
           let task: Task = {};
           this.taskName = result.taskName;
           task.type = result.type;
@@ -387,15 +415,16 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
             this.updateLinks(start_depends, this.taskName);
           }
     
-          console.log(this.taskName);
+          console.log(this.taskName,this.task);
           this.map.set(this.taskName, task);
           this.workflow.tasks = this.map;
           this.taskName = "";
           console.log(this.map);
+          
         }
         });
     
-    
+     
      }         
 
   //Delete a task and it's links
@@ -414,6 +443,20 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     this.workflow.tasks = this.map;
     this.workflowToGraph(this.map);
   }
+    // //Delete a task and it's links
+    // deleteTask2(oldName:String) {
+      
+    //   console.log(oldName);
+    //   this.map.delete(oldName);
+      
+      
+    //   console.log(this.map);
+      
+    //   this.workflow.tasks = this.map;
+    //   this.workflowToGraph(this.map);
+      
+    // }
+   
   //Convert any map to links
   workflowToGraph(map: TSMap<String, Task>) {
     this.hierarchialGraph = getTurbineData();
@@ -506,7 +549,14 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       this.depends_on = result.dependsOn;
       task.input = [];
       task.status = "ready";
-      task.input.push(result.input);
+      // console.log(result.input,"INPOUT");
+      // console.log(result.input.split(","), "RESULT SPLIT");
+
+      for(let item of result.input.split(",")){
+        console.log(item);
+      task.input.push(item);
+      }
+      // console.log(task.input, " TASSK INPUT");
       this.wTaskAliases.push(result.taskName);
 
       task.depends_on = null;
@@ -582,8 +632,9 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     let config = new MatSnackBarConfig();
     config.duration = 500;
     console.log("From component: ", this.workflow.workFlowName);
+    if(this.oldworkflowName == '') this.oldworkflowName = this.workflow.workFlowName;
     return this.persistence
-      .updateWorkFlow(
+      .updateWorkFlow(this.oldworkflowName,
         this.workflow.workFlowName,
         this.workflow.owner,
         this.workflowDescription,
@@ -607,8 +658,15 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe(result => {
-      
-      this.workflow.workFlowName=result.Wname;
+      if(result.editing){
+        if(result.Wname != this.workflow.workFlowName)
+        this.oldworkflowName = this.workflow.workFlowName.replace(/\s/g, '-');
+      }
+      else{
+        this.oldworkflowName = result.Wname.replace(/\s/g, '-');
+      }
+      this.workflow.workFlowName=result.Wname.replace(/\s/g, '-');
+      console.log("Workflow name saved: ",this.workflow.workFlowName)
       this.Wname = result.Wname;
       this.workflowDescription = result.description;
       console.log(this.workflow.workFlowName,'The dialog was closed');
@@ -631,7 +689,7 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
       myMap.fromJSON(result);
       console.log(myMap);
       this.map = myMap;
-
+      console.log(this.map);
       this.wTaskAliases = this.map.keys();
 
       this.workflowToGraph(this.map);

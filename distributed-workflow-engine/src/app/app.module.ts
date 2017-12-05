@@ -15,6 +15,7 @@ import { StompService } from "ng2-stomp-service";
 import { FormControl, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { Http, HttpModule } from "@angular/http";
+import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import {
   CreateWorkflowComponent,
   DialogOverviewDialog,
@@ -57,6 +58,7 @@ import {HttpInterceptor} from "./services/interceptor.service";
     AppRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
+    SlimLoadingBarModule.forRoot(),
     HttpModule,
     FormsModule,
     NgxChartsModule,

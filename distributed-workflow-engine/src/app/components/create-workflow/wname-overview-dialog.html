@@ -1,9 +1,9 @@
 
   <!-- <h1 mat-dialog-title>Add a new task to the workflow</h1> -->
   <div mat-dialog-content>
-    <p style="text-align: center;">WORKFLOW DETAILS</p>
+    <p style="text-align: center;">Workflow Details</p>
     <mat-form-field [hideRequiredMarker]="true" style="width:100%">
-      <input matInput tabindex="1" (keyup.enter)="onNoClick()" placeholder="WorkFlowName" [(ngModel)]="data.Wname" [value]="data.Wname" (keyup)="searchWorkflowName(data.Wname)" [formControl]="workflowNameValidator" required>
+      <input matInput tabindex="1" (keyup.enter)="onNoClick()" placeholder="Workflow name" [(ngModel)]="data.Wname" [value]="data.Wname" (keyup)="searchWorkflowName(data.Wname)" [formControl]="workflowNameValidator" required>
       <mat-error *ngIf="workflowNameValidator.invalid">{{getworkflowNameErrorMessage()}}</mat-error>
     </mat-form-field> 
     <div *ngIf="workflowNameexists" style="color: red;">*Workflow name already exists</div>

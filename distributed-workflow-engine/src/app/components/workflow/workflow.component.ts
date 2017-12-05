@@ -23,7 +23,7 @@ export class WorkflowComponent implements OnInit {
   ngOnInit() {
     this.load_workflows();
   }
-  statuscode : any;
+  statuscode : any = null;
   loading = true;
   noWorkflows = false;
   load_workflows() {
@@ -69,7 +69,7 @@ export class WorkflowComponent implements OnInit {
       console.log("Loading new workflows..");
       this.load_workflows();
     });
-  }
+  } 
   viewmodeexit(): void {
     this.workflow_service.displayWorkflow = null;
   }

@@ -37,6 +37,7 @@ export class ExecuteWorkflowComponent implements OnInit {
   tasks : any;
   single: any[];
   multi: any[];
+  width : number;
   view: any[] = [1000, 150];
   showXAxis = false;
   showYAxis = true;
@@ -45,6 +46,7 @@ export class ExecuteWorkflowComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = "Tasks";
   yAxisLabel = "Timeline(s)";
+
   colorScheme = {
     domain: ["#fad73f", "#663ab7", "#fad73f", "#AAAAAA"]
   };
@@ -77,7 +79,7 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.socketService.socketMessages.subscribe(data => {
       this.tasksComplete += 1;
       console.log(
-        "Completed" +
+        "Completed " +
           this.tasksComplete +
           " of " +
           this.socketService.socketNumber
@@ -93,9 +95,13 @@ export class ExecuteWorkflowComponent implements OnInit {
     this.socketService.socketNames.subscribe(data => {
       this.taskList.push(data);
       console.log("LENGTH", this.taskList.length);
-      if (this.taskList.length == this.socketService.socketNumber)
+      this.width += 50;
+      if (this.taskList.length == this.socketService.socketNumber){
         this.displayStepper = true;
+      } 
     });
+
+    
   }
 
   loadConsole(taskName) {

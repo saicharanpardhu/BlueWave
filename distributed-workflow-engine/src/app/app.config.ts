@@ -1,5 +1,5 @@
 //https://github.com/jaydeepjain3226/movie_cruiser_springboot.git
-
+//https://github.com/avalanche557/Spring_restapi.git
 //using IP of system
 // export class AppConfig {
 //   public readonly userSignup = "http://172.23.238.176:8088/v0.1/userinfo/user/";
@@ -20,19 +20,19 @@
 
 
 export class AppConfig {
-  public readonly userSignup = "http://172.23.238.151:8090/user-persistence/v0.1/userinfo/user";
-  public readonly login = "http://172.23.238.151:5000";
-  public readonly triggerEngine = "http://172.23.238.151:8090/job-manager/v1.0/workflowname/";
-  public readonly saveWorkflow = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/workflow/";
-  public readonly removeWorkflow = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/workflow/remove/";
-  public readonly reportGetJobId = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
-  public readonly getReport = "http://172.23.238.151:8040/checkout/";
-  public readonly persistence = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/workflow/";
-  public readonly socket = "http://172.23.238.151:3000/gs-guide-websocket";
-  public readonly getAllWorkflows = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/workflow/users/";
-  public readonly getWorkflow = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
-  public readonly getTasksOfWorkflow = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/tasks/";
-  public readonly getTaskNumber = "http://172.23.238.151:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
+  public readonly userSignup = "http://172.23.238.178:8090/user-persistence/v0.1/userinfo/user";
+  public readonly login = "http://172.23.238.178:5000";
+  public readonly triggerEngine = "http://172.23.238.178:8090/job-manager/v1.0/workflowname/";
+  public readonly saveWorkflow = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/workflow/";
+  public readonly removeWorkflow = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/workflow/remove/";
+  public readonly reportGetJobId = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
+  public readonly getReport = "http://172.23.238.178:8040/checkout/";
+  public readonly persistence = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/workflow/";
+  public readonly socket = "http://172.23.238.178:3000/gs-guide-websocket";
+  public readonly getAllWorkflows = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/workflow/users/";
+  public readonly getWorkflow = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
+  public readonly getTasksOfWorkflow = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/tasks/";
+  public readonly getTaskNumber = "http://172.23.238.178:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
 }
 
 // using container name 

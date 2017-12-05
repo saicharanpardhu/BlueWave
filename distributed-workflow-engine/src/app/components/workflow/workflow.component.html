@@ -5,12 +5,13 @@
   </div> 
   
   <div *ngIf="!loading"> 
-    <h2>
+    <h1>
       Workflows
-    </h2>
+    </h1>
     <div *ngIf="(statuscode == 0)" style="text-align:center">
-      <h1>Sorry!</h1>
+      <h2>Sorry!</h2>
       <p>Cannot fetch data from backend</p>
+      <img src="/assets/error.jpg">
     </div>
     <div *ngIf="!(statuscode == 0)">
       <div *ngIf="noWorkflows">

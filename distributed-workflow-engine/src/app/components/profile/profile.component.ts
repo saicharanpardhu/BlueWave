@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   loading=true;
   ngOnInit() {
     console.log("Triggering service..");
+    this.statuscode = null;
     this.profileService
       .getUserDetails(JSON.parse(localStorage["loginData"])["Email"])
       .then(res => {
@@ -126,7 +127,7 @@ export class ProfileComponent implements OnInit {
     this.passwordButton = this.getPasswordErrorMessage() == "";
     console.log(this.passwordButton);
   }
-  statuscode :any;
+  statuscode :any = null;
   updatePassword(reenterPassword, passwordSignup) {
     this.profileService
       .getUserDetails(JSON.parse(localStorage["loginData"])["Email"])

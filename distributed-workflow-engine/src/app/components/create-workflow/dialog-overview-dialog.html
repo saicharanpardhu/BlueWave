@@ -2,10 +2,10 @@
 <h1 mat-dialog-title *ngIf="data.editing">Edit Task</h1>
 <div mat-dialog-content id="dialog-content">
   <mat-form-field>
-    <input matInput tabindex="1" placeholder="TaskName" [(ngModel)]="data.taskName">
+    <input matInput tabindex="1" placeholder="Task name" [(ngModel)]="data.taskName">
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="TaskType" [(ngModel)]="data.type" name="tasks">
+    <mat-select placeholder="Task type" [(ngModel)]="data.type" name="tasks">
       <mat-option *ngFor="let task of data.taskTypes" [value]="task.value">
         {{task.name}}
       </mat-option>

@@ -75,14 +75,14 @@ export class GetReportComponent implements OnInit {
     this.workflowService.displayWorkflow = null;
   }
   loading = false;
-  ngOnInit() {
-    console.log("ngonit reports component ");
+  ngOnInit() { 
     this._service.getTaskNumber().then( res => this.length = res.json()); 
     this.pageSize = 10;
     this.pageIndex = 0;
     this.loading = true;
     console.log(this.length);
     this.getAllJobReports();
+    this.displayReport = false;
   } 
   errorMsg : any;
   statusMsg: any;
@@ -93,37 +93,36 @@ export class GetReportComponent implements OnInit {
     .getJobID(localStorage.getItem("Email"),this.pageIndex,this.pageSize)
     .subscribe(resData1 => {
       this.jobIdnames = resData1;
-      if(this.jobIdnames.length == 0) this.noReports = true;
-      console.log("jobidnames", this.jobIdnames); 
+      if(this.jobIdnames.length == 0) this.noReports = true; 
       this.loading = false;
       this.jobId = this.jobIdnames[0].jobId; 
     },
-    resEmployeeError => {this.errorMsg = resEmployeeError;
-      //this.snackBar.open(resEmployeeError,'close');
+    resEmployeeError => {this.errorMsg = resEmployeeError; 
       this.statusMsg = 'Error, Please try after sometime';
       this.statuscode = this.errorMsg.status;
       this.loading = false;
       this.snackBar.open('Cannot fetch data. Please try after some time','Close');
-    }); 
-  // console.log("USER", localStorage.getItem("Email")); 
+    });  
   }
-
+  displayReport = false;
   getJobReports(jobId: String) {
     this.reports1 = [];
     this._service.getReport(jobId).subscribe(response => {
       this.jobStartTime = new Date(response.json()[0]["jobStartTime"]);
-      this.jobEndTime = new Date(response.json()[0]["jobEndTime"]);
-      this.jobStatus = response.json()[0]["jobStatus"];
-      // console.log(response.json().length);
+      if(response.json()[0]["jobEndTime"] == null) this.jobEndTime = new Date();
+      else this.jobEndTime = new Date(response.json()[0]["jobEndTime"]);
+      this.jobStatus = response.json()[0]["jobStatus"]; 
       let len = response.json().length;
       this.tasks = [];
       this.taskLogs = [];
+      this.displayReport = true;
       for (let i = 0; i < len; i++) {
         this.task = [];
         this.task.taskAlias = response.json()[i]["taskAlias"];
         this.task.taskStartTime = new Date(response.json()[i]["taskStartTime"]);
         this.task.taskEndTime = new Date(response.json()[i]["taskEndTime"]);
         this.task.taskLogs = response.json()[i]["taskLogs"];
+        if(response.json()[i]["taskEndTime"] != null){
         this.taskWaterfall = {
           name: response.json()[i]["taskAlias"],
           series: [
@@ -142,6 +141,7 @@ export class GetReportComponent implements OnInit {
           ]
         };
         this.tasks.push(this.taskWaterfall);
+      }
         this.taskLogs.push(this.task);
         // console.log(this.tasks);
       }

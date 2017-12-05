@@ -5,6 +5,7 @@ import { MatSnackBar, MatSnackBarConfig } from "@angular/material";
 import { Router } from "@angular/router";
 import { AppConfig } from "../../app.config";
 import { UUID } from "angular2-uuid";
+import { SlimLoadingBarService } from "ng2-slim-loading-bar";
 
 @Injectable()
 export class AuthenticationService {
@@ -18,7 +19,8 @@ export class AuthenticationService {
     private socket: SocketService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private config: AppConfig
+    private config: AppConfig,
+    private slimLoadingBarService: SlimLoadingBarService
   ) {}
   private headers = new Headers({
     "Content-Type": "application/json",
@@ -82,6 +84,7 @@ export class AuthenticationService {
         this.socket.connect();
         localStorage.setItem("Email", username);
         console.log(localStorage.getItem('loginData'));
+        this.slimLoadingBarService.complete();
         this.router.navigate(["/home"]);
         console.log(localStorage.getItem("loginData"));
       }).catch((err) => {
@@ -90,7 +93,8 @@ export class AuthenticationService {
         console.error(err.status);
         console.error(err._body);
         this.statuscode = err.status;
-        if(this.statuscode == 0) this.snackBar.open("Network Connection Error. Please try after sometime.",'close');
+        this.slimLoadingBarService.complete();
+        if(this.statuscode == 0) this.snackBar.open("Network Connection Error. Please try after sometime.",'Close');
         else{
           let config = new MatSnackBarConfig();
           config.duration = 1000;

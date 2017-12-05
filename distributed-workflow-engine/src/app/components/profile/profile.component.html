@@ -3,8 +3,9 @@
   </div>
   <mat-card class="container" *ngIf="this.user && !loading">
     <div *ngIf="(this.statuscode == 0)">
-      <h1>Sorry!</h1>
+      <h2>Sorry!</h2>
       <p>Not able to retreive data, Please try again later.</p>
+      <img src="/assets/error.jpg">
     </div>
     <div *ngIf="!(this.statuscode == 0)">
       <mat-tab-group>
