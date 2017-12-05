@@ -12,6 +12,7 @@ import com.distributedpipelilne.testAgent.domain.ConsoleOutput;
 import com.distributedpipelilne.testAgent.domain.Output;
 import com.distributedpipelilne.testAgent.domain.ReportModel;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -21,12 +22,17 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 @EnableKafka
 public class testAgentProducerConfig {
-    @Bean
+    
+	@Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServer;
+
+	
+	@Bean
     public ProducerFactory<String, Output> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.178:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -48,7 +54,7 @@ public class testAgentProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.178:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -69,7 +75,7 @@ public class testAgentProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.178:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, 
           StringSerializer.class);
@@ -90,7 +96,7 @@ public class testAgentProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
           ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-          "172.23.238.178:9092");
+          bootstrapServer);
         configProps.put(
           ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
           StringSerializer.class);

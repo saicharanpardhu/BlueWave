@@ -76,24 +76,25 @@ public class testAgentConsumer {
 		String fileName = fname2[fname2.length-1].split("\\.")[0];
         logger.info(fileName);
         
-		String path = "/home/avalabche/testrun2/"+inputdata.getJobId()+"/";
+		String path = "/Task_Source/"+inputdata.getJobId()+"/";
 		StringBuffer output1 = new StringBuffer();
 		File dir = new File(path);	
 		String filePath = path+"/"+fileName;
-		File filepath = new File(filePath);
-		
+//		File filepath = new File(filePath);
+		File filepath = new File("/usr/src/");
 		/*
 		 * setting starting time stamp
 		 */
 		try{
-			logger.info("./Build-Plugin.sh "+filePath);
+			logger.info("./Test-Plugin.sh "+filePath);
 			logger.info("Task Processing...");
 			
 			 logger.info("mvn -Dtest="+url[1]+" test");
 			 /*
 				 * executing the "mvn -Dtest="< test file name> test" for the Build-Plugin.sh
 	 			 */
-			 Process process = Runtime.getRuntime().exec("mvn -Dtest="+url[1]+" test",null, filepath);
+			 Process process = Runtime.getRuntime().exec("./Test-Plugin.sh "+url[1]+"test",null, filepath);
+			 //Process process = Runtime.getRuntime().exec("mvn -Dtest="+url[1]+" test",null, filepath);
 			 process.waitFor();
 			 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			 String line = "";
@@ -109,16 +110,16 @@ public class testAgentConsumer {
 			  * writing the console output in the output.txt
 			  */
 
-	         PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
+	        // PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
              consoleOutput.setUserName(inputdata.getUserName());
              /*
               * sending the data to UI 
               */
              consoleOutput.setConsole(output1.toString());	
-	         writer.println(output1);
+	         //writer.println(output1);
 	         
-	         writer.close();
+	         //writer.close();
 	         
 	         logger.info(inputdata.getUserName());
 	         

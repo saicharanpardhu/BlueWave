@@ -1,0 +1,8 @@
+FROM java:8-jre
+FROM maven
+ADD target/Test-0.0.1-SNAPSHOT.jar test1.jar
+RUN mkdir -p /usr/src/
+WORKDIR /usr/src/
+COPY ./Test-Plugin1.sh /usr/src/
+ENTRYPOINT ["java","-Xmx200m", "-jar", "/test1.jar"]
+EXPOSE 8092
