@@ -26,7 +26,8 @@ public class BuildConsumer {
         private CountDownLatch latch = new CountDownLatch(1);
           public CountDownLatch getLatch() {
             return latch;
-@Autowired 
+          }
+         @Autowired 
          private Input input;
           @Autowired
           ConsoleOutput consoleOutput;
@@ -36,7 +37,7 @@ public class BuildConsumer {
          BuildProducer producer;
          @Autowired
          ReportModel reportModel;
-                                                                                                                                              $
+                                                                                                                                              
         public void setLatch(CountDownLatch latch) {
                 this.latch = latch;
         }
@@ -44,7 +45,7 @@ public class BuildConsumer {
          * consumer on kafka topic "Build1"
          */
         @KafkaListener(topics = "Build1", 
-                          containerFactory = "reportKafkaListenerContainerFactory")
+                         containerFactory = "reportKafkaListenerContainerFactory")
                         public void inputlistener(Input  inputdata) throws IOException, InterruptedException {
                 /*
                  * getting the file name through the Git url 
@@ -55,7 +56,7 @@ public class BuildConsumer {
                 String[] url = inputdata.getInput();
                 String fname[] = url[0].split("/");
                 String fileName = fname[fname.length-1].split("\\.")[0];
-System.out.println(fileName);
+                System.out.println(fileName);
                 String path = "/Task_Source";
                 //String path = "/var/lib/Task_Source";
                 StringBuffer output1 = new StringBuffer();
@@ -133,12 +134,14 @@ logger.info(inputdata.getUserName());
                 reportModel.setTaskEndTime(new Date(System.currentTimeMillis()));
 //              Timestamp endtime = new Timestamp(System.currentTimeMillis());
                 logger.info(reportModel.getTaskEndTime()+"#####");
-                                                                                                                                              $
+                                                                                                                                              
                 /*
 * calling the kafka producer 
                  */
+                                                                                                                                                                                                                                                                            {                                                                                                                              
                 producer.sendMessage();
                 producer.sendReport(reportModel);
                 producer.sendMessageConsole(consoleOutput);
                 }
+      }
 }

@@ -1,4 +1,4 @@
-ROM java:8-jre
+FROM java:8-jre
 FROM maven
 USER root
 
