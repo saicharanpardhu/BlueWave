@@ -5,4 +5,4 @@ RUN mkdir -p /usr/src/
 WORKDIR /usr/src/
 COPY ./Test-Plugin1.sh /usr/src/
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/test1.jar"]
-EXPOSE 8095
+EXPOSE 8092

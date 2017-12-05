@@ -58,7 +58,7 @@ public class testAgentConsumer {
 	 * consumer on kafka topic "test2"
 	 */
 
-	@KafkaListener(topics = "test5", 
+	@KafkaListener(topics = "test", 
 			  containerFactory = "reportKafkaListenerContainerFactory")
 			public void inputlistener(Input  inputdata) throws IOException, InterruptedException {
 		
@@ -76,11 +76,11 @@ public class testAgentConsumer {
 		String fileName = fname2[fname2.length-1].split("\\.")[0];
         logger.info(fileName);
         
-		String path = "/Task_Source/"+inputdata.getJobId()+"/";
+		String path = "/Task_Source";
 		StringBuffer output1 = new StringBuffer();
 		File dir = new File(path);	
 		String filePath = path+"/"+fileName;
-//		File filepath = new File(filePath);
+		//File filepath = new File(filePath);
 		File filepath = new File("/usr/src/");
 		/*
 		 * setting starting time stamp
@@ -93,8 +93,9 @@ public class testAgentConsumer {
 			 /*
 				 * executing the "mvn -Dtest="< test file name> test" for the Build-Plugin.sh
 	 			 */
-			 Process process = Runtime.getRuntime().exec("./Test-Plugin.sh "+url[1]+"test",null, filepath);
-			 //Process process = Runtime.getRuntime().exec("mvn -Dtest="+url[1]+" test",null, filepath);
+
+			Process process = Runtime.getRuntime().exec("./Test-Plugin1.sh "+url[1]+" test"+" "+fileName,null, filepath);
+			// Process process = Runtime.getRuntime().exec("mvn -Dtest="+url[1]+" test",null,filepath);
 			 process.waitFor();
 			 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			 String line = "";
@@ -110,13 +111,14 @@ public class testAgentConsumer {
 			  * writing the console output in the output.txt
 			  */
 
-	        // PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
+	        //PrintWriter writer = new PrintWriter("/home/avalabche/Desktop/output.txt", "UTF-8");
 	         consoleOutput.setTaskName(inputdata.getTaskname());
              consoleOutput.setUserName(inputdata.getUserName());
              /*
               * sending the data to UI 
               */
              consoleOutput.setConsole(output1.toString());	
+             logger.info(output1.toString());
 	         //writer.println(output1);
 	         
 	         //writer.close();
@@ -129,7 +131,7 @@ public class testAgentConsumer {
 				output.setOutput(str);
 				output.setErrcode(200);
 				output.setStderr("task complete");
-				logger.info("task complete");
+				logger.info("maroti task complete");
 				reportModel.setJobStatus("build complete");
 			}
 		}
