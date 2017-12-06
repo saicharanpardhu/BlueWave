@@ -44,7 +44,7 @@ public class BuildConsumer {
         /*
          * consumer on kafka topic "Build1"
          */
-        @KafkaListener(topics = "Build1", 
+        @KafkaListener(topics = "Build3", 
                          containerFactory = "reportKafkaListenerContainerFactory")
                         public void inputlistener(Input  inputdata) throws IOException, InterruptedException {
                 /*
