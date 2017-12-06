@@ -6,12 +6,8 @@
 	<groupId>com.distributedpipeline.java</groupId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<description>Demo project for Spring Boot</description>
-    <artifactId>Twitter</artifactId>
-	
-	
 
-	<name>Twitter</name>
+	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>com.distributedworkflowengine.java</groupId>
@@ -32,15 +28,29 @@
            <artifactId>spring-boot-starter-web</artifactId>
        </dependency>
        <dependency>
-			<groupId>org.twitter4j</groupId>
-			<artifactId>twitter4j-core</artifactId>
-			<version>[3.0,)</version>
-		</dependency>
-       <dependency>
            <groupId>org.springframework.boot</groupId>
            <artifactId>spring-boot-starter-test</artifactId>
            <scope>test</scope>
        </dependency>
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		
+		
+		
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-gmail -->
+		<dependency>
+		    <groupId>com.google.apis</groupId>
+		    <artifactId>google-api-services-gmail</artifactId>
+		    <version>v1-rev72-1.23.0</version>
+		</dependency>
        
        <!-- https://mvnrepository.com/artifact/io.swagger/swagger-annotations -->
   <dependency>
@@ -167,4 +177,6 @@
 	</build>
 
 
+	<artifactId>EmailService</artifactId>
+	<name>EmailService</name>
 </project>

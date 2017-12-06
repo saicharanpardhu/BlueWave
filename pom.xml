@@ -42,6 +42,8 @@
         <module>Clone</module>
         <module>UpperCase</module>
         <module>Test</module>
+<module>TwitterService</module>
+        <module>emailService</module>
   </modules>
 
 

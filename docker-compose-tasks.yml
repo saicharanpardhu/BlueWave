@@ -59,3 +59,22 @@ services:
     ports:
       - 8095:8095
       
+  email-task:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./emailService
+    container_name: email-task
+    image: email
+    ports:
+      - 8094:8094
+
+  twitter-task:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./TwitterService
+    container_name: twitter-task
+    image: twitter-task
+    ports:
+      - 8093:8093

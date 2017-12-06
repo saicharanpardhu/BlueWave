@@ -1,4 +1,4 @@
-package com.distributedpipelilne.twitter.message;
+package com.distributedpipelilne.emailService.message;
 
 
 import static org.mockito.Matchers.contains;
@@ -17,22 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.distributedpipelilne.twitter.domain.ConsoleOutput;
-import com.distributedpipelilne.twitter.domain.Input;
-import com.distributedpipelilne.twitter.domain.Output;
-import com.distributedpipelilne.twitter.domain.ReportModel;
-
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-
+import com.distributedpipelilne.emailService.domain.ConsoleOutput;
+import com.distributedpipelilne.emailService.domain.Input;
+import com.distributedpipelilne.emailService.domain.Output;
+import com.distributedpipelilne.emailService.domain.ReportModel;
+import com.distributedpipelilne.emailService.service.MailingServiceImpl;
 
 @Service
-public class TwitterServiceConsumer {
+public class BuildConsumer {
 	
-    
-    private static Logger logger = LogManager.getLogger(TwitterServiceConsumer.class);
+	@Autowired
+	MailingServiceImpl service;
+    private static Logger logger = LogManager.getLogger(BuildConsumer.class);
 	
 	private CountDownLatch latch = new CountDownLatch(1);
 
@@ -49,7 +45,7 @@ public class TwitterServiceConsumer {
 	 Output output;
 	 
 	 @Autowired
-	 TwitterServiceProducer producer;
+	 BuildProducer producer;
 	 
 	 @Autowired
 	 ReportModel reportModel;
@@ -61,7 +57,7 @@ public class TwitterServiceConsumer {
 	/*
 	 * consumer on kafka topic <add the kafak topic>"
 	 */
-	@KafkaListener(topics = "twitter", 
+	@KafkaListener(topics = "emails2", 
 			  containerFactory = "reportKafkaListenerContainerFactory")
 			public void inputlistener(Input  inputdata) throws IOException, InterruptedException {
 		
@@ -92,15 +88,19 @@ public class TwitterServiceConsumer {
 			/*
 			 * Write the command that should be executed <command>
  			 */
-			Twitter twitter = TwitterFactory.getSingleton();
-			Status status = twitter.updateStatus("Twitter update from Bluewave: " + inputdata.getInput()[0]);
-		    
+			
+	          String email = inputdata.getInput()[0];
+//	          service.put(email,"You job has been successfully executed");
+	          service.put(email,"You jobId:"+inputdata.getJobId()+" has been successfully executed. This is a system generated mail. Do not reply");
+	          System.out.println(email);
+			
 				String []str= {"Task Complete"};
 				output.setOutput(str);
 				output.setErrcode(200);
 				output.setStderr("task complete");
 				logger.info("task complete");
-				reportModel.setJobStatus("build complete"); 
+				reportModel.setJobStatus("build complete");
+			
 		}
 		catch (Exception e){
 			logger.error("Task failed");
@@ -136,4 +136,3 @@ public class TwitterServiceConsumer {
 		}
 
 }
-
