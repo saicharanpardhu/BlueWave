@@ -86,36 +86,36 @@
 // }
 
 //Running on AWS
-//  export class AppConfig {
-//   public readonly userSignup = "http://35.154.244.122:8090/user-persistence/v0.1/userinfo/user";
-//    public readonly login = "http://35.154.244.122:5000";
-//    public readonly triggerEngine = "http://35.154.244.122:8090/job-manager/v1.0/workflowname/";
-//    public readonly saveWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
-//    public readonly removeWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/remove/";
-//    public readonly reportGetJobId = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
-//    public readonly getReport = "http://35.154.244.122:8090/reporting-service/checkout/";
-//    public readonly persistence = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
-//    public readonly socket = "http://35.154.244.122:3000/gs-guide-websocket";
-//    public readonly getAllWorkflows = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/users/";
-//    public readonly getWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
-//    public readonly getTasksOfWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/tasks/";
-//    public readonly getTaskNumber = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
-//  }
-
-
  export class AppConfig {
-  public readonly userSignup = "https://35.154.244.122:8090/user-persistence/v0.1/userinfo/user";
-   public readonly login = "https://35.154.244.122:5000";
-   public readonly triggerEngine = "https://35.154.244.122:8090/job-manager/v1.0/workflowname/";
-   public readonly saveWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
-   public readonly removeWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/remove/";
-   public readonly reportGetJobId = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
-   public readonly getReport = "https://35.154.244.122:8090/reporting-service/checkout/";
-   public readonly persistence = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
-   public readonly socket = "https://35.154.244.122:3000/gs-guide-websocket";
-   public readonly getAllWorkflows = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/users/";
-   public readonly getWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
-   public readonly getTasksOfWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/tasks/";
-   public readonly getTaskNumber = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
+  public readonly userSignup = "http://35.154.244.122:8090/user-persistence/v0.1/userinfo/user";
+   public readonly login = "http://35.154.244.122:5000";
+   public readonly triggerEngine = "http://35.154.244.122:8090/job-manager/v1.0/workflowname/";
+   public readonly saveWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
+   public readonly removeWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/remove/";
+   public readonly reportGetJobId = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
+   public readonly getReport = "http://35.154.244.122:8090/reporting-service/checkout/";
+   public readonly persistence = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
+   public readonly socket = "http://35.154.244.122:3000/gs-guide-websocket";
+   public readonly getAllWorkflows = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/users/";
+   public readonly getWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
+   public readonly getTasksOfWorkflow = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/tasks/";
+   public readonly getTaskNumber = "http://35.154.244.122:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
  }
+
+
+//  export class AppConfig {
+//   public readonly userSignup = "https://35.154.244.122:8090/user-persistence/v0.1/userinfo/user";
+//    public readonly login = "https://35.154.244.122:5000";
+//    public readonly triggerEngine = "https://35.154.244.122:8090/job-manager/v1.0/workflowname/";
+//    public readonly saveWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
+//    public readonly removeWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/remove/";
+//    public readonly reportGetJobId = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/jobdetails/userName/latest/";
+//    public readonly getReport = "https://35.154.244.122:8090/reporting-service/checkout/";
+//    public readonly persistence = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/";
+//    public readonly socket = "https://35.154.244.122:3000/gs-guide-websocket";
+//    public readonly getAllWorkflows = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflow/users/";
+//    public readonly getWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/workflows/workflow/";
+//    public readonly getTasksOfWorkflow = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/tasks/";
+//    public readonly getTaskNumber = "https://35.154.244.122:8090/persistence-manager/v1.0/persistence/count/jobdetails/";
+//  }
 
