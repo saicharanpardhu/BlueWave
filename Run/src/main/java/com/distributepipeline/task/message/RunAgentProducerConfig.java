@@ -22,8 +22,10 @@ import com.distributepipeline.task.domain.ReportModel;
 @EnableKafka
 public class RunAgentProducerConfig {
     
+
 	@Value("${spring.kafka.bootstrap-servers}")
-	private String bootstrapServer;
+    private String bootstrapServer;
+	
 	@Bean
     public ProducerFactory<String, OutputModel> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();

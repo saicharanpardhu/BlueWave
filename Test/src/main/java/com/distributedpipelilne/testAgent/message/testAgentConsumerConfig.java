@@ -20,13 +20,17 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 @Configuration
 @EnableKafka
 public class testAgentConsumerConfig {
+	
+	@Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServer;
+
       
     @Bean
     public ConsumerFactory<String, Input> triggerConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.178:9092");
+          bootstrapServer);
         
         props.put(
           ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, 
@@ -59,7 +63,7 @@ public class testAgentConsumerConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(
           ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, 
-          "172.23.238.178:9092");
+          bootstrapServer);
         props.put(
           ConsumerConfig.GROUP_ID_CONFIG, 
           "something22");

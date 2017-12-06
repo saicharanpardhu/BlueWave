@@ -1,7 +1,24 @@
 FROM java:8-jre
+FROM maven
+USER root
+
+
+#RUN apt-get update && apt-get install -y maven
+#ADD target/BuildAgent-0.0.1-SNAPSHOT.jar build.jar
+#ENTRYPOINT ["java","-Xmx200m", "-jar", "/build.jar"]
+#EXPOSE 8099
+
+
 ADD target/BuildAgent-0.0.1-SNAPSHOT.jar build.jar
+
+RUN mkdir -p /usr/src/
+
+WORKDIR /usr/src/
+
+COPY ./Build-Plugin.sh /usr/src/
+
+#ADD target/BuildAgent-0.0.1-SNAPSHOT.jar build.jar
+
 ENTRYPOINT ["java","-Xmx200m", "-jar", "/build.jar"]
+
 EXPOSE 8099
-
-
-

@@ -47,3 +47,15 @@ services:
     ports:
       - 8096:8096
       
+  test:
+    environment:
+      EUREKA_URL: eureka
+      KAFKA_URL: kafka
+    build: ./Test
+    volumes:
+      - /home/imbatch1/Task_Source:/Task_Source
+    container_name: test
+    image: test
+    ports:
+      - 8095:8095
+      

@@ -20,10 +20,10 @@ import com.distributepipeline.task.domain.InputModel;
 @Configuration
 @EnableKafka
 public class RunAgentConsumerConfig {
-
-
+	
 	@Value("${spring.kafka.bootstrap-servers}")
-	private String bootstrapServer;
+    private String bootstrapServer;
+	
 	@Bean
     public ConsumerFactory<String, InputModel> triggerConsumerFactory() {
     Map<String, Object> props = new HashMap<>();
