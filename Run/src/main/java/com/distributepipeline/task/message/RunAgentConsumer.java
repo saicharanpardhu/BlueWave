@@ -73,7 +73,7 @@ public class RunAgentConsumer {
 		this.latch = latch;
 	}
 
-	@KafkaListener(topics = "run123", 
+	@KafkaListener(topics = "run", 
 			  containerFactory = "reportKafkaListenerContainerFactory")
 			public void inputlistener(InputModel  inputdata) throws IOException, InterruptedException {
 		
