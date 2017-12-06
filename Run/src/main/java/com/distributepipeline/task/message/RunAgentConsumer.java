@@ -111,7 +111,7 @@ public class RunAgentConsumer {
 				reportModel.setTaskAlias(inputdata.getTaskname());
 				reportModel.setJobId(inputdata.getJobId());
 				System.out.println("start time:"+ reportModel.getTaskStartTime());
-				reportModel.setJobEndTime(null);
+                reportModel.setTaskEndTime(null);
 				producer.sendReport(reportModel);     
 
 				
