@@ -30,7 +30,7 @@
       </mat-card>
       <br>
       <br>
-      <button mat-raised-button (click)="viewWaterFall();displayWaterfall=false" color="primary" *ngIf="displayWaterfall">View Waterfall</button>
+      <button mat-raised-button (click)="viewWaterFall();displayWaterfall=false" color="primary" *ngIf="displayWaterfall">View Execution Timeline</button>
       <div *ngIf="viewCharts" style="padding:10px">
         <p>JobId: {{this.jobId}}</p>
         <ngx-charts-bar-horizontal-stacked [view]="view" [scheme]="colorScheme" [results]="tasks" [gradient]="gradient" [xAxis]="showXAxis"
