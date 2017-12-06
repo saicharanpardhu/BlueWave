@@ -14,8 +14,8 @@
   
           </ngc-float-item-button>
           
-          <ngc-float-item-button id="execute1" icon="done_all" content="SAVE" *ngIf="!this.loadWorkflow" (click)="saveWorkflow()" ></ngc-float-item-button>
-           <ngc-float-item-button id="execute1" icon="done_all" content="UPDATE" *ngIf="this.loadWorkflow" (click)="updateWorkflow()" ></ngc-float-item-button>
+          <ngc-float-item-button id="execute1" icon="save" content="SAVE" *ngIf="!this.loadWorkflow" (click)="saveWorkflow()" ></ngc-float-item-button>
+           <ngc-float-item-button id="execute1" icon="update" content="UPDATE" *ngIf="this.loadWorkflow" (click)="updateWorkflow()" ></ngc-float-item-button>
           <ngc-float-item-button id="execute" icon="delete" content="{{deleteModeButton}}" (click)="deletemode()" ></ngc-float-item-button>
           <ngc-float-item-button id="execute" icon="code" content="EDITOR" (click)="openjsoneditor()"></ngc-float-item-button>
           <ngc-float-item-button id="execute" icon="settings" content="Settings" (click)="openSettings()"></ngc-float-item-button>
