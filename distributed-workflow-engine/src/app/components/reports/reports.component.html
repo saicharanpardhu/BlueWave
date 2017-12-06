@@ -18,7 +18,7 @@
         <mat-expansion-panel *ngFor="let name of jobIdnames; let i = index">
           <mat-expansion-panel-header (click)="getJobReports(name.jobId)">
             <mat-panel-title>
-              JobId
+              {{name.workFlowName}}
             </mat-panel-title>
             <mat-panel-description>
               {{name.jobId}}

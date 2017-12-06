@@ -78,6 +78,14 @@ export class CreateWorkflowComponent implements OnInit, OnDestroy {
     {
       name: "Test",
       value: "test5"
+    },
+    {
+      name:"Send Tweet",
+      value: "twitter"
+    },
+    {
+      name: "Send Email",
+      value: "emails2"
     }
   ];
   //Tasks of the workflow

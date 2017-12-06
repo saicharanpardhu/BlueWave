@@ -77,6 +77,7 @@ body, html {
 }
 .form-container {
   padding: 30px;
+  padding-bottom: 0px;
 }
 
 .mat-tab-group {
