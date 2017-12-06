@@ -58,7 +58,7 @@ public class testAgentConsumer {
 	 * consumer on kafka topic "test2"
 	 */
 
-	@KafkaListener(topics = "test", 
+	@KafkaListener(topics = "test5", 
 			  containerFactory = "reportKafkaListenerContainerFactory")
 			public void inputlistener(Input  inputdata) throws IOException, InterruptedException {
 		
