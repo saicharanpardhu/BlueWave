@@ -2,7 +2,7 @@
   <mat-card style="overflow:auto">
 
     <mat-card-content>
-      <h1 style="text-align: center;"> Heat Map of Execution Times</h1> 
+      <h1 style="text-align: center;"> Workflow Execution Frequency</h1> 
       <div *ngIf="(this.statuscode == 0)">
         <h2>Sorry!</h2>
         <p>Not able to retreive data, Please try again later.</p>
@@ -10,7 +10,7 @@
       </div>
       <div *ngIf="!(this.statuscode == 0)">
         <div *ngIf="noWorkflows" style="text-align:center">
-          <p>No workflows found. Try creating and executing workflows to view your heatmap.</p>
+          <p>No workflows found. Try creating and executing workflows to view your workflow execution frequency.</p>
           <button mat-raised-button color="primary" aria-label="Add Workflow" (click)="viewmodeexit()" [routerLink]="['/addworkflow']">
             <i class="material-icons">add_circle</i> Create workflow
           </button>
