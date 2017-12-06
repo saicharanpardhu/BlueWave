@@ -59,6 +59,8 @@ public class StateInitializerConsumer {
 		user.setUserName(trigger.getUserName());
 		engine.sendMessage(user);
 		reportModel.setJobStartTime(new Timestamp(System.currentTimeMillis()));
+		reportModel.setJobEndTime(null);
+
 		reportModel.setJobId(trigger.getJobId());
 		
 		Map<String,Task> mp=new HashMap<String,Task>();
